@@ -29,8 +29,13 @@ export default function Home() {
         <Button variant="tertiary" size="medium" rightIcon={null}>Button</Button>
       </div>
       
-      <div>
-        <Input placeholder="Enter your ID" />
+      <div className="space-y-4">
+        <Input size="medium" status="default" placeholder="Medium Input" />
+        <Input size="small" status="default" placeholder="Samll Input" />
+        <Input size="medium" status="disabled" placeholder="Disabled Input" />
+        <Input size="small" status="disabled" placeholder="Disabled Input" />
+        <Input size="medium" status="error" placeholder="Error Input" />
+        <Input size="small" status="error" placeholder="Error Input" />
       </div>
     </div>
   );
