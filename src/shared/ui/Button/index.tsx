@@ -4,6 +4,8 @@
 //   <Button variant="tertiary" size="medium" leftIcon={null} rightIcon={null}>Button</Button>
 // </div>
 
+'use client'
+
 import React from 'react';
 import { ExpandIcon } from '@/shared/ui/icons/ExpandIcon';
 
@@ -27,11 +29,11 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'small',
   leftIcon = <ExpandIcon />,
   rightIcon = <ExpandIcon />,
-  onClick,
+  onClick = () => console.log('Button clicked!'),
   disabled = false,
   className = '',
 }) => {
-  const baseClasses = 'inline-flex justify-center items-center shrink-0 rounded-[9px]';
+  const baseClasses = 'inline-flex justify-center items-center shrink-0 rounded-[9px] cursor-pointer transition-all duration-150 active:scale-95';
   
   const sizeClasses: Record<ButtonSize, string> = {
     small: 'h-[30px] px-[7px] py-2 gap-[2px]',

@@ -56,7 +56,7 @@ export const Input: React.FC<InputProps> = ({
     if (isFocused) {
       stateClasses = 'justify-between border-[1.5px] border-status-danger text-content-primary';
     } else {
-      stateClasses = 'border border-status-danger text-content-secondary';
+      stateClasses = 'border border-status-danger border-[1.5px] text-content-secondary';
     }
   } else {
     if (isFocused) {
