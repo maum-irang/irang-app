@@ -2,8 +2,15 @@ import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
 import { Form } from '@/shared/ui/Form';
 import { AudioControl } from '@/shared/ui/AudioControl';
+import { Selector } from '@/shared/ui/Selector';
 
 export default function Home() {
+ const selectorOptions = [
+   { id: '1', label: '선택지 1' },
+   { id: '2', label: '선택지 1' },
+   { id: '3', label: '선택지 1' },
+ ];
+
  return (
    <div className="p-8 space-y-8 max-w-fit">
      <div className="flex gap-8">
@@ -46,6 +53,10 @@ export default function Home() {
            <Input size="small" status="error" placeholder="Error Input" />
          </div>
        </div>
+
+       <div className="border-2 border-dashed border-purple-500 p-6 rounded-lg w-fit">
+         <Selector options={selectorOptions} selectedId="2" />
+       </div>
      </div>
 
      <div className="flex gap-8">
@@ -66,7 +77,9 @@ export default function Home() {
        <div className="border-2 border-dashed border-purple-500 p-6 rounded-lg w-fit">
          <div className="space-y-4">
            <AudioControl variant="default" playing={true} />
-           <AudioControl variant="core" playing={false} />
+         </div>
+         <div className="mt-10">
+            <AudioControl variant="core" playing={false} />
          </div>
        </div>
      </div>
