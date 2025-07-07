@@ -6,7 +6,7 @@ interface FormProps {
   label: string;
   required?: boolean;
   placeholder?: string;
-  inputStatus?: 'default' | 'error' | 'disabled';
+  inputStatus?: 'default' | 'error';
   inputSize?: 'small' | 'medium';
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,11 +30,11 @@ export const Form: React.FC<FormProps> = ({
   return (
     <div className={formClasses}>
       <label 
-        className="text-[#000000] text-[13px] font-normal leading-5 tracking-[-0.26px]" 
+        className="text-content-primary text-[13px] font-normal leading-5 tracking-[-0.26px]" 
         style={{ fontFamily: 'Pretendard' }}
       >
         {label}
-        {required && <span className="text-[#F42B5E] ml-1">*</span>}
+        {required && <span className="text-status-danger ml-1">*</span>}
       </label>
       <Input
         placeholder={placeholder}
@@ -45,7 +45,7 @@ export const Form: React.FC<FormProps> = ({
       />
       {inputStatus === 'error' && errorMessage && (
         <span 
-          className="text-[#F42B5E] text-[13px] font-normal leading-5 tracking-[-0.26px]"
+          className="text-status-danger text-[13px] font-normal leading-5 tracking-[-0.26px]"
           style={{ fontFamily: 'Pretendard' }}
         >
           {errorMessage}

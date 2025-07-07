@@ -129,7 +129,7 @@ export const AudioControl: React.FC<AudioControlProps> = ({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
-        className="w-[200px] h-[5px] bg-[#DDDFE3] rounded-[40px] cursor-pointer relative select-none"
+        className="w-[200px] h-[5px] bg-fill-tertiary rounded-[40px] cursor-pointer relative select-none"
       >
         <div
           className="h-full bg-grayscale-500 rounded-[40px]"
