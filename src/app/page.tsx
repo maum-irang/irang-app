@@ -3,6 +3,7 @@ import { Input } from '@/shared/ui/Input';
 import { Form } from '@/shared/ui/Form';
 import { AudioControl } from '@/shared/ui/AudioControl';
 import { Selector } from '@/shared/ui/Selector';
+import { TextButton } from '@/shared/ui/TextButton';
 
 export default function Home() {
  const selectorOptions = [
@@ -57,6 +58,23 @@ export default function Home() {
        <div className="border-2 border-dashed border-purple-500 p-6 rounded-lg w-fit">
          <Selector options={selectorOptions} selectedId="2" />
        </div>
+
+       <div className="border-2 border-dashed border-purple-500 p-6 rounded-lg w-fit">
+         <div className="space-y-4">
+           <div className="flex gap-4">
+             <TextButton variant="default" size="small">Button</TextButton>
+             <TextButton variant="default" size="medium">Button</TextButton>
+           </div>
+           <div className="flex gap-4">
+             <TextButton variant="primary" size="small">Button</TextButton>
+             <TextButton variant="primary" size="medium">Button</TextButton>
+           </div>
+           <div className="flex gap-4">
+             <TextButton variant="danger" size="small">Button</TextButton>
+             <TextButton variant="danger" size="medium">Button</TextButton>
+           </div>
+         </div>
+       </div>
      </div>
 
      <div className="flex gap-8">
@@ -77,9 +95,7 @@ export default function Home() {
        <div className="border-2 border-dashed border-purple-500 p-6 rounded-lg w-fit">
          <div className="space-y-4">
            <AudioControl variant="default" playing={true} />
-         </div>
-         <div className="mt-10">
-            <AudioControl variant="core" playing={false} />
+           <AudioControl variant="core" playing={false} />
          </div>
        </div>
      </div>
