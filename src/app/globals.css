@@ -1,21 +1,86 @@
+/* src/app/globals.css */
 @import "tailwindcss";
+
+@theme {
+  /* System */
+  --color-system-white: #FFFFFF;
+  --color-system-black: #000000;
+  
+  /* Semantic */
+  --color-semantic-color: #FFFFFF;
+  
+  /* Status */
+  --color-status-success: #59DB40;
+  --color-status-success-translucent: #59DB40;
+  --color-status-danger: #F42B5E;
+  --color-status-danger-translucent: #F42B5E;
+  --color-status-warning: #EAC50D;
+  --color-status-warning-translucent: #EAC50D;
+  
+  /* Fill */
+  --color-fill-primary: #F3F4F5;
+  --color-fill-secondary: #E9EAED;
+  --color-fill-tertiary: #DDEFE3;
+  --color-fill-invert: #1B1D22;
+  
+  /* Accent */
+  --color-accent-primary: #864EF6;
+  --color-accent-transparent: #F2ECFE;
+  
+  /* Stroke */
+  --color-stroke-primary: #E9EAED;
+  --color-stroke-secondary: #DDEFE3;
+  --color-stroke-tertiary: #8F96A3;
+  
+  /* Content */
+  --color-content-primary: #2F3238;
+  --color-content-secondary: #8F96A3;
+  --color-content-tertiary: #DDEFE3;
+  --color-content-invert: #FFFFFF;
+  
+  /* Background */
+  --color-background-primary: #FFFFFF;
+  --color-background-secondary: #F3F4F5;
+  --color-background-tertiary: #E9EAED;
+  --color-background-quaternary: #DDEFE3;
+  
+  /* Grayscale */
+  --color-grayscale-0: #FFFFFF;
+  --color-grayscale-50: #F3F4F5;
+  --color-grayscale-100: #E9EAED;
+  --color-grayscale-150: #DEE0E3;
+  --color-grayscale-200: #DDEFE3;
+  --color-grayscale-300: #8F96A3;
+  --color-grayscale-400: #5B6270;
+  --color-grayscale-500: #41464F;
+  --color-grayscale-600: #2F3238;
+  --color-grayscale-700: #25272C;
+  --color-grayscale-800: #1B1D22;
+  --color-grayscale-900: #0E0F11;
+  
+  /* Core */
+  --color-core-100: #F2ECFE;
+  --color-core-200: #C4A9FA;
+  --color-core-300: #864EF6;
+  --color-core-400: #7032ED;
+  --color-core-500: #52368A;
+  --color-core-600: #3E2D5F;
+  
+  /* Solid */
+  --color-solid-green: #59DB40;
+  --color-solid-yellow: #EAC50D;
+  --color-solid-red: #F42B5E;
+}
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --foreground: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
