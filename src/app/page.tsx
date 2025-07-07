@@ -88,7 +88,7 @@ export default function Home() {
              inputStatus="error"
              errorMessage="ID field is required"
            />
-           <Form label="Label" placeholder="Enter your ID" inputStatus="disabled" />
+           <Form label="Label" placeholder="Enter your ID"/>
          </div>
        </div>
 
