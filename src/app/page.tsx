@@ -38,8 +38,8 @@ export default function Home() {
              <Button variant="secondary" size="medium">Button</Button>
            </div>
            <div className="flex gap-4">
-             <Button variant="tertiary" size="small" leftIcon={null}>Button</Button>
-             <Button variant="tertiary" size="medium" rightIcon={null}>Button</Button>
+             <Button variant="tertiary" size="small">Button</Button>
+             <Button variant="tertiary" size="medium">Button</Button>
            </div>
          </div>
        </div>
