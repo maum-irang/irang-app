@@ -11,9 +11,6 @@ interface ProgressBarProps {
           <span className="text-sm font-bold text-gray-700">
             {current} / {total}
           </span>
-          <span className="text-sm font-bold text-gray-700">
-            정답고르기 까지 몇초 걸리는지
-          </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-3">
           <div 

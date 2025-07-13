@@ -3,7 +3,7 @@ import { Question } from './quizTypes';
 export const mockQuestions: Question[] = [
   {
     id: 1,
-    imageUrl: '/images/emotions/happy.jpg',
+    imageUrl: '/images/emotions/face.jpg',
     emotion: '기쁨',
     options: ['기쁨', '슬픔', '화남', '놀람'],
     correctAnswer: 0,
@@ -11,7 +11,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 2,
-    imageUrl: '/images/emotions/sad.jpg',
+    imageUrl: '/images/emotions/face.jpg',
     emotion: '슬픔',
     options: ['기쁨', '슬픔', '무서움', '화남'],
     correctAnswer: 1,
@@ -19,7 +19,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 3,
-    imageUrl: '/images/emotions/angry.jpg',
+    imageUrl: '/images/emotions/face.jpg',
     emotion: '화남',
     options: ['놀람', '기쁨', '화남', '슬픔'],
     correctAnswer: 2,
@@ -27,7 +27,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 4,
-    imageUrl: '/images/emotions/surprised.jpg',
+    imageUrl: '/images/emotions/face.jpg',
     emotion: '놀람',
     options: ['화남', '놀람', '기쁨', '무서움'],
     correctAnswer: 1,
@@ -35,7 +35,7 @@ export const mockQuestions: Question[] = [
   },
   {
     id: 5,
-    imageUrl: '/images/emotions/scared.jpg',
+    imageUrl: '/images/emotions/face.jpg',
     emotion: '무서움',
     options: ['슬픔', '화남', '무서움', '놀람'],
     correctAnswer: 2,
