@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Layers, Stamp, Notebook, Mic, Camera } from 'lucide-react';
 import Lottie from 'lottie-react';
 import checkAnimation from '../../../../public/animations/check.json';
@@ -8,6 +9,7 @@ import StampRoadmap from './components/StampRoadmap';
 import { useStampData } from '../model/useStampData';
 
 export const AttendancePage = () => {
+  const router = useRouter();
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
   const [showNotesAnimation, setShowNotesAnimation] = useState(false);
@@ -39,6 +41,14 @@ export const AttendancePage = () => {
     const font = new FontFace('SBAggroOTF', 'url(/fonts/SBAggroOTF-B.otf)');
     font.load().then(f => document.fonts.add(f)).catch(() => {});
   }, []);
+
+  const handleStage1Click = () => {
+    setShowAttendanceAnimation(true);
+    setTimeout(() => {
+      // 1단계 학습 페이지로 이동
+      router.push('/learning/stage1');
+    }, 1500);
+  };
 
   const handleStudyClick = () => {
     setShowStudyAnimation(true);
@@ -79,13 +89,15 @@ export const AttendancePage = () => {
             안녕 <span className="text-accent-primary">마음아</span>?<br /> 오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-4 border-2 border-gray-200 relative">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg border-2 border-gray-200 relative">
               <h2 className="text-2xl font-black text-accent-primary text-center">
                 마음이
               </h2>
+              {/* 이름표 구멍 */}
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-400 shadow-inner"></div>
               </div>
+              {/* 이름표 끈/줄 */}
               <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-0.5 h-6 bg-gray-400"></div>
             </div>
           </div>
@@ -97,6 +109,8 @@ export const AttendancePage = () => {
             completedCount={completedCount}
             totalCount={totalCount}
           />
+
+          {/* 오른쪽 카드들을 하나의 컨테이너로 묶어서 높이 맞춤 */}
           <div className="h-[584px] flex flex-col">
             <div
               className="rounded-3xl p-8 relative flex-1"
@@ -111,7 +125,7 @@ export const AttendancePage = () => {
               <div className="grid grid-cols-3 gap-6">
                 <div className="relative">
                   <button
-                    onClick={() => setShowAttendanceAnimation(true)}
+                    onClick={handleStage1Click}
                     className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full"
                   >
                     <div className="mb-3 text-accent-primary">
@@ -164,6 +178,8 @@ export const AttendancePage = () => {
                 </div>
               </div>
             </div>
+
+            {/* 8px 간격 */}
             <div className="h-2"></div>
 
             <div
