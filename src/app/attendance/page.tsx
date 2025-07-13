@@ -1,5 +1,5 @@
 import { AttendancePage } from '@/widgets/attendance';
 
-export default function Home() {
+export default function Page() {
   return <AttendancePage />;
 }
