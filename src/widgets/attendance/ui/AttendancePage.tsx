@@ -47,21 +47,15 @@ useEffect(() => {
    window.history.replaceState({}, '', window.location.pathname);
  }
  
- // 2단계 완료 애니메이션 확인
  if (urlParams.get('showStage2CompleteAnimation') === 'true') {
    setShowStudyAnimation(true);
    window.history.replaceState({}, '', window.location.pathname);
  }
 }, []);
 
-const handleStage1Click = () => {
- router.push('/learning/stage1');
-};
-
-const handleStudyClick = () => {
- // 애니메이션 없이 바로 이동
- router.push('/learning/stage2');
-};
+  const handleStage1Click = () => {
+    router.push('/learning/stage1');
+  };
 
 const handleAttendanceClick = () => {
  setShowStampAnimation(true);
