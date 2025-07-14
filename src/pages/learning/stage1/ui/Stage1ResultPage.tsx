@@ -9,7 +9,7 @@ export const Stage1ResultPage = () => {
 const router = useRouter();
 const [displayText, setDisplayText] = useState('');
 
-const score = 2;
+const score = 4;
 const total = 5;
 const percentage = Math.round((score / total) * 100);
 const passThreshold = 80
@@ -57,7 +57,7 @@ const handleRestart = () => {
 
 const handleHome = () => {
   if (isPassed) {
-    router.push('/attendance');
+    router.push('/attendance?showCompleteAnimation=true');
   }
 };
 
