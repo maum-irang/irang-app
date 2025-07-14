@@ -165,14 +165,6 @@ export const Stage2ResultPage = () => {
                       <Home size={20} />
                       <span>학습 종료하기</span>
                     </button>
-
-                    <button
-                      onClick={() => router.push("/learning/stage3")}
-                      className="w-full py-3 px-6 bg-purple-500 text-white rounded-2xl font-black text-base transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2"
-                    >
-                      <span>3단계로 이동하기</span>
-                      <ArrowRight size={20} />
-                    </button>
                   </>
                 ) : (
                   <button

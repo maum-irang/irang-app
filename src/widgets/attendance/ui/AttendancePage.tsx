@@ -74,6 +74,10 @@ export const AttendancePage = () => {
     }, 1500);
   };
 
+  const handleStage3Click = () => {
+    router.push("/learning/stage3");
+  };
+
   return (
     <div
       className="min-h-screen bg-green-100 p-6 flex items-center"
@@ -193,7 +197,7 @@ export const AttendancePage = () => {
                 </div>
                 <div className="relative">
                   <button
-                    onClick={() => setShowNotesAnimation(true)}
+                    onClick={handleStage3Click}
                     className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full"
                   >
                     <div className="mb-3 text-accent-primary">
