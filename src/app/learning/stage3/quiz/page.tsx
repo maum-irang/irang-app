@@ -2,4 +2,4 @@ import { Stage3QuizPage } from "../../../../pages/learning/stage3/ui/Stage3QuizP
 
 export default function Stage3Quiz() {
   return <Stage3QuizPage />;
-} 
+}

@@ -2,4 +2,4 @@ import { Stage3IntroPage } from "../../../pages/learning/stage3/ui/Stage3IntroPa
 
 export default function Stage3Page() {
   return <Stage3IntroPage />;
-} 
+}

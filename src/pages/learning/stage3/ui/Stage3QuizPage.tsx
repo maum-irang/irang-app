@@ -3,11 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Volume2 } from "lucide-react";
 
-const expressions = [
-  "웃어보세요!",
-  "찡그려보세요!",
-  "놀란 표정 지어보세요!"
-];
+const expressions = ["웃어보세요!", "찡그려보세요!", "놀란 표정 지어보세요!"];
 
 export const Stage3QuizPage = () => {
   const router = useRouter();
@@ -16,16 +12,21 @@ export const Stage3QuizPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then(stream => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       })
-      .catch(() => setError("카메라 접근이 불가능합니다. 권한을 허용해 주세요."));
+      .catch(() =>
+        setError("카메라 접근이 불가능합니다. 권한을 허용해 주세요.")
+      );
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
-        (videoRef.current.srcObject as MediaStream).getTracks().forEach(track => track.stop());
+        (videoRef.current.srcObject as MediaStream)
+          .getTracks()
+          .forEach(track => track.stop());
       }
     };
   }, []);
@@ -39,7 +40,9 @@ export const Stage3QuizPage = () => {
   };
 
   const handleTTS = () => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(expressions[step]));
+    window.speechSynthesis.speak(
+      new SpeechSynthesisUtterance(expressions[step])
+    );
   };
 
   return (
@@ -55,7 +58,12 @@ export const Stage3QuizPage = () => {
             {error ? (
               <span className="text-red-500 font-bold">{error}</span>
             ) : (
-              <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover rounded-3xl" />
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover rounded-3xl"
+              />
             )}
           </div>
           <button
@@ -76,4 +84,4 @@ export const Stage3QuizPage = () => {
       </div>
     </div>
   );
-}; 
+};

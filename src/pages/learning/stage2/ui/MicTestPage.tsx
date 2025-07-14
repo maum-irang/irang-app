@@ -15,7 +15,7 @@ export const MicTestPage = () => {
     "안녕! 마이크 테스트 시작할게. 준비되면 마이크 버튼 누르고 '안녕하세요'라고 말해줘.",
     "좋아! 이번엔 좀 더 크게 '테스트입니다'라고 말해줘.",
     "완전 잘했어! 마지막으로 '마음이랑'이라고 말해줘.",
-    "마이크 테스트 끝! 이제 진짜 학습 시작하자!"
+    "마이크 테스트 끝! 이제 진짜 학습 시작하자!",
   ];
 
   const handleBack = () => {
@@ -115,8 +115,8 @@ export const MicTestPage = () => {
               isRecording
                 ? "bg-red-500 text-white animate-pulse"
                 : micTestPassed
-                ? "bg-green-500 text-white"
-                : "bg-white/90 backdrop-blur-sm text-purple-500"
+                  ? "bg-green-500 text-white"
+                  : "bg-white/90 backdrop-blur-sm text-purple-500"
             }`}
             style={{
               borderRadius: "30px 40px 35px 25px",
@@ -125,11 +125,11 @@ export const MicTestPage = () => {
             <div className="flex flex-col items-center space-y-3">
               <div
                 className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                  isRecording 
-                    ? "bg-white/20" 
-                    : micTestPassed 
-                    ? "bg-white/20" 
-                    : "bg-purple-100"
+                  isRecording
+                    ? "bg-white/20"
+                    : micTestPassed
+                      ? "bg-white/20"
+                      : "bg-purple-100"
                 }`}
               >
                 {micTestPassed ? (
@@ -141,11 +141,11 @@ export const MicTestPage = () => {
                 )}
               </div>
               <span>
-                {micTestPassed 
-                  ? "테스트 완료!" 
-                  : isRecording 
-                  ? "녹음 중..." 
-                  : "음성 입력"}
+                {micTestPassed
+                  ? "테스트 완료!"
+                  : isRecording
+                    ? "녹음 중..."
+                    : "음성 입력"}
               </span>
               {micTestPassed && (
                 <p className="text-sm opacity-90">학습으로 이동 가능</p>
@@ -171,23 +171,23 @@ export const MicTestPage = () => {
           <div className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3">
             <div
               className={`w-3 h-3 rounded-full ${
-                isTyping 
-                  ? "bg-purple-500 animate-pulse" 
-                  : micTestPassed 
-                  ? "bg-green-500" 
-                  : "bg-blue-500"
+                isTyping
+                  ? "bg-purple-500 animate-pulse"
+                  : micTestPassed
+                    ? "bg-green-500"
+                    : "bg-blue-500"
               }`}
             ></div>
             <span className="font-black text-gray-700">
-              {isTyping 
-                ? "AI가 말하고 있어요..." 
-                : micTestPassed 
-                ? "테스트 완료! 학습을 시작할 수 있습니다" 
-                : "마이크 테스트 중입니다"}
+              {isTyping
+                ? "AI가 말하고 있어요..."
+                : micTestPassed
+                  ? "테스트 완료! 학습을 시작할 수 있습니다"
+                  : "마이크 테스트 중입니다"}
             </span>
           </div>
         </div>
       </div>
     </div>
   );
-}; 
+};

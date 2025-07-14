@@ -132,7 +132,9 @@ export const Stage3IntroPage = () => {
                     <p className="font-black text-gray-800 text-sm">
                       표정 따라하기
                     </p>
-                    <p className="text-gray-600 text-xs">안내에 따라 표정 연습</p>
+                    <p className="text-gray-600 text-xs">
+                      안내에 따라 표정 연습
+                    </p>
                   </div>
                 </div>
               </div>
@@ -156,4 +158,4 @@ export const Stage3IntroPage = () => {
       </div>
     </div>
   );
-}; 
+};

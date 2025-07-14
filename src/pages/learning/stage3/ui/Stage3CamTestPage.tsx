@@ -7,10 +7,11 @@ export const Stage3CamTestPage = () => {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState("");
-  const [camOn, setCamOn] = useState(true); 
+  const [camOn, setCamOn] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  const fullText = "카메라가 잘 나오는지 확인해 주세요!\n화면에 얼굴이 잘 보이면 '다음 단계'를 눌러주세요.";
+  const fullText =
+    "카메라가 잘 나오는지 확인해 주세요!\n화면에 얼굴이 잘 보이면 '다음 단계'를 눌러주세요.";
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
@@ -31,28 +32,30 @@ export const Stage3CamTestPage = () => {
 
   const playTTS = () => {
     if (window.speechSynthesis) {
-      const utter = new window.SpeechSynthesisUtterance(fullText.replace(/\n/g, " "));
+      const utter = new window.SpeechSynthesisUtterance(
+        fullText.replace(/\n/g, " ")
+      );
       utter.lang = "ko-KR";
       window.speechSynthesis.speak(utter);
     }
   };
 
-
   const handleBack = () => {
     router.push("/learning/stage3");
   };
 
-
-
   useEffect(() => {
     let localStream: MediaStream | null = null;
     if (camOn) {
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
         .then(s => {
           setStream(s);
           localStream = s;
         })
-        .catch(() => setError("카메라 접근이 불가능합니다. 권한을 허용해 주세요."));
+        .catch(() =>
+          setError("카메라 접근이 불가능합니다. 권한을 허용해 주세요.")
+        );
     } else {
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
@@ -121,11 +124,11 @@ export const Stage3CamTestPage = () => {
             {error ? (
               <span className="text-red-500 font-bold">{error}</span>
             ) : camOn && stream ? (
-              <video 
-                ref={videoRef} 
-                autoPlay 
-                playsInline 
-                className="w-full h-full object-cover rounded-3xl" 
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover rounded-3xl"
               />
             ) : (
               <span className="text-3xl text-gray-400">캠</span>
@@ -156,7 +159,7 @@ export const Stage3CamTestPage = () => {
               <span>{camOn ? "캠 끄기" : "캠 켜기"}</span>
             </div>
           </button>
-          
+
           <button
             onClick={handleNext}
             disabled={!(camOn && stream)}
