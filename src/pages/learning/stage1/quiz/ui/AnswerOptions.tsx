@@ -17,10 +17,10 @@ export const AnswerOptions: React.FC<AnswerOptionsProps> = ({
 }) => {
   const getButtonStyle = (index: number) => {
     const baseStyle =
-      "text-gray-800 rounded-3xl p-6 text-center min-h-[120px] flex items-center justify-center transition-all duration-200 border-3 font-black text-xl relative overflow-hidden";
+      "text-gray-800 rounded-3xl p-6 text-center min-h-[120px] flex items-center justify-center border-3 font-black text-xl relative overflow-hidden";
 
     if (!showResult) {
-      return `${baseStyle} bg-white hover:bg-gray-50 border-gray-200 ${disabled ? "opacity-50 cursor-not-allowed" : "active:scale-95 hover:scale-105"}`;
+      return `${baseStyle} bg-white border-gray-200 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`;
     }
 
     if (index === correctAnswer) {

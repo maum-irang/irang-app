@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
-
 interface QuestionCardProps {
   imageUrl: string;
   questionNumber: number;
@@ -15,32 +13,35 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   return (
     <div
-      className="bg-white rounded-3xl overflow-hidden relative"
+      className="bg-gray-50 rounded-3xl overflow-hidden relative flex flex-col items-center justify-center"
       style={{
         width: "100%",
-        maxWidth: "500px",
-        height: "300px",
-        border: "3px solid rgba(255,255,255,0.8)",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+        maxWidth: "600px",
+        height: "340px",
+        boxShadow: "0 8px 32px rgba(168,139,250,0)",
       }}
     >
+      <span className="absolute top-4 left-4 bg-purple-400 text-white text-lg font-black px-5 py-2 rounded-full">
+        Q{questionNumber}
+      </span>
       {imageError ? (
-        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+        <div className="w-full h-full flex items-center justify-center">
           <div className="text-center">
-            <div className="text-6xl mb-2">😊</div>
-            <p className="text-lg font-bold text-gray-600">표정 이미지</p>
+            <div className="text-7xl mb-2">😊</div>
+            <p className="text-xl font-bold text-purple-500">표정 이미지</p>
           </div>
         </div>
       ) : (
         <>
-          <Image
-            src={imageUrl}
-            alt={`감정 표현 이미지 ${questionNumber}`}
-            fill
-            className="object-cover"
-            onError={() => setImageError(true)}
-            priority={questionNumber <= 2}
-          />
+          <div className="w-full h-full flex items-center justify-center">
+            <img
+              src={imageUrl}
+              alt={`감정 표현 이미지 ${questionNumber}`}
+              className="object-contain max-h-[220px] mx-auto"
+              onError={() => setImageError(true)}
+              style={{ maxWidth: "90%", maxHeight: "220px" }}
+            />
+          </div>
         </>
       )}
     </div>

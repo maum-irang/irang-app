@@ -10,15 +10,12 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   progress,
 }) => {
   return (
-    <div className="w-full mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-bold text-gray-700">
-          {current} / {total}
-        </span>
+    <div className="w-full mt-10 mb-5">
+      <div className="flex justify-center items-center mb-2">
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-3">
+      <div className="w-full bg-white rounded-full h-5 shadow-inner">
         <div
-          className="bg-accent-primary h-3 rounded-full transition-all duration-300"
+          className="h-5 rounded-full transition-all duration-300 bg-purple-400"
           style={{ width: `${progress}%` }}
         />
       </div>

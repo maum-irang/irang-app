@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
 import { useQuizData } from "../model/useQuizData";
 import { ProgressBar } from "./ProgressBar";
 import { QuestionCard } from "./QuestionCard";
 import { AnswerOptions } from "./AnswerOptions";
-import { Timer } from "./Timer";
 
 export const QuizPage = () => {
   const router = useRouter();
@@ -58,17 +56,6 @@ export const QuizPage = () => {
     >
       <div className="max-w-2xl mx-auto w-full h-full flex flex-col">
         <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={handleBack}
-            className="p-2 bg-white/90 backdrop-blur-sm rounded-xl transition-all duration-300"
-          >
-            <ChevronLeft
-              size={20}
-              className="text-gray-700"
-              strokeWidth={2.5}
-            />
-          </button>
-
           <div className="flex-1 mx-4">
             <ProgressBar
               current={quizState.currentQuestionIndex + 1}
@@ -76,8 +63,6 @@ export const QuizPage = () => {
               progress={progress}
             />
           </div>
-
-          <Timer startTime={questionStartTime} isActive={!showResult} />
         </div>
 
         <div className="flex-1 flex items-center justify-center mb-6">
