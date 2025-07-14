@@ -7,10 +7,9 @@ export const Stage3CamTestPage = () => {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState("");
-  const [camOn, setCamOn] = useState(true); // 기본 켜짐
+  const [camOn, setCamOn] = useState(true); 
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  // displayText, isTyping 상태 추가
   const fullText = "카메라가 잘 나오는지 확인해 주세요!\n화면에 얼굴이 잘 보이면 '다음 단계'를 눌러주세요.";
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -30,7 +29,6 @@ export const Stage3CamTestPage = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // playTTS 함수 추가
   const playTTS = () => {
     if (window.speechSynthesis) {
       const utter = new window.SpeechSynthesisUtterance(fullText.replace(/\n/g, " "));
@@ -47,26 +45,15 @@ export const Stage3CamTestPage = () => {
 
 
   useEffect(() => {
+    let localStream: MediaStream | null = null;
     if (camOn) {
-      // 기존 스트림이 있다면 먼저 정리
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-        setStream(null);
-      }
-      
-      // 새로운 스트림 요청
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(s => {
           setStream(s);
-          if (videoRef.current) {
-            videoRef.current.srcObject = s;
-            videoRef.current.play().catch(console.error);
-          }
-          setError("");
+          localStream = s;
         })
         .catch(() => setError("카메라 접근이 불가능합니다. 권한을 허용해 주세요."));
     } else {
-      // 캠 끄기
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
         setStream(null);
@@ -75,14 +62,17 @@ export const Stage3CamTestPage = () => {
         videoRef.current.srcObject = null;
       }
     }
+    return () => {
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+      }
+    };
   }, [camOn]);
 
   useEffect(() => {
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-    };
+    if (videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
   }, [stream]);
 
   const handleToggleCam = () => {
