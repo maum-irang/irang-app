@@ -1,12 +1,11 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react'; 
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { useQuizData } from '../model/useQuizData';
 import { ProgressBar } from './ProgressBar';
 import { QuestionCard } from './QuestionCard';
 import { AnswerOptions } from './AnswerOptions';
-import { ResultModal } from './ResultModal';
 import { Timer } from './Timer';
 
 export const QuizPage = () => {
@@ -18,9 +17,14 @@ export const QuizPage = () => {
     selectedAnswer,
     showResult,
     selectAnswer,
-    resetQuiz,
     questionStartTime
   } = useQuizData();
+
+  useEffect(() => {
+    if (quizState.isCompleted) {
+      router.push('/learning/stage1/result');
+    }
+  }, [quizState.isCompleted, router]); 
 
   const handleBack = () => {
     router.back();
@@ -30,9 +34,13 @@ export const QuizPage = () => {
     selectAnswer(answerIndex);
   };
 
-  const handleCloseResult = () => {
-    router.push('/attendance');
-  };
+  if (quizState.isCompleted) {
+    return (
+      <div className="h-screen bg-green-100 p-4 flex flex-col items-center justify-center">
+        <p className="text-xl font-bold">퀴즈가 완료되었습니다. 곧 결과 페이지로 이동합니다...</p>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -85,13 +93,6 @@ export const QuizPage = () => {
             onSelect={handleAnswerSelect}
           />
         </div>
-        <ResultModal
-          isOpen={quizState.isCompleted}
-          score={quizState.score}
-          total={quizState.questions.length}
-          onClose={handleCloseResult}
-          onRestart={resetQuiz}
-        />
       </div>
     </div>
   );

@@ -131,7 +131,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         </div>
 
         <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-          <span className="text-white text-sm font-bold">{stamp.id}</span>
+          <span className="text-white text-sm font-bold">{stamp.id}일차</span>
         </div>
       </div>
     );
