@@ -81,7 +81,7 @@ export const useStampData = () => {
 
   const canCompleteStamp = (stampId: number): boolean => {
     const stamp = stampState.stamps.find(s => s.id === stampId);
-    return stamp ? !stamp.completed && stamp.isToday : false;
+    return stamp ? !stamp.completed && (stamp.isToday ?? false) : false;
   };
 
   const activateNextStamp = () => {
