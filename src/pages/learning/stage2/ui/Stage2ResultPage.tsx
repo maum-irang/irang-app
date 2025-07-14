@@ -9,7 +9,7 @@ export const Stage2ResultPage = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
 
-  const score = 2;
+  const score = 4;
   const total = 5;
   const percentage = Math.round((score / total) * 100);
   const passThreshold = 80;

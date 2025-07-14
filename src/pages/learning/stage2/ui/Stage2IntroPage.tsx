@@ -46,7 +46,7 @@ export const Stage2IntroPage = () => {
   const handleStartLearning = async () => {
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-    router.push("/learning/stage2/quiz");
+    router.push("/learning/stage2/mic-test");
   };
 
   return (

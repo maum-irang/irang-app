@@ -1,22 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Mic, MicOff, Volume2 } from "lucide-react";
+import { ChevronLeft, Mic, MicOff, CheckCircle } from "lucide-react";
 
-export const Stage2QuizPage = () => {
+export const MicTestPage = () => {
   const router = useRouter();
   const [isRecording, setIsRecording] = useState(false);
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [testStep, setTestStep] = useState(0);
+  const [micTestPassed, setMicTestPassed] = useState(false);
 
-  const aiMessages = [
-    "우와! 1단계를 통과했구나! 안녕 이웃아, 나는 마음이라고 해! 이제 우리 대화하면서 학습해보자. 내가 질문을 수 있게 말을 해볼래?",
-    "정말 잘했어! 그런데 혹시 오늘 기분이 어때? 기쁜 목소리로 대답해줄 수 있을까?",
-    "와! 정말 기쁜 목소리네! 그럼 이번에는 조금 다른 감정으로 말해볼까? 슬픈 목소리로 '괜찮아요'라고 말해보자.",
-    "음성을 잘 인식했어! 감정 표현을 정말 잘하고 있구나. 마지막으로 놀란 목소리로 '정말요?'라고 말해볼래?",
+  const testMessages = [
+    "안녕! 마이크 테스트 시작할게. 준비되면 마이크 버튼 누르고 '안녕하세요'라고 말해줘.",
+    "좋아! 이번엔 좀 더 크게 '테스트입니다'라고 말해줘.",
+    "완전 잘했어! 마지막으로 '마음이랑'이라고 말해줘.",
+    "마이크 테스트 끝! 이제 진짜 학습 시작하자!"
   ];
-
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
   const handleBack = () => {
     router.push("/learning/stage2");
@@ -25,7 +25,6 @@ export const Stage2QuizPage = () => {
   const typeMessage = (message: string) => {
     setIsTyping(true);
     setDisplayText("");
-
     let index = 0;
     const timer = setInterval(() => {
       if (index <= message.length) {
@@ -42,11 +41,12 @@ export const Stage2QuizPage = () => {
     if (isRecording) {
       setIsRecording(false);
       setTimeout(() => {
-        if (currentMessageIndex < aiMessages.length - 1) {
-          setCurrentMessageIndex(currentMessageIndex + 1);
-          typeMessage(aiMessages[currentMessageIndex + 1]);
-        } else {
-          router.push("/learning/stage2/result");
+        if (testStep < testMessages.length - 1) {
+          setTestStep(testStep + 1);
+          typeMessage(testMessages[testStep + 1]);
+        }
+        if (testStep + 1 === testMessages.length - 1) {
+          setMicTestPassed(true);
         }
       }, 1000);
     } else {
@@ -54,12 +54,8 @@ export const Stage2QuizPage = () => {
     }
   };
 
-  const playTTS = () => {
-    console.log("TTS 재생:", displayText);
-  };
-
   useEffect(() => {
-    typeMessage(aiMessages[0]);
+    typeMessage(testMessages[0]);
   }, []);
 
   return (
@@ -88,7 +84,7 @@ export const Stage2QuizPage = () => {
             />
           </button>
           <h1 className="text-3xl font-black text-black">
-            <span className="text-purple-500">2단계 학습</span>
+            <span className="text-purple-500">마이크 테스트</span>
           </h1>
         </div>
 
@@ -101,7 +97,7 @@ export const Stage2QuizPage = () => {
             }}
           >
             <div className="rounded-2xl p-6 relative">
-              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px] text-center">
+              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px]">
                 {displayText}
                 {isTyping && (
                   <span className="animate-pulse text-purple-500">|</span>
@@ -114,10 +110,13 @@ export const Stage2QuizPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={handleRecord}
+            disabled={micTestPassed}
             className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 ${
               isRecording
                 ? "bg-red-500 text-white animate-pulse"
-                : "bg-white/90 backdrop-blur-sm text-purple-500 hover:bg-white"
+                : micTestPassed
+                ? "bg-green-500 text-white"
+                : "bg-white/90 backdrop-blur-sm text-purple-500"
             }`}
             style={{
               borderRadius: "30px 40px 35px 25px",
@@ -126,30 +125,44 @@ export const Stage2QuizPage = () => {
             <div className="flex flex-col items-center space-y-3">
               <div
                 className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                  isRecording ? "bg-white/20" : "bg-purple-100"
+                  isRecording 
+                    ? "bg-white/20" 
+                    : micTestPassed 
+                    ? "bg-white/20" 
+                    : "bg-purple-100"
                 }`}
               >
-                {isRecording ? <MicOff size={32} /> : <Mic size={32} />}
+                {micTestPassed ? (
+                  <CheckCircle size={32} />
+                ) : isRecording ? (
+                  <MicOff size={32} />
+                ) : (
+                  <Mic size={32} />
+                )}
               </div>
-              <span>음성 입력</span>
-              {isRecording && (
-                <p className="text-sm opacity-90 animate-pulse">녹음 중...</p>
+              <span>
+                {micTestPassed 
+                  ? "테스트 완료!" 
+                  : isRecording 
+                  ? "녹음 중..." 
+                  : "음성 입력"}
+              </span>
+              {micTestPassed && (
+                <p className="text-sm opacity-90">학습으로 이동 가능</p>
               )}
             </div>
           </button>
 
           <button
-            onClick={playTTS}
-            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600"
+            onClick={() => router.push("/learning/stage2/quiz")}
+            disabled={!micTestPassed}
+            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               borderRadius: "25px 35px 30px 40px",
             }}
           >
             <div className="flex flex-col items-center space-y-3">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                <Volume2 size={32} />
-              </div>
-              <span>다시 듣기</span>
+              <span>학습 시작하기</span>
             </div>
           </button>
         </div>
@@ -157,14 +170,24 @@ export const Stage2QuizPage = () => {
         <div className="mt-8 text-center">
           <div className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3">
             <div
-              className={`w-3 h-3 rounded-full ${isTyping ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}
+              className={`w-3 h-3 rounded-full ${
+                isTyping 
+                  ? "bg-purple-500 animate-pulse" 
+                  : micTestPassed 
+                  ? "bg-green-500" 
+                  : "bg-blue-500"
+              }`}
             ></div>
             <span className="font-black text-gray-700">
-              {isTyping ? "AI가 말하고 있어요..." : "당신의 차례입니다"}
+              {isTyping 
+                ? "AI가 말하고 있어요..." 
+                : micTestPassed 
+                ? "테스트 완료! 학습을 시작할 수 있습니다" 
+                : "마이크 테스트 중입니다"}
             </span>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}; 
