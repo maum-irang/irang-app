@@ -1,9 +1,9 @@
-"use client"
-import React, { useState } from 'react';
-import { CloseIcon } from '@/shared/ui/icons/CloseIcon';
+"use client";
+import React, { useState } from "react";
+import { CloseIcon } from "@/shared/ui/icons/CloseIcon";
 
-type InputStatus = 'default' | 'error' | 'disabled';
-type InputSize = 'small' | 'medium';
+type InputStatus = "default" | "error" | "disabled";
+type InputSize = "small" | "medium";
 
 interface InputProps {
   placeholder?: string;
@@ -18,17 +18,19 @@ export const Input: React.FC<InputProps> = ({
   placeholder = "글자를 입력하세요",
   value,
   onChange,
-  status = 'default',
-  size = 'medium',
-  className = '',
+  status = "default",
+  size = "medium",
+  className = "",
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [inputValue, setInputValue] = useState(value || '');
+  const [inputValue, setInputValue] = useState(value || "");
 
   const handleClear = () => {
-    setInputValue('');
+    setInputValue("");
     if (onChange) {
-      onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+      onChange({
+        target: { value: "" },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
@@ -39,30 +41,35 @@ export const Input: React.FC<InputProps> = ({
     }
   };
 
-  const isDisabled = status === 'disabled';
-  const isError = status === 'error';
+  const isDisabled = status === "disabled";
+  const isError = status === "error";
 
-  const baseClasses = 'flex w-[305px] items-center gap-[10px] shrink-0 text-[13px] font-normal leading-5 tracking-[-0.26px] outline-none transition-all';
-  
+  const baseClasses =
+    "flex w-[305px] items-center gap-[10px] shrink-0 text-[13px] font-normal leading-5 tracking-[-0.26px] outline-none transition-all";
+
   const sizeClasses = {
-    small: 'h-[30px] min-h-[30px] max-h-[30px] px-[10px] rounded-[9px]',
-    medium: 'h-[38px] px-3 rounded-[11px]',
+    small: "h-[30px] min-h-[30px] max-h-[30px] px-[10px] rounded-[9px]",
+    medium: "h-[38px] px-3 rounded-[11px]",
   };
-  
+
   let stateClasses;
   if (isDisabled) {
-    stateClasses = 'border border-stroke-primary opacity-70 bg-fill-primary text-content-secondary cursor-not-allowed';
+    stateClasses =
+      "border border-stroke-primary opacity-70 bg-fill-primary text-content-secondary cursor-not-allowed";
   } else if (isError) {
     if (isFocused) {
-      stateClasses = 'justify-between border-[1.5px] border-status-danger text-content-primary';
+      stateClasses =
+        "justify-between border-[1.5px] border-status-danger text-content-primary";
     } else {
-      stateClasses = 'border border-status-danger border-[1.5px] text-content-secondary';
+      stateClasses =
+        "border border-status-danger border-[1.5px] text-content-secondary";
     }
   } else {
     if (isFocused) {
-      stateClasses = 'justify-between border-[1.5px] border-accent-primary text-content-primary';
+      stateClasses =
+        "justify-between border-[1.5px] border-accent-primary text-content-primary";
     } else {
-      stateClasses = 'border border-stroke-primary text-content-secondary';
+      stateClasses = "border border-stroke-primary text-content-secondary";
     }
   }
 
@@ -79,7 +86,7 @@ export const Input: React.FC<InputProps> = ({
         onFocus={() => !isDisabled && setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         disabled={isDisabled}
-        style={{ fontFamily: 'Pretendard' }}
+        style={{ fontFamily: "Pretendard" }}
       />
       {isFocused && inputValue && !isDisabled && (
         <button

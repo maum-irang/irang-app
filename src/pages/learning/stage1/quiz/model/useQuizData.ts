@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { QuizState, QuizResult } from './quizTypes';
-import { mockQuestions } from './mockQuestions';
+import { useState, useEffect } from "react";
+import { QuizState, QuizResult } from "./quizTypes";
+import { mockQuestions } from "./mockQuestions";
 
 export const useQuizData = () => {
   const [quizState, setQuizState] = useState<QuizState>({
@@ -9,7 +9,7 @@ export const useQuizData = () => {
     results: [],
     isCompleted: false,
     score: 0,
-    startTime: new Date()
+    startTime: new Date(),
   });
 
   const [questionStartTime, setQuestionStartTime] = useState<Date>(new Date());
@@ -17,8 +17,10 @@ export const useQuizData = () => {
   const [showResult, setShowResult] = useState(false);
 
   const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
-  const isLastQuestion = quizState.currentQuestionIndex === quizState.questions.length - 1;
-  const progress = ((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100;
+  const isLastQuestion =
+    quizState.currentQuestionIndex === quizState.questions.length - 1;
+  const progress =
+    ((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100;
 
   useEffect(() => {
     setQuestionStartTime(new Date());
@@ -27,11 +29,11 @@ export const useQuizData = () => {
   }, [quizState.currentQuestionIndex]);
 
   const selectAnswer = (answerIndex: number) => {
-    if (selectedAnswer !== null) return; 
+    if (selectedAnswer !== null) return;
 
-    const responseTime = (Date.now() - questionStartTime.getTime()) / 1000; 
+    const responseTime = (Date.now() - questionStartTime.getTime()) / 1000;
     const isCorrect = answerIndex === currentQuestion.correctAnswer;
-    
+
     setSelectedAnswer(answerIndex);
     setShowResult(true);
 
@@ -39,7 +41,7 @@ export const useQuizData = () => {
       questionId: currentQuestion.id,
       selectedAnswer: answerIndex,
       isCorrect,
-      timeSpent: responseTime
+      timeSpent: responseTime,
     };
 
     const newResults = [...quizState.results, result];
@@ -52,14 +54,14 @@ export const useQuizData = () => {
           results: newResults,
           score: newScore,
           isCompleted: true,
-          endTime: new Date()
+          endTime: new Date(),
         }));
       } else {
         setQuizState(prev => ({
           ...prev,
           currentQuestionIndex: prev.currentQuestionIndex + 1,
           results: newResults,
-          score: newScore
+          score: newScore,
         }));
       }
     }, 2000);
@@ -72,7 +74,7 @@ export const useQuizData = () => {
       results: [],
       isCompleted: false,
       score: 0,
-      startTime: new Date()
+      startTime: new Date(),
     });
     setQuestionStartTime(new Date());
     setSelectedAnswer(null);
@@ -88,6 +90,6 @@ export const useQuizData = () => {
     showResult,
     selectAnswer,
     resetQuiz,
-    questionStartTime
+    questionStartTime,
   };
 };

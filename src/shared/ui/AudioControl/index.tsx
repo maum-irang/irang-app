@@ -1,18 +1,18 @@
-"use client"
-import React, { useState, useRef } from 'react';
-import { PlayIcon } from '@/shared/ui/icons/PlayIcon';
-import { VolumeIcon } from '@/shared/ui/icons/VolumeIcon';
+"use client";
+import React, { useState, useRef } from "react";
+import { PlayIcon } from "@/shared/ui/icons/PlayIcon";
+import { VolumeIcon } from "@/shared/ui/icons/VolumeIcon";
 
 interface AudioControlProps {
-  variant?: 'default' | 'core';
+  variant?: "default" | "core";
   playing?: boolean;
   className?: string;
 }
 
 export const AudioControl: React.FC<AudioControlProps> = ({
-  variant = 'default',
+  variant = "default",
   playing = false,
-  className = '',
+  className = "",
 }) => {
   const [isPlaying, setIsPlaying] = useState(playing);
   const [currentTime, setCurrentTime] = useState(0);
@@ -23,7 +23,7 @@ export const AudioControl: React.FC<AudioControlProps> = ({
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const togglePlay = () => {
@@ -59,21 +59,18 @@ export const AudioControl: React.FC<AudioControlProps> = ({
     setIsDragging(false);
   };
 
-  if (variant === 'core') {
+  if (variant === "core") {
     const coreClasses = `inline-flex py-[10px] px-[13px] items-center gap-[14px] rounded-[50px] bg-core-300 ${className}`;
-    
+
     return (
       <div className={coreClasses}>
-        <button
-          onClick={togglePlay}
-          className="text-white hover:opacity-70"
-        >
+        <button onClick={togglePlay} className="text-white hover:opacity-70">
           <PlayIcon />
         </button>
 
         <span
           className="text-white text-center text-[15px] font-normal leading-[23px] tracking-[-0.3px]"
-          style={{ fontFamily: 'Pretendard' }}
+          style={{ fontFamily: "Pretendard" }}
         >
           {formatTime(currentTime)} / {formatTime(duration)}
         </span>
@@ -118,7 +115,7 @@ export const AudioControl: React.FC<AudioControlProps> = ({
 
       <span
         className="text-content-primary text-center text-[15px] font-normal leading-[23px] tracking-[-0.3px]"
-        style={{ fontFamily: 'Pretendard' }}
+        style={{ fontFamily: "Pretendard" }}
       >
         {formatTime(currentTime)} / {formatTime(duration)}
       </span>

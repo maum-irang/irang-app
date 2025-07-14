@@ -1,24 +1,27 @@
-'use client'
-import React, { useState } from 'react';
-import Image from 'next/image';
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
 
 interface QuestionCardProps {
   imageUrl: string;
   questionNumber: number;
 }
 
-export const QuestionCard: React.FC<QuestionCardProps> = ({ imageUrl, questionNumber }) => {
+export const QuestionCard: React.FC<QuestionCardProps> = ({
+  imageUrl,
+  questionNumber,
+}) => {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div 
+    <div
       className="bg-white rounded-3xl overflow-hidden relative"
-      style={{ 
-        width: '100%',
-        maxWidth: '500px',
-        height: '300px',
-        border: '3px solid rgba(255,255,255,0.8)',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
+      style={{
+        width: "100%",
+        maxWidth: "500px",
+        height: "300px",
+        border: "3px solid rgba(255,255,255,0.8)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
       }}
     >
       {imageError ? (
@@ -36,7 +39,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ imageUrl, questionNu
             fill
             className="object-cover"
             onError={() => setImageError(true)}
-            priority={questionNumber <= 2}  
+            priority={questionNumber <= 2}
           />
         </>
       )}

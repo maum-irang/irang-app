@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface StampData {
   id: number;
@@ -22,39 +22,39 @@ export const useStampData = () => {
     stamps: [],
     completedCount: 0,
     totalCount: 0,
-    todayStampId: null
+    todayStampId: null,
   });
 
   const initializeStamps = (): StampData[] => {
     const stampPositions = [
-      { top: '15%', left: '20%' },
-      { top: '15%', left: '50%' },
-      { top: '15%', left: '80%' },
-      { top: '40%', left: '20%' },
-      { top: '40%', left: '50%' },
-      { top: '40%', left: '80%' },
-      { top: '65%', left: '20%' },
-      { top: '65%', left: '50%' },
-      { top: '65%', left: '80%' },
+      { top: "15%", left: "20%" },
+      { top: "15%", left: "50%" },
+      { top: "15%", left: "80%" },
+      { top: "40%", left: "20%" },
+      { top: "40%", left: "50%" },
+      { top: "40%", left: "80%" },
+      { top: "65%", left: "20%" },
+      { top: "65%", left: "50%" },
+      { top: "65%", left: "80%" },
     ];
 
     return stampPositions.map((position, index) => ({
       id: index + 1,
-      completed: index < 5, 
+      completed: index < 5,
       position,
-      isToday: index === 5, 
+      isToday: index === 5,
     }));
   };
 
   const completeStamp = (stampId: number) => {
     setStampState(prev => ({
       ...prev,
-      stamps: prev.stamps.map(stamp => 
-        stamp.id === stampId 
+      stamps: prev.stamps.map(stamp =>
+        stamp.id === stampId
           ? { ...stamp, completed: true, isToday: false }
           : stamp
       ),
-      completedCount: prev.completedCount + 1
+      completedCount: prev.completedCount + 1,
     }));
   };
 
@@ -63,9 +63,9 @@ export const useStampData = () => {
       ...prev,
       stamps: prev.stamps.map(stamp => ({
         ...stamp,
-        isToday: stamp.id === stampId
+        isToday: stamp.id === stampId,
       })),
-      todayStampId: stampId
+      todayStampId: stampId,
     }));
   };
 
@@ -75,7 +75,7 @@ export const useStampData = () => {
       stamps: newStamps,
       completedCount: newStamps.filter(s => s.completed).length,
       totalCount: newStamps.length,
-      todayStampId: newStamps.find(s => s.isToday)?.id || null
+      todayStampId: newStamps.find(s => s.isToday)?.id || null,
     });
   };
 
@@ -95,12 +95,12 @@ export const useStampData = () => {
     const stamps = initializeStamps();
     const completedCount = stamps.filter(s => s.completed).length;
     const todayStamp = stamps.find(s => s.isToday);
-    
+
     setStampState({
       stamps,
       completedCount,
       totalCount: stamps.length,
-      todayStampId: todayStamp?.id || null
+      todayStampId: todayStamp?.id || null,
     });
   }, []);
 
@@ -110,6 +110,6 @@ export const useStampData = () => {
     updateTodayStamp,
     resetStamps,
     canCompleteStamp,
-    activateNextStamp
+    activateNextStamp,
   };
 };

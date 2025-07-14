@@ -1,15 +1,26 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { ChevronLeft, Clock, Target, BookOpen } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft, Clock, Target, BookOpen } from "lucide-react";
 
 export const Stage1IntroPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [displayText, setDisplayText] = useState('');
-  const fullText = '안녕 마음아!\n 1단계에서는 사람들의 다양한 표정을 보고 어떤 감정인지 맞춰보는 퀴즈를 할거야. 여러 감정들이 얼굴에 어떻게 나타나는지 함께 배워보자! 표정을 통해서 다른 사람의 마음을 이해하는 능력을 기를 수 있을거야. 준비됐니?';
+  const [displayText, setDisplayText] = useState("");
+  const fullText =
+    "안녕 마음아!\n 1단계에서는 사람들의 다양한 표정을 보고 어떤 감정인지 맞춰보는 퀴즈를 할거야. 여러 감정들이 얼굴에 어떻게 나타나는지 함께 배워보자! 표정을 통해서 다른 사람의 마음을 이해하는 능력을 기를 수 있을거야. 준비됐니?";
 
-  const highlightWords = ['표정', '감정', '퀴즈', '1단계', '기쁨', '슬픔', '화남', '놀람', '무서움'];
+  const highlightWords = [
+    "표정",
+    "감정",
+    "퀴즈",
+    "1단계",
+    "기쁨",
+    "슬픔",
+    "화남",
+    "놀람",
+    "무서움",
+  ];
 
   useEffect(() => {
     let index = 0;
@@ -28,10 +39,13 @@ export const Stage1IntroPage = () => {
   const renderHighlightedText = (text: string) => {
     let result = text;
     highlightWords.forEach(word => {
-      const regex = new RegExp(`(${word})`, 'g');
-      result = result.replace(regex, `<span class="text-accent-primary font-black">$1</span>`);
+      const regex = new RegExp(`(${word})`, "g");
+      result = result.replace(
+        regex,
+        `<span class="text-accent-primary font-black">$1</span>`
+      );
     });
-    result = result.replace(/\n/g, '<br>');
+    result = result.replace(/\n/g, "<br>");
     return result;
   };
 
@@ -42,22 +56,22 @@ export const Stage1IntroPage = () => {
   const handleStartLearning = () => {
     setIsLoading(true);
     setTimeout(() => {
-      router.push('/learning/stage1/quiz');
+      router.push("/learning/stage1/quiz");
       setIsLoading(false);
     }, 1500);
   };
 
   return (
-    <div 
-      className="min-h-screen bg-green-100 p-6 flex items-center" 
-      style={{ 
-        fontFamily: 'SBAggroOTF, Gowun Dodum, Noto Sans KR, sans-serif', 
-        fontWeight: '300',
-        backgroundImage: 'url(/images/background.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+    <div
+      className="min-h-screen bg-green-100 p-6 flex items-center"
+      style={{
+        fontFamily: "SBAggroOTF, Gowun Dodum, Noto Sans KR, sans-serif",
+        fontWeight: "300",
+        backgroundImage: "url(/images/background.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
       }}
     >
       <div className="max-w-6xl mx-auto w-full">
@@ -66,7 +80,11 @@ export const Stage1IntroPage = () => {
             onClick={handleBack}
             className="mr-4 p-3 bg-white/90 backdrop-blur-sm rounded-2xl transition-all duration-300"
           >
-            <ChevronLeft size={28} className="text-gray-700" strokeWidth={2.5} />
+            <ChevronLeft
+              size={28}
+              className="text-gray-700"
+              strokeWidth={2.5}
+            />
           </button>
           <h1 className="text-3xl font-black text-black">
             1단계 <span className="text-accent-primary">감정 인식</span> 학습
@@ -75,17 +93,20 @@ export const Stage1IntroPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 relative">
-            <div 
+            <div
               className="bg-white/95 backdrop-blur-sm p-8 flex items-center justify-center transition-all duration-200"
               style={{
-                borderRadius: '80px 120px 90px 110px',
-                minHeight: displayText.length > 0 ? `${Math.max(380, displayText.length * 2.5)}px` : '380px'
+                borderRadius: "80px 120px 90px 110px",
+                minHeight:
+                  displayText.length > 0
+                    ? `${Math.max(380, displayText.length * 2.5)}px`
+                    : "380px",
               }}
             >
-              <h2 
+              <h2
                 className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200"
-                dangerouslySetInnerHTML={{ 
-                  __html: renderHighlightedText(displayText) 
+                dangerouslySetInnerHTML={{
+                  __html: renderHighlightedText(displayText),
                 }}
               />
             </div>
@@ -95,12 +116,15 @@ export const Stage1IntroPage = () => {
             <div
               className="rounded-3xl p-6"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(255,255,255,1) 70%, rgba(255,255,255,0.3) 100%)',
-                minHeight: '380px'
+                background:
+                  "radial-gradient(ellipse at center, rgba(255,255,255,1) 70%, rgba(255,255,255,0.3) 100%)",
+                minHeight: "380px",
               }}
             >
-              <h3 className="text-lg font-black text-gray-800 mb-6 text-center">학습 정보</h3>
-              
+              <h3 className="text-lg font-black text-gray-800 mb-6 text-center">
+                학습 정보
+              </h3>
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -135,12 +159,12 @@ export const Stage1IntroPage = () => {
                 onClick={handleStartLearning}
                 disabled={isLoading}
                 className={`w-full mt-10 py-4 px-6 bg-accent-primary text-white rounded-2xl font-black text-base transition-all duration-300 ${
-                  isLoading 
-                    ? 'opacity-50 cursor-not-allowed' 
-                    : 'active:scale-95'
+                  isLoading
+                    ? "opacity-50 cursor-not-allowed"
+                    : "active:scale-95"
                 }`}
               >
-                {isLoading ? '시작 준비 중...' : '1단계 시작하기'}
+                {isLoading ? "시작 준비 중..." : "1단계 시작하기"}
               </button>
             </div>
           </div>
