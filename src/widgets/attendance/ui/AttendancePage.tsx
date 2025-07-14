@@ -94,7 +94,7 @@ export const AttendancePage = () => {
            안녕 <span className="text-accent-primary">마음아</span>?<br /> 오늘도 재미있게 학습해보자
          </h1>
          <div className="relative">
-           <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg border-2 border-gray-200 relative">
+           <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-4 border-2 border-gray-200 relative">
              <h2 className="text-2xl font-black text-accent-primary text-center">
                마음이
              </h2>
