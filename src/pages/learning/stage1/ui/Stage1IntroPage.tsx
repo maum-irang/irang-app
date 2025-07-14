@@ -140,7 +140,7 @@ export const Stage1IntroPage = () => {
                     : 'active:scale-95'
                 }`}
               >
-                {isLoading ? '시작 준비 중...' : '표정 감정 퀴즈 시작하기'}
+                {isLoading ? '시작 준비 중...' : '1단계 시작하기'}
               </button>
             </div>
           </div>
