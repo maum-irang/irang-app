@@ -8,7 +8,7 @@ export const Stage2IntroPage = () => {
   const [displayText, setDisplayText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const fullText =
-    "안녕 마음아! 이번에는 2단계 감정 표현 학습이야.\n목소리로 감정을 표현하고 인식하는 연습을 해보자. 준비됐니?";
+    "안녕 마음아!\n 이번에는 2단계 감정 표현 학습이야.\n목소리로 감정을 표현하고 인식하는 연습을 해보자. 준비됐니?";
 
   const highlightWords = ["2단계", "감정 표현", "목소리", "연습"];
 

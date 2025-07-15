@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Camera, CameraOff, Volume2 } from "lucide-react";
+import { ChevronLeft, Camera, CameraOff } from "lucide-react";
 
 export const Stage3CamTestPage = () => {
   const router = useRouter();
@@ -9,36 +9,6 @@ export const Stage3CamTestPage = () => {
   const [error, setError] = useState("");
   const [camOn, setCamOn] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
-
-  const fullText =
-    "카메라가 잘 나오는지 확인해 주세요!\n화면에 얼굴이 잘 보이면 '다음 단계'를 눌러주세요.";
-  const [displayText, setDisplayText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    let index = 0;
-    setIsTyping(true);
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setDisplayText(fullText.slice(0, index));
-        index++;
-      } else {
-        setIsTyping(false);
-        clearInterval(timer);
-      }
-    }, 40);
-    return () => clearInterval(timer);
-  }, []);
-
-  const playTTS = () => {
-    if (window.speechSynthesis) {
-      const utter = new window.SpeechSynthesisUtterance(
-        fullText.replace(/\n/g, " ")
-      );
-      utter.lang = "ko-KR";
-      window.speechSynthesis.speak(utter);
-    }
-  };
 
   const handleBack = () => {
     router.push("/learning/stage3");

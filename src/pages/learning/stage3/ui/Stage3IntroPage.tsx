@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Camera, Smile, AlertTriangle } from "lucide-react";
+import { ChevronLeft, Camera, Smile } from "lucide-react";
 
 export const Stage3IntroPage = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const fullText =
-    "안녕 마음아! 이번에는 3단계 감정 표현 학습이야.\n카메라로 표정을 따라 해보는 연습을 해보자. 준비됐니?";
+    "안녕 마음아!\n 이번에는 3단계 감정 표현 학습이야.\n카메라로 표정을 따라 해보는 연습을 해보자. 준비됐니?";
 
   const highlightWords = ["3단계", "감정 표현", "카메라", "연습"];
 
