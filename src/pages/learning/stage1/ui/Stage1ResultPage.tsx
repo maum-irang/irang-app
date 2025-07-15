@@ -147,7 +147,6 @@ export const Stage1ResultPage = () => {
                 )}
               </div>
 
-              {/* flex-1을 사용해서 남은 공간을 차지하고 하단에 버튼들을 배치 */}
               <div className="flex-1 flex flex-col justify-end space-y-3">
                 <button
                   onClick={handleRestart}

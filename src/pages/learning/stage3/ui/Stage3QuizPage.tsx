@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Volume2, ChevronLeft } from "lucide-react";
+import { Volume2, ChevronLeft, ChevronRight, Check } from "lucide-react";
 
 const expressions = ["웃어보세요!", "찡그려보세요!", "놀란 표정 지어보세요!"];
 
@@ -82,25 +82,20 @@ export const Stage3QuizPage = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col items-center space-y-8">
-          {/* TTS 텍스트 표시 영역 */}
+        <div className="flex flex-col items-center space-y-6">
           <div
-            className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 w-full max-w-2xl"
+            className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 w-full max-w-2xl"
             style={{
               borderRadius: "40px 60px 50px 55px",
             }}
           >
             <div className="text-center">
-              <h2 className="text-2xl font-black text-gray-800 mb-4">
-                지시사항
-              </h2>
               <p className="text-2xl font-black text-blue-500 leading-relaxed">
                 {expressions[step]}
               </p>
             </div>
           </div>
 
-          {/* 카메라 영역 */}
           <div className="relative w-full max-w-2xl h-[400px] bg-gray-100 rounded-3xl flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-200">
             {error ? (
               <span className="text-red-500 font-bold text-center">
@@ -116,24 +111,41 @@ export const Stage3QuizPage = () => {
             )}
           </div>
 
-          {/* 버튼 영역 */}
-          <div className="flex space-x-4 w-full max-w-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
             <button
               onClick={handleTTS}
-              className="flex-1 py-4 bg-purple-500 text-white rounded-2xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600 shadow-md flex items-center justify-center space-x-2"
+              className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600"
+              style={{
+                borderRadius: "25px 35px 30px 40px",
+              }}
             >
-              <Volume2 size={24} />
-              <span>다시 듣기</span>
+              <div className="flex flex-col items-center space-y-3">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                  <Volume2 size={32} />
+                </div>
+                <span>다시 듣기</span>
+              </div>
             </button>
             <button
               onClick={handleNext}
-              className="flex-1 py-4 bg-blue-500 text-white rounded-2xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-blue-600 shadow-md"
+              className="p-8 bg-blue-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-blue-600"
+              style={{
+                borderRadius: "30px 40px 35px 25px",
+              }}
             >
-              {step < expressions.length - 1 ? "다음" : "완료"}
+              <div className="flex flex-col items-center space-y-3">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+                  {step < expressions.length - 1 ? (
+                    <ChevronRight size={32} />
+                  ) : (
+                    <Check size={32} />
+                  )}
+                </div>
+                <span>{step < expressions.length - 1 ? "다음" : "완료"}</span>
+              </div>
             </button>
           </div>
 
-          {/* 진행 상황 */}
           <div className="text-center">
             <p className="text-gray-600 font-bold text-lg">
               {step + 1} / {expressions.length}
