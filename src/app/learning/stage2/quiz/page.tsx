@@ -1,5 +1,5 @@
-import { Stage2QuizPage } from "../../../../pages/learning/stage2/ui/Stage2QuizPage";
+import { Stage2QuizPage } from "@/pages/learning/stage2/ui/Stage2QuizPage";
 
-export default function Stage2Quiz() {
+export default function Page() {
   return <Stage2QuizPage />;
 }

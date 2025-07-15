@@ -1,5 +1,5 @@
-import { MicTestPage } from "../../../../pages/learning/stage2/ui/MicTestPage";
+import { MicTestPage } from "@/pages/learning/stage2/ui/MicTestPage";
 
-export default function MicTest() {
+export default function Page() {
   return <MicTestPage />;
 }
