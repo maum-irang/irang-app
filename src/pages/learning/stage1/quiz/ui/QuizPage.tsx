@@ -15,7 +15,6 @@ export const QuizPage = () => {
     selectedAnswer,
     showResult,
     selectAnswer,
-    questionStartTime,
   } = useQuizData();
 
   useEffect(() => {
@@ -23,10 +22,6 @@ export const QuizPage = () => {
       router.push("/learning/stage1/result");
     }
   }, [quizState.isCompleted, router]);
-
-  const handleBack = () => {
-    router.back();
-  };
 
   const handleAnswerSelect = (answerIndex: number) => {
     selectAnswer(answerIndex);
