@@ -12,7 +12,7 @@ export const AttendancePage = () => {
   const router = useRouter();
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
-  const [showNotesAnimation, setShowNotesAnimation] = useState(false);
+  const [showNotesAnimation] = useState(false);
   const [showStampAnimation, setShowStampAnimation] = useState(false);
 
   const {
