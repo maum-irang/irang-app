@@ -146,17 +146,17 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
         return (
-          <div style={{ width: 70, height: 70, position: 'relative' }}>
+          <div style={{ width: 70, height: 70, position: "relative" }}>
             {turtleAnimation && turtleAnimation !== "css-fallback" ? (
               <>
                 <div
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     opacity: showFirstAnimation ? 1 : 0,
                     width: 70,
-                    height: 70
+                    height: 70,
                   }}
                 >
                   <Lottie
@@ -169,12 +169,12 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                 </div>
                 <div
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     opacity: showFirstAnimation ? 0 : 1,
                     width: 70,
-                    height: 70
+                    height: 70,
                   }}
                 >
                   <Lottie
