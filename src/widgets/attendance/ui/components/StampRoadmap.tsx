@@ -125,9 +125,12 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
   const currentStamp = getCurrentStamp();
 
+  // 갈색 둥지 컴포넌트
   const renderNest = () => (
     <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative">
+      {/* 둥지 안쪽 */}
       <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
+      {/* 둥지 가장자리 효과 */}
       <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
       <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
       <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
@@ -138,11 +141,15 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   const renderStamp = (stamp: StampData) => {
     const renderStampIcon = () => {
       if (stamp.completed) {
+        // 둥지에 알이 채워진 상태 - 둥지는 항상 갈색
         return (
           <div className="relative">
+            {/* 갈색 둥지 */}
             {renderNest()}
+            {/* 둥지 안의 알 - 출석 완료 시에만 표시 */}
             <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 -translate-y-1">
               <div className="w-5 h-6 bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500 shadow-md flex items-center justify-center">
+                {/* 귀여운 점무늬 */}
                 <div className="absolute top-1 left-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
                 <div className="absolute top-2 right-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
                 <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-600 rounded-full"></div>
@@ -151,6 +158,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
           </div>
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
+        // 현재 위치에는 거북이 애니메이션
         return (
           <div style={{ width: 70, height: 70, position: "relative" }}>
             {turtleAnimation && turtleAnimation !== "css-fallback" ? (
@@ -204,6 +212,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
           </div>
         );
       } else {
+        // 빈 둥지 - 같은 갈색이지만 투명도만 적용
         return <div className="relative opacity-60">{renderNest()}</div>;
       }
     };
