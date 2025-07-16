@@ -14,6 +14,8 @@ export const AttendancePage = () => {
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
   const [showNotesAnimation] = useState(false);
   const [showStampAnimation, setShowStampAnimation] = useState(false);
+  const [showClickAnimation, setShowClickAnimation] = useState(false);
+  const [clickAnimation, setClickAnimation] = useState(null);
 
   const {
     stamps,
@@ -35,6 +37,21 @@ export const AttendancePage = () => {
         font-style: normal;
         font-display: swap;
       }
+      
+      .click-animation {
+        animation: clickPulse 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes clickPulse {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
     `;
     document.head.appendChild(style);
 
@@ -54,9 +71,29 @@ export const AttendancePage = () => {
       setShowStudyAnimation(true);
       window.history.replaceState({}, "", window.location.pathname);
     }
+
+    const loadClickAnimation = async () => {
+      try {
+        const animationData = await import("../../../../public/animations/click.json");
+        setClickAnimation(animationData.default);
+      } catch (error) {
+        console.warn("클릭 애니메이션 로드 실패, CSS 애니메이션 사용:", error);
+        setClickAnimation("css-fallback");
+      }
+    };
+
+    const clickAnimationTimer = setTimeout(async () => {
+      await loadClickAnimation();
+      setShowClickAnimation(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(clickAnimationTimer);
+    };
   }, []);
 
   const handleStage1Click = () => {
+    setShowClickAnimation(false);
     router.push("/learning/stage1");
   };
 
@@ -144,6 +181,31 @@ export const AttendancePage = () => {
                       학습하기
                     </p>
                   </button>
+                  {showClickAnimation && (
+                    <div
+                      className="absolute inset-0 rounded-3xl flex items-center justify-end  pt-15 pl-17 z-10 pointer-events-none"
+                      style={{
+                        backgroundColor: "rgba(255,255,255,0.20)",
+                      }}
+                    >
+                      {clickAnimation && clickAnimation !== "css-fallback" ? (
+                        <Lottie
+                          animationData={clickAnimation}
+                          loop={true}
+                          autoPlay
+                          style={{ width: 100, height: 100 }}
+                        />
+                      ) : (
+                        <div className="click-animation">
+                          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {showAttendanceAnimation && (
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"

@@ -182,4 +182,4 @@ export const Stage3ResultPage = () => {
       </div>
     </div>
   );
-}; 
+};
