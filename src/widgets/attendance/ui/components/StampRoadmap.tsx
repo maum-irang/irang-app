@@ -54,7 +54,9 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
     const loadTurtleAnimation = async () => {
       try {
-        const animationData = await import("../../../../../public/animations/turtle.json");
+        const animationData = await import(
+          "../../../../../public/animations/turtle.json"
+        );
         setTurtleAnimation(animationData.default);
       } catch (error) {
         console.warn("거북이 애니메이션 로드 실패:", error);
@@ -73,7 +75,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimationKey(prev => prev + 1);
-    }, 6000);  
+    }, 6000);
 
     return () => clearInterval(interval);
   }, []);

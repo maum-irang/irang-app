@@ -360,4 +360,4 @@ export const AttendancePage = () => {
       </div>
     </div>
   );
-}; 
+};
