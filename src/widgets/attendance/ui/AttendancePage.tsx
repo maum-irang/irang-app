@@ -19,6 +19,8 @@ export const AttendancePage = () => {
   const [clickAnimation, setClickAnimation] = useState<object | string | null>(
     null
   );
+  const [, setLastClickTime] = useState(Date.now());
+  const [clickTimeout, setClickTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const {
     stamps,
@@ -87,26 +89,91 @@ export const AttendancePage = () => {
       }
     };
 
-    const clickAnimationTimer = setTimeout(async () => {
-      await loadClickAnimation();
-      setShowClickAnimation(true);
-    }, 2000);
+    loadClickAnimation();
+
+    const startClickAnimationTimer = () => {
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+      }
+
+      const timeout = setTimeout(async () => {
+        await loadClickAnimation();
+        setShowClickAnimation(true);
+      }, 5000);
+
+      setClickTimeout(timeout);
+    };
+
+    startClickAnimationTimer();
 
     return () => {
-      clearTimeout(clickAnimationTimer);
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+      }
     };
   }, []);
 
+  const loadClickAnimation = async () => {
+    try {
+      const animationData = await import(
+        "../../../../public/animations/click.json"
+      );
+      setClickAnimation(animationData.default);
+    } catch (error) {
+      console.warn("클릭 애니메이션 로드 실패, CSS 애니메이션 사용:", error);
+      setClickAnimation("css-fallback");
+    }
+  };
+
   const handleStage1Click = () => {
     setShowClickAnimation(false);
+    setLastClickTime(Date.now());
+
+    if (clickTimeout) {
+      clearTimeout(clickTimeout);
+    }
+
+    const timeout = setTimeout(async () => {
+      await loadClickAnimation();
+      setShowClickAnimation(true);
+    }, 5000);
+
+    setClickTimeout(timeout);
     router.push("/learning/stage1");
   };
 
   const handleStudyClick = () => {
+    setShowClickAnimation(false);
+    setLastClickTime(Date.now());
+
+    if (clickTimeout) {
+      clearTimeout(clickTimeout);
+    }
+
+    const timeout = setTimeout(async () => {
+      await loadClickAnimation();
+      setShowClickAnimation(true);
+    }, 5000);
+
+    setClickTimeout(timeout);
     router.push("/learning/stage2");
   };
 
   const handleAttendanceClick = () => {
+    setShowClickAnimation(false);
+    setLastClickTime(Date.now());
+
+    if (clickTimeout) {
+      clearTimeout(clickTimeout);
+    }
+
+    const timeout = setTimeout(async () => {
+      await loadClickAnimation();
+      setShowClickAnimation(true);
+    }, 5000);
+
+    setClickTimeout(timeout);
+
     setShowStampAnimation(true);
     setTimeout(() => {
       if (todayStampId && canCompleteStamp(todayStampId)) {
@@ -117,6 +184,19 @@ export const AttendancePage = () => {
   };
 
   const handleStage3Click = () => {
+    setShowClickAnimation(false);
+    setLastClickTime(Date.now());
+
+    if (clickTimeout) {
+      clearTimeout(clickTimeout);
+    }
+
+    const timeout = setTimeout(async () => {
+      await loadClickAnimation();
+      setShowClickAnimation(true);
+    }, 5000);
+
+    setClickTimeout(timeout);
     router.push("/learning/stage3");
   };
 
@@ -187,12 +267,7 @@ export const AttendancePage = () => {
                     </p>
                   </button>
                   {showClickAnimation && (
-                    <div
-                      className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none"
-                      style={{
-                        backgroundColor: "rgba(255,255,255,0.20)",
-                      }}
-                    >
+                    <div className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none">
                       {clickAnimation && clickAnimation !== "css-fallback" ? (
                         <Lottie
                           animationData={clickAnimation}

@@ -25,7 +25,9 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgSize, setSvgSize] = useState({ width: 0, height: 0 });
-  const [turtleAnimation, setTurtleAnimation] = useState<unknown>(null);
+  const [turtleAnimation, setTurtleAnimation] = useState<
+    object | string | null
+  >(null);
   const [showFirstAnimation, setShowFirstAnimation] = useState(true);
   const [animationKey1, setAnimationKey1] = useState(0);
   const [animationKey2, setAnimationKey2] = useState(0);
@@ -123,18 +125,22 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
   const currentStamp = getCurrentStamp();
 
+  const renderNest = () => (
+    <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative">
+      <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
+      <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+      <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+      <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+      <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+    </div>
+  );
+
   const renderStamp = (stamp: StampData) => {
     const renderStampIcon = () => {
       if (stamp.completed) {
         return (
           <div className="relative">
-            <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative">
-              <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
-              <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full"></div>
-            </div>
+            {renderNest()}
             <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 -translate-y-1">
               <div className="w-5 h-6 bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500 shadow-md flex items-center justify-center">
                 <div className="absolute top-1 left-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
@@ -198,18 +204,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
           </div>
         );
       } else {
-        return (
-          <div className="relative">
-            <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative opacity-60">
-              <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
-              <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full"></div>
-              <div className="absolute inset-x-2 top-2 bottom-2 bg-gradient-to-b from-amber-300 to-amber-500 rounded-full opacity-50"></div>
-            </div>
-          </div>
-        );
+        return <div className="relative opacity-60">{renderNest()}</div>;
       }
     };
 
