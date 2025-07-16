@@ -13,9 +13,12 @@ export const AttendancePage = () => {
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
   const [showNotesAnimation] = useState(false);
+
   const [showStampAnimation, setShowStampAnimation] = useState(false);
   const [showClickAnimation, setShowClickAnimation] = useState(false);
-  const [clickAnimation, setClickAnimation] = useState(null);
+  const [clickAnimation, setClickAnimation] = useState<object | string | null>(
+    null
+  );
 
   const {
     stamps,
@@ -74,7 +77,9 @@ export const AttendancePage = () => {
 
     const loadClickAnimation = async () => {
       try {
-        const animationData = await import("../../../../public/animations/click.json");
+        const animationData = await import(
+          "../../../../public/animations/click.json"
+        );
         setClickAnimation(animationData.default);
       } catch (error) {
         console.warn("클릭 애니메이션 로드 실패, CSS 애니메이션 사용:", error);
@@ -183,7 +188,7 @@ export const AttendancePage = () => {
                   </button>
                   {showClickAnimation && (
                     <div
-                      className="absolute inset-0 rounded-3xl flex items-center justify-end  pt-15 pl-17 z-10 pointer-events-none"
+                      className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none"
                       style={{
                         backgroundColor: "rgba(255,255,255,0.20)",
                       }}
@@ -355,4 +360,4 @@ export const AttendancePage = () => {
       </div>
     </div>
   );
-};
+}; 

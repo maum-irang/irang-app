@@ -1,4 +1,4 @@
-import { AttendancePage } from "@/widgets/attendance";
+import { AttendancePage } from "../widgets/attendance";
 
 export default function Home() {
   return <AttendancePage />;
