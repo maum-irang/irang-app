@@ -26,7 +26,9 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgSize, setSvgSize] = useState({ width: 0, height: 0 });
   const [turtleAnimation, setTurtleAnimation] = useState(null);
-  const [animationKey, setAnimationKey] = useState(0);
+  const [showFirstAnimation, setShowFirstAnimation] = useState(true);
+  const [animationKey1, setAnimationKey1] = useState(0);
+  const [animationKey2, setAnimationKey2] = useState(0);
 
   useEffect(() => {
     const updateSvgSize = () => {
@@ -74,11 +76,17 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setAnimationKey(prev => prev + 1);
+      if (showFirstAnimation) {
+        setAnimationKey2(prev => prev + 1);
+        setShowFirstAnimation(false);
+      } else {
+        setAnimationKey1(prev => prev + 1);
+        setShowFirstAnimation(true);
+      }
     }, 6000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [showFirstAnimation]);
 
   const connectionCurves = [
     { from: { x: "20%", y: "15%" }, to: { x: "50%", y: "15%" } },
@@ -120,24 +128,64 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
       if (stamp.completed) {
         return (
           <div className="relative">
-            <div className="w-6 h-7 bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500 shadow-md flex items-center justify-center">
-              <div className="absolute top-1 left-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
-              <div className="absolute top-2 right-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
-              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-600 rounded-full"></div>
+            <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative">
+              <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
+              <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+            </div>
+            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 -translate-y-1">
+              <div className="w-5 h-6 bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500 shadow-md flex items-center justify-center">
+                <div className="absolute top-1 left-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
+                <div className="absolute top-2 right-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-600 rounded-full"></div>
+              </div>
             </div>
           </div>
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
         return (
-          <div>
+          <div style={{ width: 70, height: 70, position: 'relative' }}>
             {turtleAnimation && turtleAnimation !== "css-fallback" ? (
-              <Lottie
-                key={animationKey}
-                animationData={turtleAnimation}
-                loop={false}
-                autoPlay
-                style={{ width: 70, height: 70 }}
-              />
+              <>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    opacity: showFirstAnimation ? 1 : 0,
+                    width: 70,
+                    height: 70
+                  }}
+                >
+                  <Lottie
+                    key={animationKey1}
+                    animationData={turtleAnimation}
+                    loop={false}
+                    autoPlay
+                    style={{ width: 70, height: 70 }}
+                  />
+                </div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    opacity: showFirstAnimation ? 0 : 1,
+                    width: 70,
+                    height: 70
+                  }}
+                >
+                  <Lottie
+                    key={animationKey2}
+                    animationData={turtleAnimation}
+                    loop={false}
+                    autoPlay
+                    style={{ width: 70, height: 70 }}
+                  />
+                </div>
+              </>
             ) : (
               <div className="w-14 h-14 flex items-center justify-center">
                 <div className="w-8 h-8 bg-green-500 rounded-full shadow-lg flex items-center justify-center">
@@ -151,7 +199,16 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         );
       } else {
         return (
-          <div className="w-5 h-5 bg-gray-300 rounded-full border-2 border-gray-500 shadow-md opacity-60"></div>
+          <div className="relative">
+            <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative opacity-60">
+              <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
+              <div className="absolute -top-1 left-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute -top-1 right-1 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute top-0 left-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full"></div>
+              <div className="absolute inset-x-2 top-2 bottom-2 bg-gradient-to-b from-amber-300 to-amber-500 rounded-full opacity-50"></div>
+            </div>
+          </div>
         );
       }
     };
