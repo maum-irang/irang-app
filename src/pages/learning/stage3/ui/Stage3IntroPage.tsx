@@ -21,7 +21,7 @@ export const Stage3IntroPage = () => {
       } else {
         clearInterval(timer);
       }
-    }, 80);
+    }, 60);
     return () => clearInterval(timer);
   }, []);
 
