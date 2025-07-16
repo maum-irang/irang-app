@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import Lottie from "lottie-react";
 
 interface StampData {
   id: number;
@@ -24,6 +25,8 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgSize, setSvgSize] = useState({ width: 0, height: 0 });
+  const [turtleAnimation, setTurtleAnimation] = useState(null);
+  const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
     const updateSvgSize = () => {
@@ -49,10 +52,30 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
     window.addEventListener("resize", handleResize);
 
+    const loadTurtleAnimation = async () => {
+      try {
+        const animationData = await import("../../../../../public/animations/turtle.json");
+        setTurtleAnimation(animationData.default);
+      } catch (error) {
+        console.warn("거북이 애니메이션 로드 실패:", error);
+        setTurtleAnimation("css-fallback");
+      }
+    };
+
+    loadTurtleAnimation();
+
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimationKey(prev => prev + 1);
+    }, 6000);  
+
+    return () => clearInterval(interval);
   }, []);
 
   const connectionCurves = [
@@ -94,57 +117,39 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
     const renderStampIcon = () => {
       if (stamp.completed) {
         return (
-          <div className="relative flex flex-col items-center">
-            <div className="w-1 h-16 bg-gray-600 rounded-full mb-2"></div>
-            <div
-              className="absolute top-0 left-1 w-12 h-8 bg-green-500 shadow-lg flex items-center justify-center"
-              style={{
-                clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)",
-              }}
-            >
-              <svg
-                className="w-4 h-4 text-white -ml-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+          <div className="relative">
+            <div className="w-6 h-7 bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-full border-2 border-yellow-500 shadow-md flex items-center justify-center">
+              <div className="absolute top-1 left-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
+              <div className="absolute top-2 right-1 w-1 h-1 bg-yellow-600 rounded-full"></div>
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-600 rounded-full"></div>
             </div>
           </div>
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
         return (
-          <div className="relative flex flex-col items-center">
-            <div className="w-1 h-16 bg-gray-600 rounded-full mb-2"></div>
-            <div
-              className="absolute top-0 left-1 w-12 h-8 bg-red-500 shadow-lg flex items-center justify-center animate-pulse"
-              style={{
-                clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)",
-              }}
-            >
-              <div className="w-2 h-2 bg-white rounded-full -ml-1"></div>
-            </div>
+          <div>
+            {turtleAnimation && turtleAnimation !== "css-fallback" ? (
+              <Lottie
+                key={animationKey}
+                animationData={turtleAnimation}
+                loop={false}
+                autoPlay
+                style={{ width: 70, height: 70 }}
+              />
+            ) : (
+              <div className="w-14 h-14 flex items-center justify-center">
+                <div className="w-8 h-8 bg-green-500 rounded-full shadow-lg flex items-center justify-center">
+                  <div className="w-4 h-4 bg-green-700 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
       } else {
         return (
-          <div className="relative flex flex-col items-center">
-            <div className="w-1 h-16 bg-gray-400 rounded-full mb-2 opacity-60"></div>
-            <div
-              className="absolute top-0 left-1 w-12 h-8 bg-gray-300 shadow-md flex items-center justify-center opacity-60"
-              style={{
-                clipPath: "polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)",
-              }}
-            >
-              <div className="w-3 h-3 border-2 border-gray-500 rounded-full -ml-1"></div>
-            </div>
-          </div>
+          <div className="w-5 h-5 bg-gray-300 rounded-full border-2 border-gray-500 shadow-md opacity-60"></div>
         );
       }
     };
@@ -200,7 +205,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-10">
           <p className="text-white font-black text-lg">학습 도장 로드맵</p>
           <p className="text-white/90 font-bold text-base">
-            매일 깃발을 세워보세요!
+            거북이와 함께 천천히 달려요!
           </p>
           <p className="text-white/90 font-bold text-base">
             {completedCount}/{totalCount} 완료
