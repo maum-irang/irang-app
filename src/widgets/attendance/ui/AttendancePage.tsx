@@ -148,7 +148,7 @@ export const AttendancePage = () => {
       const timeout = setTimeout(async () => {
         await loadClickAnimation();
         setShowClickAnimation(true);
-      }, 5000);
+      }, 10000);
 
       setClickTimeout(timeout);
     };
@@ -185,7 +185,7 @@ export const AttendancePage = () => {
     const timeout = setTimeout(async () => {
       await loadClickAnimation();
       setShowClickAnimation(true);
-    }, 5000);
+    }, 10000);
 
     setClickTimeout(timeout);
     router.push("/learning/stage1");
@@ -202,7 +202,7 @@ export const AttendancePage = () => {
     const timeout = setTimeout(async () => {
       await loadClickAnimation();
       setShowClickAnimation(true);
-    }, 5000);
+    }, 10000);
 
     setClickTimeout(timeout);
     router.push("/learning/stage2");
@@ -219,17 +219,18 @@ export const AttendancePage = () => {
     const timeout = setTimeout(async () => {
       await loadClickAnimation();
       setShowClickAnimation(true);
-    }, 5000);
+    }, 10000);
 
     setClickTimeout(timeout);
 
     setShowStampAnimation(true);
+
     setTimeout(() => {
       if (todayStampId && canCompleteStamp(todayStampId)) {
         completeStamp(todayStampId);
         activateNextStamp();
       }
-    }, 1500);
+    }, 2000);
   };
 
   const handleStage3Click = () => {
@@ -243,7 +244,7 @@ export const AttendancePage = () => {
     const timeout = setTimeout(async () => {
       await loadClickAnimation();
       setShowClickAnimation(true);
-    }, 5000);
+    }, 10000);
 
     setClickTimeout(timeout);
     router.push("/learning/stage3");
@@ -268,7 +269,7 @@ export const AttendancePage = () => {
             오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-8 py-4 border-2 border-gray-200 relative">
+            <div className="bg-white/80 rounded-2xl px-8 py-4 border-2 border-gray-200 relative shadow-lg">
               <h2 className="text-2xl font-black text-accent-primary text-center">
                 마음이
               </h2>
@@ -289,17 +290,37 @@ export const AttendancePage = () => {
 
           <div className="h-[584px] flex flex-col">
             <div
-              className="rounded-3xl p-8 relative flex-1"
+              className="rounded-3xl p-8 relative flex-1 bg-gradient-to-br from-white/90 to-white/70"
               style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(255,255,255,1) 70%, rgba(255,255,255,0.3) 100%)",
-                boxShadow: "0 8px 32px rgba(0,0,0,0)",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              <h2 className="text-2xl font-black text-gray-800 mb-6">
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute top-4 left-4 w-16 h-16 bg-blue-200/20 rounded-full animate-pulse"></div>
+                <div
+                  className="absolute top-8 right-8 w-12 h-12 bg-green-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "1s" }}
+                ></div>
+                <div
+                  className="absolute bottom-8 left-8 w-10 h-10 bg-purple-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "2s" }}
+                ></div>
+                <div
+                  className="absolute bottom-4 right-4 w-14 h-14 bg-yellow-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "0.5s" }}
+                ></div>
+
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"
+                  style={{ animationDuration: "8s" }}
+                ></div>
+              </div>
+
+              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10">
                 매일하는 <span className="text-blue-300">단계별 학습</span>
               </h2>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="relative">
                   <button
                     onClick={handleStage1Click}
@@ -338,8 +359,7 @@ export const AttendancePage = () => {
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.20)",
-                        backdropFilter: "blur(2px)",
+                        backgroundColor: "rgba(255,255,255,0.30)",
                       }}
                     >
                       <Lottie
@@ -372,8 +392,7 @@ export const AttendancePage = () => {
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.20)",
-                        backdropFilter: "blur(2px)",
+                        backgroundColor: "rgba(255,255,255,0.30)",
                       }}
                     >
                       <Lottie
@@ -403,8 +422,7 @@ export const AttendancePage = () => {
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.20)",
-                        backdropFilter: "blur(2px)",
+                        backgroundColor: "rgba(255,255,255,0.30)",
                       }}
                     >
                       <Lottie
@@ -422,17 +440,37 @@ export const AttendancePage = () => {
             <div className="h-2"></div>
 
             <div
-              className="rounded-3xl p-8 relative flex-1"
+              className="rounded-3xl p-8 relative flex-1 bg-gradient-to-br from-white/90 to-white/70"
               style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(255,255,255,1) 70%, rgba(255,255,255,0.3) 100%)",
-                boxShadow: "0 8px 32px rgba(0,0,0,0)",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              <h2 className="text-2xl font-black text-gray-800 mb-6">
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute top-4 left-4 w-16 h-16 bg-blue-200/20 rounded-full animate-pulse"></div>
+                <div
+                  className="absolute top-8 right-8 w-12 h-12 bg-green-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "1s" }}
+                ></div>
+                <div
+                  className="absolute bottom-8 left-8 w-10 h-10 bg-purple-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "2s" }}
+                ></div>
+                <div
+                  className="absolute bottom-4 right-4 w-14 h-14 bg-yellow-200/20 rounded-full animate-pulse"
+                  style={{ animationDelay: "0.5s" }}
+                ></div>
+
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"
+                  style={{ animationDuration: "8s" }}
+                ></div>
+              </div>
+
+              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10">
                 한 단계 <span className="text-blue-300">UP!</span>
               </h2>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="relative">
                   <button
                     onClick={handleAttendanceClick}
@@ -450,8 +488,7 @@ export const AttendancePage = () => {
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
                       style={{
-                        backgroundColor: "rgba(255,255,255,0.20)",
-                        backdropFilter: "blur(2px)",
+                        backgroundColor: "rgba(255,255,255,0.30)",
                       }}
                     >
                       <Lottie

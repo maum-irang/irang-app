@@ -118,6 +118,24 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
     </div>
   );
 
+  const renderBubbles = (color: string, count: number = 3) => (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {Array.from({ length: count }).map((_, index) => (
+        <div
+          key={index}
+          className={`absolute w-2 h-2 ${color} rounded-full opacity-60 animate-bubble`}
+          style={{
+            left: `${20 + index * 25}%`,
+            bottom: "-15px",
+            animationDelay: `${index * 0.8}s`,
+            animationDuration: "4s",
+            animationIterationCount: "infinite",
+          }}
+        />
+      ))}
+    </div>
+  );
+
   const renderStamp = (stamp: StampData) => {
     const renderStampIcon = () => {
       if (stamp.completed) {
@@ -131,6 +149,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                 <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-600 rounded-full"></div>
               </div>
             </div>
+            {renderBubbles("bg-yellow-300", 4)}
           </div>
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
@@ -144,6 +163,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                   autoPlay
                   style={{ width: 70, height: 70 }}
                 />
+                {renderBubbles("bg-green-300", 5)}
               </div>
             ) : (
               <div className="w-14 h-14 flex items-center justify-center">
@@ -152,12 +172,18 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                     <div className="w-2 h-2 bg-green-300 rounded-full"></div>
                   </div>
                 </div>
+                {renderBubbles("bg-green-300", 5)}
               </div>
             )}
           </div>
         );
       } else {
-        return <div className="relative opacity-60">{renderNest()}</div>;
+        return (
+          <div className="relative opacity-60">
+            {renderNest()}
+            {renderBubbles("bg-gray-400", 2)}
+          </div>
+        );
       }
     };
 

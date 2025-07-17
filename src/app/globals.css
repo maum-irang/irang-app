@@ -119,6 +119,95 @@
   }
 }
 
+@keyframes bubble {
+  0% {
+    transform: translateY(0) scale(0.3);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+    transform: translateY(-20px) scale(0.8);
+  }
+  80% {
+    opacity: 0.6;
+    transform: translateY(-80px) scale(1);
+  }
+  100% {
+    transform: translateY(-120px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundBubble {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0.3);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.4;
+    transform: translateY(90vh) translateX(0) scale(0.8);
+  }
+  85% {
+    opacity: 0.4;
+    transform: translateY(10vh) translateX(var(--bubble-x, 0)) scale(1);
+  }
+  100% {
+    transform: translateY(-50px) translateX(var(--bubble-x, 0)) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes celebrationBubble {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+    transform: translateY(85vh) translateX(0) scale(0.9);
+  }
+  90% {
+    opacity: 0.6;
+    transform: translateY(5vh) translateX(var(--bubble-x, 0)) scale(1.1);
+  }
+  100% {
+    transform: translateY(-100px) translateX(var(--bubble-x, 0)) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-bubble {
+  animation: bubble 3s ease-out infinite;
+}
+
+.animate-background-bubble {
+  animation: backgroundBubble 6s ease-out infinite;
+}
+
+.animate-celebration-bubble {
+  animation: celebrationBubble 2s ease-out infinite;
+}
+
+.background-bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.background-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  animation: backgroundBubble var(--bubble-duration, 8s) ease-out infinite;
+  animation-delay: var(--bubble-delay, 0s);
+}
+
 body {
   background: linear-gradient(
     -45deg,
