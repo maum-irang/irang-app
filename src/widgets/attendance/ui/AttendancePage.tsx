@@ -43,6 +43,55 @@ export const AttendancePage = () => {
         font-display: swap;
       }
       
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(1.1);
+        }
+      }
+      
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .animate-float-delayed {
+        animation: float 6s ease-in-out infinite;
+        animation-delay: 3s;
+      }
+      
+      .animate-pulse {
+        animation: pulse 4s ease-in-out infinite;
+      }
+      
+      .animate-pulse-delayed {
+        animation: pulse 5s ease-in-out infinite reverse;
+      }
+      
       .click-animation {
         animation: clickPulse 1.5s ease-in-out infinite;
       }
@@ -202,17 +251,16 @@ export const AttendancePage = () => {
 
   return (
     <div
-      className="min-h-screen bg-green-100 p-6 flex items-center"
+      className="min-h-screen p-6 flex items-center relative overflow-hidden"
       style={{
         fontFamily: "SBAggroOTF, Gowun Dodum, Noto Sans KR, sans-serif",
         fontWeight: "300",
-        backgroundImage: "url(/images/background.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        background: "linear-gradient(-45deg, #a8e6cf, #88d8c0, #b8e6b8, #c8e6c9, #dcedc8, #f0f8e8)",
+        backgroundSize: "400% 400%",
+        animation: "gradientShift 20s ease infinite",
       }}
     >
+
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-black">
