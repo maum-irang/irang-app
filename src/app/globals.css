@@ -98,7 +98,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -107,7 +108,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     transform: scale(1);
   }
@@ -118,7 +120,15 @@
 }
 
 body {
-  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+  background: linear-gradient(
+    -45deg,
+    #667eea,
+    #764ba2,
+    #f093fb,
+    #f5576c,
+    #4facfe,
+    #00f2fe
+  );
   background-size: 400% 400%;
   animation: gradientShift 20s ease infinite;
   color: var(--foreground);
@@ -131,7 +141,7 @@ body {
 /* 배경 장식 요소들 */
 body::before,
 body::after {
-  content: '';
+  content: "";
   position: fixed;
   width: 200px;
   height: 200px;
@@ -166,7 +176,7 @@ body::after {
 }
 
 .background-decoration::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 20%;
   left: 20%;
@@ -179,7 +189,7 @@ body::after {
 }
 
 .background-decoration::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 30%;
   right: 15%;

@@ -255,12 +255,12 @@ export const AttendancePage = () => {
       style={{
         fontFamily: "SBAggroOTF, Gowun Dodum, Noto Sans KR, sans-serif",
         fontWeight: "300",
-        background: "linear-gradient(-45deg, #a8e6cf, #88d8c0, #b8e6b8, #c8e6c9, #dcedc8, #f0f8e8)",
+        background:
+          "linear-gradient(-45deg, #a8e6cf, #88d8c0, #b8e6b8, #c8e6c9, #dcedc8, #f0f8e8)",
         backgroundSize: "400% 400%",
         animation: "gradientShift 20s ease infinite",
       }}
     >
-
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-black">
