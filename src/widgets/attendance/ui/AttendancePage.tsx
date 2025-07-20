@@ -33,88 +33,6 @@ export const AttendancePage = () => {
   } = useStampData();
 
   useEffect(() => {
-    const style = document.createElement("style");
-    style.textContent = `
-      @font-face {
-        font-family: 'SBAggroOTF';
-        src: url('/fonts/SBAggroOTF-B.otf') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
-      
-      @keyframes gradientShift {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-      
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-20px) rotate(180deg);
-        }
-      }
-      
-      @keyframes pulse {
-        0%, 100% {
-          opacity: 0.3;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.6;
-          transform: scale(1.1);
-        }
-      }
-      
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-      
-      .animate-float-delayed {
-        animation: float 6s ease-in-out infinite;
-        animation-delay: 3s;
-      }
-      
-      .animate-pulse {
-        animation: pulse 4s ease-in-out infinite;
-      }
-      
-      .animate-pulse-delayed {
-        animation: pulse 5s ease-in-out infinite reverse;
-      }
-      
-      .click-animation {
-        animation: clickPulse 1.5s ease-in-out infinite;
-      }
-      
-      @keyframes clickPulse {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 0.8;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 1;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    const font = new FontFace("SBAggroOTF", "url(/fonts/SBAggroOTF-B.otf)");
-    font
-      .load()
-      .then(f => document.fonts.add(f))
-      .catch(() => {});
-
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("showCompleteAnimation") === "true") {
       setShowAttendanceAnimation(true);
@@ -254,8 +172,6 @@ export const AttendancePage = () => {
     <div
       className="min-h-screen p-6 flex items-center relative overflow-hidden"
       style={{
-        fontFamily: "SBAggroOTF, Gowun Dodum, Noto Sans KR, sans-serif",
-        fontWeight: "300",
         background:
           "linear-gradient(-45deg, #a8e6cf, #88d8c0, #b8e6b8, #c8e6c9, #dcedc8, #f0f8e8)",
         backgroundSize: "400% 400%",

@@ -1,6 +1,14 @@
 /* src/app/globals.css */
 @import "tailwindcss";
 
+@font-face {
+  font-family: "SBAggroOTF";
+  src: url("/fonts/SBAggroOTF-B.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* System */
   --color-system-white: #ffffff;
@@ -176,6 +184,18 @@
   }
 }
 
+@keyframes clickPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
 .animate-bubble {
   animation: bubble 3s ease-out infinite;
 }
@@ -186,6 +206,10 @@
 
 .animate-celebration-bubble {
   animation: celebrationBubble 2s ease-out infinite;
+}
+
+.click-animation {
+  animation: clickPulse 1.5s ease-in-out infinite;
 }
 
 .background-bubbles {
@@ -221,7 +245,8 @@ body {
   background-size: 400% 400%;
   animation: gradientShift 20s ease infinite;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "SBAggroOTF", "Gowun Dodum", "Noto Sans KR", sans-serif;
+  font-weight: 300;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
