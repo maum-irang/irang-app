@@ -157,7 +157,7 @@ export const AttendancePage = () => {
     router.push("/learning/stage2");
   };
 
-  const handleAttendanceClick = () => {
+  const handleAttendanceClick = async () => {
     setShowClickAnimation(false);
     setLastClickTime(Date.now());
 
@@ -174,12 +174,64 @@ export const AttendancePage = () => {
 
     setShowStampAnimation(true);
 
-    setTimeout(() => {
-      if (todayStampId && canCompleteStamp(todayStampId)) {
-        completeStamp(todayStampId);
-        activateNextStamp();
+    try {
+      console.log("===== 출석체크 시작 =====");
+      console.log("🎯 단순 도장 찍기 - 백엔드에서 자동 데이터 생성");
+
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      console.log("📤 요청 헤더:", headers);
+
+      const response = await fetch("/api/attendance/check", {
+        method: "POST",
+        headers,
+      });
+
+      if (response.ok) {
+        const attendanceData = await response.json();
+        console.log("출석체크 성공:", attendanceData);
+        console.log("출석 ID:", attendanceData.attendanceId);
+        console.log("출석 날짜:", attendanceData.date);
+        console.log("출석 상태:", attendanceData.isPresent);
+
+        console.log("스탬프 업데이트 시작...");
+        console.log("todayStampId:", todayStampId);
+
+        setTimeout(() => {
+          try {
+            if (todayStampId && canCompleteStamp(todayStampId)) {
+              console.log("스탬프 완료 처리:", todayStampId);
+              completeStamp(todayStampId);
+              activateNextStamp();
+              console.log("스탬프 업데이트 완료!");ㅁ\\
+            } else {
+              console.log("스탬프 업데이트 조건 불만족:");
+              console.log("- todayStampId:", todayStampId);
+              console.log(
+                "- canCompleteStamp:",
+                todayStampId ? canCompleteStamp(todayStampId) : "no stampId"
+              );
+            }
+          } catch (stampError) {
+            console.error("스탬프 업데이트 중 오류:", stampError);
+          }
+        }, 2000);
+      } else {
+        console.error("출석체크 실패:", response.status);
+        try {
+          const errorData = await response.json();
+          console.error("에러 내용:", errorData);
+        } catch {
+          console.error("에러 응답 파싱 실패");
+        }
+        alert("출석체크에 실패했습니다. 다시 시도해주세요.");
       }
-    }, 2000);
+    } catch (error) {
+      console.error("출석체크 요청 중 오류:", error);
+      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    }
   };
 
   const handleStage3Click = () => {
