@@ -180,13 +180,14 @@ export const AttendancePage = () => {
     >
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-black text-black">
-            안녕 <span className="text-accent-primary">마음아</span>?<br />{" "}
+          <h1 className="text-4xl font-black text-black font-normal">
+            안녕 <span className="text-accent-primary">마음아</span>?
+            <br />
             오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
             <div className="bg-white/80 rounded-2xl px-8 py-4 border-2 border-gray-200 relative shadow-lg">
-              <h2 className="text-2xl font-black text-accent-primary text-center">
+              <h2 className="text-2xl font-black text-accent-primary text-center font-normal">
                 마음이
               </h2>
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -233,7 +234,7 @@ export const AttendancePage = () => {
                 ></div>
               </div>
 
-              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10">
+              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10 font-normal">
                 매일하는 <span className="text-blue-300">단계별 학습</span>
               </h2>
               <div className="grid grid-cols-3 gap-6 relative z-10">
@@ -245,7 +246,7 @@ export const AttendancePage = () => {
                     <div className="mb-3 text-accent-primary">
                       <Layers size={40} className="mx-auto" strokeWidth={3} />
                     </div>
-                    <p className="text-lg font-black text-gray-800">
+                    <p className="text-lg font-black text-gray-800 font-normal">
                       1단계
                       <br />
                       학습하기
@@ -298,7 +299,7 @@ export const AttendancePage = () => {
                     <div className="mb-3 text-accent-primary">
                       <Mic size={40} className="mx-auto" strokeWidth={3} />
                     </div>
-                    <p className="text-lg font-black text-gray-800">
+                    <p className="text-lg font-black text-gray-800 font-normal">
                       2단계
                       <br />
                       학습하기
@@ -328,7 +329,7 @@ export const AttendancePage = () => {
                     <div className="mb-3 text-accent-primary">
                       <Camera size={40} className="mx-auto" strokeWidth={3} />
                     </div>
-                    <p className="text-lg font-black text-gray-800">
+                    <p className="text-lg font-black text-gray-800 font-normal">
                       3단계
                       <br />
                       학습하기
@@ -383,7 +384,7 @@ export const AttendancePage = () => {
                 ></div>
               </div>
 
-              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10">
+              <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10 font-normal">
                 한 단계 <span className="text-blue-300">UP!</span>
               </h2>
               <div className="grid grid-cols-3 gap-6 relative z-10">
@@ -395,7 +396,7 @@ export const AttendancePage = () => {
                     <div className="mb-3 text-accent-primary">
                       <Stamp size={40} className="mx-auto" strokeWidth={3} />
                     </div>
-                    <p className="text-lg font-black text-gray-800">
+                    <p className="text-lg font-black text-gray-800 font-normal">
                       오늘의 <br />
                       출석하기
                     </p>
@@ -420,10 +421,12 @@ export const AttendancePage = () => {
                   <div className="mb-3 text-accent-primary">
                     <Notebook size={40} className="mx-auto" strokeWidth={3} />
                   </div>
-                  <p className="text-lg font-black text-gray-800">오답노트</p>
+                  <p className="text-lg font-black text-gray-800 font-normal">
+                    오답노트
+                  </p>
                 </div>
                 <div className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full">
-                  <p className="text-xl font-black text-accent-primary">
+                  <p className="text-xl font-black text-accent-primary font-normal">
                     COMING
                     <br />
                     SOON
