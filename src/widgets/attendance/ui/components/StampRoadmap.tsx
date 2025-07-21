@@ -236,11 +236,11 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         {stamps.map(renderStamp)}
 
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center z-10">
-          <p className="text-white font-black text-lg">학습 도장 로드맵</p>
-          <p className="text-white/90 font-bold text-base">
+          <p className="text-black font-black text-lg">학습 도장 로드맵</p>
+          <p className="text-black/90 font-bold text-base">
             거북이와 함께 천천히 달려요!
           </p>
-          <p className="text-white/90 font-bold text-base">
+          <p className="text-black/90 font-bold text-base">
             {completedCount}/{totalCount} 완료
           </p>
         </div>
