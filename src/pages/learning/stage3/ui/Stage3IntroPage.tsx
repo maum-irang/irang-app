@@ -3,16 +3,47 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Camera, Smile } from "lucide-react";
 
+interface UserInfo {
+  id: string;
+  name: string;
+  role: string;
+}
+
 export const Stage3IntroPage = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const fullText =
-    "안녕 마음아!\n 이번에는 3단계 감정 표현 학습이야.\n카메라로 표정을 따라 해보는 연습을 해보자. 준비됐니?";
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [fullText, setFullText] = useState("");
+
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      setUserInfo(JSON.parse(storedUserInfo));
+    }
+  }, []);
+
+  useEffect(() => {
+    const userName = getUserName();
+    const text = `안녕 ${userName}!\n 이번에는 3단계 감정 표현 학습이야.\n카메라로 표정을 따라 해보는 연습을 해보자. 준비됐니?`;
+    setFullText(text);
+  }, [userInfo]);
+
+  const getUserName = () => {
+    if (!userInfo?.name) return "마음아";
+    const name = userInfo.name;
+    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+      return `${name.substring(1)}아`;
+    }
+    return `${name.split(" ")[0]}아`;
+  };
 
   const highlightWords = ["3단계", "감정 표현", "카메라", "연습"];
 
   useEffect(() => {
+    if (!fullText) return;
+
+    setDisplayText("");
     let index = 0;
     const timer = setInterval(() => {
       if (index <= fullText.length) {
@@ -23,7 +54,7 @@ export const Stage3IntroPage = () => {
       }
     }, 60);
     return () => clearInterval(timer);
-  }, []);
+  }, [fullText]);
 
   const renderHighlightedText = (text: string) => {
     let result = text;
