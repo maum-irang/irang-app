@@ -56,7 +56,8 @@ export default function LoginPage() {
             </div>
 
             <h1 className="text-3xl font-normal text-gray-800 relative z-10">
-              간단하게 <span className="text-accent-primary">본인확인</span>을 할게!
+              간단하게 <span className="text-accent-primary">본인확인</span>을
+              할게!
             </h1>
             <p className="text-lg font-normal text-content-secondary mt-2 relative z-10">
               오늘도 함께 학습해보자

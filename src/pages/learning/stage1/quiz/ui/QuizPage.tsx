@@ -30,7 +30,7 @@ export const QuizPage = () => {
   if (quizState.isCompleted) {
     return (
       <div className="h-screen bg-green-100 p-4 flex flex-col items-center justify-center">
-        <p className="text-xl font-bold">
+        <p className="text-xl font-bold font-normal">
           퀴즈가 완료되었습니다. 곧 결과 페이지로 이동합니다...
         </p>
       </div>

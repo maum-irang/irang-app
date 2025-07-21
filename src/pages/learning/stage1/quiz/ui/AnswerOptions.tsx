@@ -17,7 +17,7 @@ export const AnswerOptions: React.FC<AnswerOptionsProps> = ({
 }) => {
   const getButtonStyle = (index: number) => {
     const baseStyle =
-      "text-gray-800 rounded-3xl p-6 text-center min-h-[120px] flex items-center justify-center border-3 font-black text-xl relative overflow-hidden";
+      "text-gray-800 rounded-3xl p-6 text-center min-h-[120px] flex items-center justify-center border-3 font-black text-xl relative overflow-hidden font-normal";
 
     if (!showResult) {
       return `${baseStyle} bg-white border-gray-200 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`;

@@ -12,7 +12,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div className="w-full mt-10 mb-5">
       <div className="flex justify-center items-center mb-2">
-        <span className="text-lg font-black text-gray-700">
+        <span className="text-lg font-black text-gray-700 font-normal">
           {current} / {total}
         </span>
       </div>

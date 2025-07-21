@@ -92,7 +92,7 @@ export const Stage1ResultPage = () => {
 
       <div className="max-w-6xl mx-auto w-full relative z-20">
         <div className="flex items-center mb-6">
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             1단계{" "}
             <span className={isPassed ? "text-accent-primary" : "text-red-500"}>
               {isPassed ? "완료" : "재도전"}
@@ -111,7 +111,7 @@ export const Stage1ResultPage = () => {
               }}
             >
               <h2
-                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200"
+                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200 font-normal"
                 dangerouslySetInnerHTML={{
                   __html: renderHighlightedText(displayText),
                 }}
@@ -129,7 +129,7 @@ export const Stage1ResultPage = () => {
               }}
             >
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-black text-gray-800 mb-2">
+                <h3 className="text-2xl font-black text-gray-800 mb-2 font-normal">
                   최종 점수
                 </h3>
                 <div
@@ -150,7 +150,7 @@ export const Stage1ResultPage = () => {
               <div className="flex-1 flex flex-col justify-end space-y-3">
                 <button
                   onClick={handleRestart}
-                  className="w-full py-3 px-6 bg-blue-400 text-white rounded-2xl font-black text-base transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2"
+                  className="w-full py-3 px-6 bg-blue-400 text-white rounded-2xl font-black text-base transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2 font-normal"
                 >
                   <RotateCcw size={20} />
                   <span>다시 도전하기</span>
@@ -159,14 +159,14 @@ export const Stage1ResultPage = () => {
                 {isPassed ? (
                   <button
                     onClick={handleHome}
-                    className="w-full py-3 px-6 bg-gray-200 text-gray-800 rounded-2xl font-black text-base transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2"
+                    className="w-full py-3 px-6 bg-gray-200 text-gray-800 rounded-2xl font-black text-base transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2 font-normal"
                   >
                     <Home size={20} />
                     <span>학습 종료하기</span>
                   </button>
                 ) : (
                   <button
-                    className="w-full py-3 px-6 bg-gray-300 text-gray-500 rounded-2xl font-black text-base cursor-not-allowed flex items-center justify-center space-x-2 opacity-50"
+                    className="w-full py-3 px-6 bg-gray-300 text-gray-500 rounded-2xl font-black text-base cursor-not-allowed flex items-center justify-center space-x-2 opacity-50 font-normal"
                     disabled
                   >
                     <Home size={20} />
