@@ -297,7 +297,7 @@ export const AttendancePage = () => {
               </div>
 
               <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10 font-normal">
-                매일하는 <span className="text-blue-300">단계별 학습</span>
+                매일하는 <span className="text-blue-400">단계별 학습</span>
               </h2>
               <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="relative">
@@ -447,7 +447,7 @@ export const AttendancePage = () => {
               </div>
 
               <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10 font-normal">
-                한 단계 <span className="text-blue-300">UP!</span>
+                한 단계 <span className="text-blue-400">UP!</span>
               </h2>
               <div className="grid grid-cols-3 gap-6 relative z-10">
                 <div className="relative">

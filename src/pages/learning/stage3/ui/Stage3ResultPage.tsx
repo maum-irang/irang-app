@@ -5,9 +5,17 @@ import { Home, RotateCcw } from "lucide-react";
 import Lottie from "lottie-react";
 import celebrationAnimation from "../../../../../public/animations/celebration.json";
 
+interface UserInfo {
+  id: string;
+  name: string;
+  role: string;
+}
+
 export const Stage3ResultPage = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [fullText, setFullText] = useState("");
 
   const score = 3;
   const total = 3;
@@ -15,15 +23,38 @@ export const Stage3ResultPage = () => {
   const passThreshold = 80;
   const isPassed = percentage >= passThreshold;
 
-  const fullText = isPassed
-    ? "와! 정말 잘했어 마음아!\n3단계 표정 표현 퀴즈를 모두 완료했구나. 카메라 앞에서 감정을 표현하는 능력이 많이 늘었을 거야. 이제 자신감 있게 감정을 표현할 수 있게 되었어!"
-    : "아쉽게도 목표 점수에 조금 부족해 ㅜㅜ.\n하지만 괜찮아! 다시 도전해서 더 좋은 결과를 만들어봐. 표정 표현은 많은 연습이 필요하니까!";
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      setUserInfo(JSON.parse(storedUserInfo));
+    }
+  }, []);
+
+  const getUserName = () => {
+    if (!userInfo?.name) return "마음아";
+    const name = userInfo.name;
+    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+      return `${name.substring(1)}아`;
+    }
+    return `${name.split(" ")[0]}아`;
+  };
+
+  useEffect(() => {
+    const userName = getUserName();
+    const text = isPassed
+      ? `와! 정말 잘했어 ${userName}!\n3단계 표정 표현 퀴즈를 모두 완료했구나. 카메라 앞에서 감정을 표현하는 능력이 많이 늘었을 거야. 이제 자신감 있게 감정을 표현할 수 있게 되었어!`
+      : "아쉽게도 목표 점수에 조금 부족해 ㅜㅜ.\n하지만 괜찮아! 다시 도전해서 더 좋은 결과를 만들어봐. 표정 표현은 많은 연습이 필요하니까!";
+    setFullText(text);
+  }, [userInfo, isPassed]);
 
   const highlightWords = isPassed
     ? ["표정", "표현", "카메라", "자신감"]
     : ["목표", "도전", "연습", "표정"];
 
   useEffect(() => {
+    if (!fullText) return;
+
+    setDisplayText("");
     let index = 0;
     const timer = setInterval(() => {
       if (index <= fullText.length) {
