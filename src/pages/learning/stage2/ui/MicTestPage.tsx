@@ -83,7 +83,7 @@ export const MicTestPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             <span className="text-purple-500">마이크 테스트</span>
           </h1>
         </div>
@@ -97,7 +97,7 @@ export const MicTestPage = () => {
             }}
           >
             <div className="rounded-2xl p-6 relative">
-              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px]">
+              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px] font-normal">
                 {displayText}
                 {isTyping && (
                   <span className="animate-pulse text-purple-500">|</span>
@@ -111,7 +111,7 @@ export const MicTestPage = () => {
           <button
             onClick={handleRecord}
             disabled={micTestPassed}
-            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 ${
+            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 font-normal ${
               isRecording
                 ? "bg-red-500 text-white animate-pulse"
                 : micTestPassed
@@ -140,7 +140,7 @@ export const MicTestPage = () => {
                   <Mic size={32} />
                 )}
               </div>
-              <span>
+              <span className="font-normal">
                 {micTestPassed
                   ? "테스트 완료!"
                   : isRecording
@@ -148,7 +148,9 @@ export const MicTestPage = () => {
                     : "음성 입력"}
               </span>
               {micTestPassed && (
-                <p className="text-sm opacity-90">학습으로 이동 가능</p>
+                <p className="text-sm opacity-90 font-normal">
+                  학습으로 이동 가능
+                </p>
               )}
             </div>
           </button>
@@ -156,12 +158,12 @@ export const MicTestPage = () => {
           <button
             onClick={() => router.push("/learning/stage2/quiz")}
             disabled={!micTestPassed}
-            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed font-normal"
             style={{
               borderRadius: "25px 35px 30px 40px",
             }}
           >
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-3 font-normal">
               <span>학습 시작하기</span>
             </div>
           </button>
@@ -178,7 +180,7 @@ export const MicTestPage = () => {
                     : "bg-blue-500"
               }`}
             ></div>
-            <span className="font-black text-gray-700">
+            <span className="font-normal text-gray-700">
               {isTyping
                 ? "AI가 말하고 있어요..."
                 : micTestPassed

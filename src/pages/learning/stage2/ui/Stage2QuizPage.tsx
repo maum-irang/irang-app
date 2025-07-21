@@ -87,7 +87,7 @@ export const Stage2QuizPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             <span className="text-purple-500">2단계 학습</span>
           </h1>
         </div>
@@ -101,7 +101,7 @@ export const Stage2QuizPage = () => {
             }}
           >
             <div className="rounded-2xl p-6 relative">
-              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px] text-center">
+              <p className="text-lg font-medium text-gray-800 leading-relaxed min-h-[60px] text-center font-normal">
                 {displayText}
                 {isTyping && (
                   <span className="animate-pulse text-purple-500">|</span>
@@ -114,7 +114,7 @@ export const Stage2QuizPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={handleRecord}
-            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 ${
+            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 font-normal ${
               isRecording
                 ? "bg-red-500 text-white animate-pulse"
                 : "bg-white/90 backdrop-blur-sm text-purple-500 hover:bg-white"
@@ -140,7 +140,7 @@ export const Stage2QuizPage = () => {
 
           <button
             onClick={playTTS}
-            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600"
+            className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600 font-normal"
             style={{
               borderRadius: "25px 35px 30px 40px",
             }}
@@ -159,7 +159,7 @@ export const Stage2QuizPage = () => {
             <div
               className={`w-3 h-3 rounded-full ${isTyping ? "bg-purple-500 animate-pulse" : "bg-green-500"}`}
             ></div>
-            <span className="font-black text-gray-700">
+            <span className="font-black text-gray-700 font-normal">
               {isTyping ? "AI가 말하고 있어요..." : "당신의 차례입니다"}
             </span>
           </div>

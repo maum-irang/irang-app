@@ -42,7 +42,7 @@ export const Stage1IntroPage = () => {
       const regex = new RegExp(`(${word})`, "g");
       result = result.replace(
         regex,
-        `<span class="text-accent-primary font-black">$1</span>`
+        `<span class="text-accent-primary font-normal">$1</span>`
       );
     });
     result = result.replace(/\n/g, "<br>");

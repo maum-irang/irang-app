@@ -32,7 +32,7 @@ export const Stage2IntroPage = () => {
       const regex = new RegExp(`(${word})`, "g");
       result = result.replace(
         regex,
-        `<span class="text-purple-500 font-black">$1</span>`
+        `<span class="text-purple-500 font-normal">$1</span>`
       );
     });
     result = result.replace(/\n/g, "<br>");
@@ -74,7 +74,7 @@ export const Stage2IntroPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             2단계 <span className="text-purple-500">감정 표현</span> 학습
           </h1>
         </div>
@@ -89,7 +89,7 @@ export const Stage2IntroPage = () => {
               }}
             >
               <h2
-                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200"
+                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200 font-normal"
                 dangerouslySetInnerHTML={{
                   __html: renderHighlightedText(displayText),
                 }}
@@ -106,7 +106,7 @@ export const Stage2IntroPage = () => {
                 minHeight: "380px",
               }}
             >
-              <h3 className="text-lg font-black text-gray-800 mb-6 text-center">
+              <h3 className="text-lg font-black text-gray-800 mb-6 text-center font-normal">
                 학습 정보
               </h3>
 
@@ -116,7 +116,7 @@ export const Stage2IntroPage = () => {
                     <Volume2 size={16} className="text-white" />
                   </div>
                   <div>
-                    <p className="font-black text-gray-800 text-sm">
+                    <p className="font-black text-gray-800 text-sm font-normal">
                       음성 인식
                     </p>
                     <p className="text-gray-600 text-xs">
@@ -130,7 +130,7 @@ export const Stage2IntroPage = () => {
                     <VolumeX size={16} className="text-white" />
                   </div>
                   <div>
-                    <p className="font-black text-gray-800 text-sm">
+                    <p className="font-black text-gray-800 text-sm font-normal">
                       실시간 피드백
                     </p>
                     <p className="text-gray-600 text-xs">즉시 결과 확인</p>
@@ -142,7 +142,7 @@ export const Stage2IntroPage = () => {
                 <button
                   onClick={handleStartLearning}
                   disabled={isLoading}
-                  className={`w-full mt-10 py-4 px-6 bg-accent-primary text-white rounded-2xl font-black text-base transition-all duration-300 ${
+                  className={`w-full mt-10 py-4 px-6 bg-accent-primary text-white rounded-2xl font-black text-base transition-all duration-300 font-normal ${
                     isLoading
                       ? "opacity-50 cursor-not-allowed"
                       : "active:scale-95"
