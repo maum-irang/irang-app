@@ -10,23 +10,49 @@ export default function LoginPage() {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showCelebration, setShowCelebration] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(e.target.value);
   };
-
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = () => {
-    if (userId && password) {
-      setShowCelebration(true);
-      setTimeout(() => {
-        console.log("로그인 처리:", { userId, password });
-        // 로그인 성공 후 홈으로 이동
-        router.push("/home");
-      }, 2000);
+  const handleLogin = async () => {
+    if (userId && password && !isLoading) {
+      try {
+        setIsLoading(true);
+        setShowCelebration(true);
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: userId,
+            password: password,
+            mode: "manager",
+          }),
+        });
+
+        if (response.status === 201) {
+          console.log("로그인 성공!");
+          setTimeout(() => {
+            router.push("/home");
+          }, 2000);
+        } else {
+          console.error("로그인 실패:", response.status);
+          setShowCelebration(false);
+          alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+        }
+      } catch (error) {
+        console.error("로그인 요청 중 오류:", error);
+        setShowCelebration(false);
+        alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -117,14 +143,14 @@ export default function LoginPage() {
             <div className="pt-4">
               <button
                 onClick={handleLogin}
-                disabled={!userId || !password}
+                disabled={!userId || !password || isLoading}
                 className={`w-full py-4 px-6 bg-accent-primary text-white rounded-2xl font-normal text-base transition-all duration-300 ${
-                  !userId || !password
+                  !userId || !password || isLoading
                     ? "opacity-50 cursor-not-allowed"
                     : "active:scale-95"
                 }`}
               >
-                다음
+                {isLoading ? "로그인 중..." : "다음"}
               </button>
             </div>
           </div>
