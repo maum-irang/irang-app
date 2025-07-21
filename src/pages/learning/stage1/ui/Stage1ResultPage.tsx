@@ -56,7 +56,7 @@ export const Stage1ResultPage = () => {
 
   const handleHome = () => {
     if (isPassed) {
-      router.push("/attendance?showCompleteAnimation=true");
+      router.push("/home?showCompleteAnimation=true");
     }
   };
 

@@ -39,7 +39,7 @@ export const Stage3IntroPage = () => {
   };
 
   const handleBack = () => {
-    router.push("/attendance");
+    router.push("/home");
   };
 
   const handleStartLearning = async () => {

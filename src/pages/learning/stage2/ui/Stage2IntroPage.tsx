@@ -40,7 +40,7 @@ export const Stage2IntroPage = () => {
   };
 
   const handleBack = () => {
-    router.push("/attendance");
+    router.push("/home");
   };
 
   const handleStartLearning = async () => {

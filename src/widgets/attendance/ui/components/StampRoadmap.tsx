@@ -199,7 +199,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         <div className="flex flex-col items-center">
           {renderStampIcon()}
 
-          <div className="mt-2 backdrop-blur-sm rounded-lg px-2 py-1">
+          <div className="mt-2 rounded-lg px-2 py-1">
             <span className="text-gray-800 text-xs font-bold">
               {stamp.id}일차
             </span>

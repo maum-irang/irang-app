@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Home, RotateCcw, ArrowRight } from "lucide-react";
+import { Home, RotateCcw } from "lucide-react";
 import Lottie from "lottie-react";
 import celebrationAnimation from "../../../../../public/animations/celebration.json";
 
@@ -56,7 +56,7 @@ export const Stage2ResultPage = () => {
 
   const handleHome = () => {
     if (isPassed) {
-      router.push("/attendance?showStage2CompleteAnimation=true");
+      router.push("/home?showStage2CompleteAnimation=true");
     }
   };
 

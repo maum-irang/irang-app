@@ -50,7 +50,7 @@ export const Stage1IntroPage = () => {
   };
 
   const handleBack = () => {
-    router.back();
+    router.push("/home");
   };
 
   const handleStartLearning = () => {
