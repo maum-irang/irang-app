@@ -8,11 +8,19 @@ import stampAnimation from "../../../../public/animations/stamp.json";
 import StampRoadmap from "./components/StampRoadmap";
 import { useStampData } from "../model/useStampData";
 
+interface UserInfo {
+  id: string;
+  name: string;
+  role: string;
+}
+
 export const AttendancePage = () => {
   const router = useRouter();
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
   const [showNotesAnimation] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   const [showStampAnimation, setShowStampAnimation] = useState(false);
   const [showClickAnimation, setShowClickAnimation] = useState(false);
@@ -31,6 +39,29 @@ export const AttendancePage = () => {
     canCompleteStamp,
     activateNextStamp,
   } = useStampData();
+
+  useEffect(() => {
+    const loadUserInfo = () => {
+      try {
+        console.log("=== 사용자 정보 로드 시작 ===");
+
+        const storedUserInfo = localStorage.getItem("userInfo");
+        if (storedUserInfo) {
+          const userData = JSON.parse(storedUserInfo);
+          console.log("저장된 사용자 정보:", userData);
+          setUserInfo(userData);
+        } else {
+          console.log("저장된 사용자 정보가 없습니다");
+        }
+      } catch (error) {
+        console.error("사용자 정보 로드 중 오류:", error);
+      } finally {
+        setIsLoadingUser(false);
+      }
+    };
+
+    loadUserInfo();
+  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -168,6 +199,36 @@ export const AttendancePage = () => {
     router.push("/learning/stage3");
   };
 
+  const getUserDisplayName = () => {
+    console.log("getUserDisplayName 호출:");
+    console.log("- isLoadingUser:", isLoadingUser);
+    console.log("- userInfo:", userInfo);
+    console.log("- userInfo?.name:", userInfo?.name);
+
+    if (isLoadingUser) {
+      console.log("-> 로딩 중 반환");
+      return "로딩중...";
+    }
+    if (!userInfo || !userInfo.name) {
+      console.log("-> userInfo 없음, 기본값 반환");
+      return "마음아";
+    }
+    const name = userInfo.name;
+    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+      const firstName = name.substring(1);
+      console.log("- 한국어 이름 처리:", name, "->", firstName);
+      const result = `${firstName}아`;
+      console.log("-> 최종 결과:", result);
+      return result;
+    }
+
+    const firstName = name.split(" ")[0];
+    console.log("- 영어 이름 처리:", firstName);
+    const result = `${firstName}아`;
+    console.log("-> 최종 결과:", result);
+    return result;
+  };
+
   return (
     <div
       className="min-h-screen p-6 flex items-center relative overflow-hidden"
@@ -181,14 +242,15 @@ export const AttendancePage = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-black font-normal">
-            안녕 <span className="text-accent-primary">마음아</span>?
+            안녕{" "}
+            <span className="text-accent-primary">{getUserDisplayName()}</span>?
             <br />
             오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
             <div className="bg-white/80 rounded-2xl px-8 py-4 border-2 border-gray-200 relative shadow-lg">
               <h2 className="text-2xl font-black text-accent-primary text-center font-normal">
-                마음이
+                {userInfo && userInfo.name ? userInfo.name : "마음이"}
               </h2>
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-400 shadow-inner"></div>
@@ -437,6 +499,20 @@ export const AttendancePage = () => {
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+      `}</style>
     </div>
   );
 };

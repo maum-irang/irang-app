@@ -32,12 +32,21 @@ export default function LoginPage() {
           body: JSON.stringify({
             id: userId,
             password: password,
-            mode: "manager",
+            mode: "child",
           }),
         });
 
         if (response.status === 201) {
           console.log("로그인 성공!");
+
+          const loginData = await response.json();
+          console.log("로그인 응답:", loginData);
+
+          if (loginData.id && loginData.name) {
+            localStorage.setItem("userInfo", JSON.stringify(loginData));
+            console.log("사용자 정보 저장 완료:", loginData);
+          }
+
           setTimeout(() => {
             router.push("/home");
           }, 2000);
