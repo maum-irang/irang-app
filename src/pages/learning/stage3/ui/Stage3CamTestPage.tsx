@@ -84,7 +84,7 @@ export const Stage3CamTestPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             <span className="text-blue-300">카메라 테스트</span>
           </h1>
         </div>
@@ -109,7 +109,7 @@ export const Stage3CamTestPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={handleToggleCam}
-            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 ${
+            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 font-normal ${
               camOn
                 ? "bg-red-500 text-white hover:bg-red-600"
                 : "bg-white/90 backdrop-blur-sm text-blue-300 hover:bg-white"
@@ -133,16 +133,16 @@ export const Stage3CamTestPage = () => {
           <button
             onClick={handleNext}
             disabled={!(camOn && stream)}
-            className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 ${
+            className={`p-8 rounded-3xl font-black text-lg bg-blue-300 transition-all duration-300 active:scale-95${
               camOn && stream
-                ? "bg-blue-300 text-white hover:bg-blue-300"
+                ? "bg-blue-300 text-white"
                 : "bg-white/90 backdrop-blur-sm text-gray-400 cursor-not-allowed opacity-60"
             }`}
             style={{
               borderRadius: "25px 35px 30px 40px",
             }}
           >
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col font-normal items-center space-y-3">
               <span>학습 시작하기</span>
             </div>
           </button>

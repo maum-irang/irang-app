@@ -77,7 +77,7 @@ export const Stage3QuizPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             <span className="text-blue-300">3단계 학습</span>
           </h1>
         </div>
@@ -90,7 +90,7 @@ export const Stage3QuizPage = () => {
             }}
           >
             <div className="text-center">
-              <p className="text-2xl font-black text-blue-500 leading-relaxed">
+              <p className="text-2xl font-black text-blue-500 leading-relaxed font-normal">
                 {expressions[step]}
               </p>
             </div>
@@ -114,12 +114,12 @@ export const Stage3QuizPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
             <button
               onClick={handleTTS}
-              className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600"
+              className="p-8 bg-purple-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-purple-600 font-normal"
               style={{
                 borderRadius: "25px 35px 30px 40px",
               }}
             >
-              <div className="flex flex-col items-center space-y-3">
+              <div className="flex flex-col font-normal items-center space-y-3">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                   <Volume2 size={32} />
                 </div>
@@ -128,12 +128,12 @@ export const Stage3QuizPage = () => {
             </button>
             <button
               onClick={handleNext}
-              className="p-8 bg-blue-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-blue-600"
+              className="p-8 bg-blue-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-blue-600 font-normal"
               style={{
                 borderRadius: "30px 40px 35px 25px",
               }}
             >
-              <div className="flex flex-col items-center space-y-3">
+              <div className="flex flex-col font-normal items-center space-y-3">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                   {step < expressions.length - 1 ? (
                     <ChevronRight size={32} />
@@ -147,7 +147,7 @@ export const Stage3QuizPage = () => {
           </div>
 
           <div className="text-center">
-            <p className="text-gray-600 font-bold text-lg">
+            <p className="text-gray-600 font-bold text-lg font-normal">
               {step + 1} / {expressions.length}
             </p>
           </div>

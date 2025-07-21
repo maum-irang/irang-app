@@ -31,7 +31,7 @@ export const Stage3IntroPage = () => {
       const regex = new RegExp(`(${word})`, "g");
       result = result.replace(
         regex,
-        `<span class=\"text-purple-500 font-black\">$1</span>`
+        `<span class=\"text-purple-500 font-normal\">$1</span>`
       );
     });
     result = result.replace(/\n/g, "<br>");
@@ -73,7 +73,7 @@ export const Stage3IntroPage = () => {
               strokeWidth={2.5}
             />
           </button>
-          <h1 className="text-3xl font-black text-black">
+          <h1 className="text-3xl font-black text-black font-normal">
             3단계 <span className="text-purple-500">감정 표현</span> 학습
           </h1>
         </div>
@@ -88,7 +88,7 @@ export const Stage3IntroPage = () => {
               }}
             >
               <h2
-                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200"
+                className="text-xl font-black text-gray-800 leading-relaxed tracking-wide text-center max-w-2xl transition-all duration-200 font-normal"
                 dangerouslySetInnerHTML={{
                   __html: renderHighlightedText(displayText),
                 }}
@@ -105,7 +105,7 @@ export const Stage3IntroPage = () => {
                 minHeight: "380px",
               }}
             >
-              <h3 className="text-lg font-black text-gray-800 mb-6 text-center">
+              <h3 className="text-lg font-black text-gray-800 mb-6 text-center font-normal">
                 학습 정보
               </h3>
 
@@ -115,7 +115,7 @@ export const Stage3IntroPage = () => {
                     <Camera size={16} className="text-white" />
                   </div>
                   <div>
-                    <p className="font-black text-gray-800 text-sm">
+                    <p className="font-black text-gray-800 text-sm font-normal">
                       캠 테스트
                     </p>
                     <p className="text-gray-600 text-xs">
@@ -129,7 +129,7 @@ export const Stage3IntroPage = () => {
                     <Smile size={16} className="text-white" />
                   </div>
                   <div>
-                    <p className="font-black text-gray-800 text-sm">
+                    <p className="font-black text-gray-800 text-sm font-normal">
                       표정 따라하기
                     </p>
                     <p className="text-gray-600 text-xs">
@@ -143,7 +143,7 @@ export const Stage3IntroPage = () => {
                 <button
                   onClick={handleStartLearning}
                   disabled={isLoading}
-                  className={`w-full mt-10 py-4 px-6 bg-accent-primary text-white rounded-2xl font-black text-base transition-all duration-300 ${
+                  className={`w-full mt-10 py-4 px-6 bg-accent-primary text-white rounded-2xl font-black text-base transition-all duration-300 font-normal ${
                     isLoading
                       ? "opacity-50 cursor-not-allowed"
                       : "active:scale-95"
