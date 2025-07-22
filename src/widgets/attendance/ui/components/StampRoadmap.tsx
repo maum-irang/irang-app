@@ -28,6 +28,8 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
   const [turtleAnimation, setTurtleAnimation] = useState<
     object | string | null
   >(null);
+  const [turtleMoving, setTurtleMoving] = useState(false);
+  const [prevCurrentStamp, setPrevCurrentStamp] = useState<StampData | null>(null);
 
   useEffect(() => {
     const updateSvgSize = () => {
@@ -108,6 +110,18 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
 
   const currentStamp = getCurrentStamp();
 
+  useEffect(() => {
+    if (currentStamp && prevCurrentStamp && currentStamp.id !== prevCurrentStamp.id) {
+      setTurtleMoving(true);
+      
+      setTimeout(() => {
+        setTurtleMoving(false);
+      }, 2500);
+    }
+    
+    setPrevCurrentStamp(currentStamp || null);
+  }, [currentStamp, prevCurrentStamp]);
+
   const renderNest = () => (
     <div className="w-8 h-6 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-md relative">
       <div className="absolute inset-x-1 top-1 bottom-1 bg-gradient-to-b from-amber-500 to-amber-700 rounded-full"></div>
@@ -154,7 +168,12 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
         );
       } else if (currentStamp && stamp.id === currentStamp.id) {
         return (
-          <div style={{ width: 70, height: 70, position: "relative" }}>
+          <div 
+            style={{ width: 70, height: 70, position: "relative" }}
+            className={`transition-all duration-[2000ms] ease-in-out ${
+              turtleMoving ? 'scale-110 animate-bounce' : 'scale-100'
+            }`}
+          >
             {turtleAnimation && turtleAnimation !== "css-fallback" ? (
               <div style={{ width: 70, height: 70, position: "relative" }}>
                 <Lottie
@@ -164,15 +183,19 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                   style={{ width: 70, height: 70 }}
                 />
                 {renderBubbles("bg-green-300", 5)}
+                {turtleMoving && renderBubbles("bg-yellow-300", 7)}
               </div>
             ) : (
               <div className="w-14 h-14 flex items-center justify-center">
-                <div className="w-8 h-8 bg-green-500 rounded-full shadow-lg flex items-center justify-center">
+                <div className={`w-8 h-8 bg-green-500 rounded-full shadow-lg flex items-center justify-center transition-all duration-[2000ms] ${
+                  turtleMoving ? 'bg-yellow-500 shadow-xl scale-105' : 'bg-green-500'
+                }`}>
                   <div className="w-4 h-4 bg-green-700 rounded-full flex items-center justify-center">
                     <div className="w-2 h-2 bg-green-300 rounded-full"></div>
                   </div>
                 </div>
                 {renderBubbles("bg-green-300", 5)}
+                {turtleMoving && renderBubbles("bg-yellow-300", 7)}
               </div>
             )}
           </div>
@@ -231,6 +254,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
                 opacity="0.4"
               />
             ))}
+            
         </svg>
 
         {stamps.map(renderStamp)}

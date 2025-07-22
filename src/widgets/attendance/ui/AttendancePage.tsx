@@ -57,6 +57,7 @@ export const AttendancePage = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     activateNextStamp,
     initializeStampsFromAttendanceData,
+    moveToNextStamp,
   } = useStampData();
 
   useEffect(() => {
@@ -278,16 +279,9 @@ export const AttendancePage = () => {
         console.log("출석 날짜:", attendanceData.date);
         console.log("출석 상태:", attendanceData.isPresent);
 
-        console.log("🔄 최신 출석 데이터 조회 및 거북이 위치 업데이트...");
-
-        setTimeout(async () => {
-          try {
-            await fetchMonthlyAttendance();
-            console.log("✅ 출석체크 후 거북이 위치 업데이트 완료!");
-          } catch (error) {
-            console.error("출석체크 후 데이터 업데이트 오류:", error);
-          }
-        }, 1000);
+        setTimeout(() => {
+          moveToNextStamp();
+        }, 2000);
       } else {
         console.error("출석체크 실패:", response.status);
         try {

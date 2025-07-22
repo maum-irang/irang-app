@@ -91,6 +91,35 @@ export const useStampData = () => {
     }
   };
 
+  // 출석체크 완료 후 거북이 즉시 이동
+  const moveToNextStamp = () => {
+    const currentTurtleStamp = stampState.stamps.find(s => s.isToday);
+    if (currentTurtleStamp && !currentTurtleStamp.completed) {
+      // 현재 스탬프 완료 처리
+      const updatedStamps = stampState.stamps.map(stamp =>
+        stamp.id === currentTurtleStamp.id
+          ? { ...stamp, completed: true, isToday: false }
+          : stamp
+      );
+
+      // 다음 미완료 스탬프 찾아서 거북이 이동
+      const nextStamp = updatedStamps.find(s => !s.completed);
+      const finalStamps = updatedStamps.map(stamp => ({
+        ...stamp,
+        isToday: nextStamp ? stamp.id === nextStamp.id : false,
+      }));
+
+      setStampState(prev => ({
+        ...prev,
+        stamps: finalStamps,
+        completedCount: finalStamps.filter(s => s.completed).length,
+        todayStampId: nextStamp?.id || null,
+      }));
+
+      console.log(`🐢 거북이 이동: ${currentTurtleStamp.id}일차 → ${nextStamp?.id || '완료'}일차`);
+    }
+  };
+
   // 실제 출석 데이터를 기반으로 스탬프 상태 초기화
   const initializeStampsFromAttendanceData = (presentDates: string[]) => {
     console.log("🔄 출석 데이터 기반 스탬프 초기화:", presentDates);
@@ -182,5 +211,6 @@ export const useStampData = () => {
     canCompleteStamp,
     activateNextStamp,
     initializeStampsFromAttendanceData,
+    moveToNextStamp,
   };
 };
