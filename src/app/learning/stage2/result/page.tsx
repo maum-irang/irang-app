@@ -1,5 +1,10 @@
-import { Stage2ResultPage } from "@/pages/learning/stage2/ui/Stage2ResultPage";
+import { Suspense } from "react";
+import { Stage2ResultPage } from "@/components/learning/stage2/ui/Stage2ResultPage";
 
 export default function Page() {
-  return <Stage2ResultPage />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Stage2ResultPage />
+    </Suspense>
+  );
 }
