@@ -156,7 +156,7 @@ export const Stage1ResultPage = () => {
       <div className="min-h-screen bg-green-100 p-6 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
-          <p className="text-xl font-bold">결과를 불러오고 있어요...</p>
+          <p className="text-xl font-bold">결과를 불러오고 있어...</p>
         </div>
       </div>
     );
