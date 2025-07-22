@@ -21,6 +21,8 @@ export const AttendancePage = () => {
   const [showNotesAnimation] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [monthlyAttendance, setMonthlyAttendance] = useState<any>(null);
+  const [isLoadingAttendance, setIsLoadingAttendance] = useState(true);
 
   const [showStampAnimation, setShowStampAnimation] = useState(false);
   const [showClickAnimation, setShowClickAnimation] = useState(false);
@@ -38,6 +40,7 @@ export const AttendancePage = () => {
     completeStamp,
     canCompleteStamp,
     activateNextStamp,
+    initializeStampsFromAttendanceData,
   } = useStampData();
 
   useEffect(() => {
@@ -62,6 +65,67 @@ export const AttendancePage = () => {
 
     loadUserInfo();
   }, []);
+  const fetchMonthlyAttendance = async () => {
+    if (!userInfo?.id) return;
+
+    try {
+      console.log("===== 월별 출석 데이터 조회 시작 =====");
+
+      const currentDate = new Date();
+      const year = currentDate.getFullYear().toString();
+      const month = (currentDate.getMonth() + 1).toString();
+
+      console.log("🔍 요청 파라미터:", {
+        childId: userInfo.id,
+        year,
+        month,
+      });
+
+      const response = await fetch(
+        `/api/attendance/monthly?childId=${userInfo.id}&year=${year}&month=${month}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("✅ 월별 출석 데이터:", data);
+        setMonthlyAttendance(data);
+
+        updateStampsFromAttendanceData(data);
+      } else {
+        console.error("❌ 월별 출석 데이터 실패:", response.status);
+      }
+    } catch (error) {
+      console.error("월별 출석 데이터 조회 오류:", error);
+    } finally {
+      setIsLoadingAttendance(false);
+    }
+  };
+
+  useEffect(() => {
+    if (userInfo?.id) {
+      fetchMonthlyAttendance();
+    }
+  }, [userInfo]);
+
+  const updateStampsFromAttendanceData = (attendanceData: any) => {
+    console.log("🎯 실제 출석 데이터로 스탬프 및 거북이 위치 업데이트");
+    console.log("전체 출석 데이터:", attendanceData);
+
+    let presentDates = attendanceData.presentDates || [];
+
+    if (presentDates.length === 0 && attendanceData.attendanceRecords) {
+      console.log("🔍 presentDates가 비어있음, attendanceRecords에서 추출");
+      presentDates = attendanceData.attendanceRecords
+        .filter((record: any) => record.isPresent === true)
+        .map((record: any) => record.date);
+
+      console.log("📅 attendanceRecords에서 추출한 출석 날짜들:", presentDates);
+    } else {
+      console.log("📅 presentDates에서 가져온 출석 날짜들:", presentDates);
+    }
+
+    initializeStampsFromAttendanceData(presentDates);
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -196,28 +260,16 @@ export const AttendancePage = () => {
         console.log("출석 날짜:", attendanceData.date);
         console.log("출석 상태:", attendanceData.isPresent);
 
-        console.log("스탬프 업데이트 시작...");
-        console.log("todayStampId:", todayStampId);
+        console.log("🔄 최신 출석 데이터 조회 및 거북이 위치 업데이트...");
 
-        setTimeout(() => {
+        setTimeout(async () => {
           try {
-            if (todayStampId && canCompleteStamp(todayStampId)) {
-              console.log("스탬프 완료 처리:", todayStampId);
-              completeStamp(todayStampId);
-              activateNextStamp();
-              console.log("스탬프 업데이트 완료!");ㅁ\\
-            } else {
-              console.log("스탬프 업데이트 조건 불만족:");
-              console.log("- todayStampId:", todayStampId);
-              console.log(
-                "- canCompleteStamp:",
-                todayStampId ? canCompleteStamp(todayStampId) : "no stampId"
-              );
-            }
-          } catch (stampError) {
-            console.error("스탬프 업데이트 중 오류:", stampError);
+            await fetchMonthlyAttendance();
+            console.log("✅ 출석체크 후 거북이 위치 업데이트 완료!");
+          } catch (error) {
+            console.error("출석체크 후 데이터 업데이트 오류:", error);
           }
-        }, 2000);
+        }, 1000);
       } else {
         console.error("출석체크 실패:", response.status);
         try {
