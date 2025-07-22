@@ -1,41 +1,19 @@
-FROM node:23-bookworm-slim AS base
+FROM node:20.10.0-alpine
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm --activate
+# Install dependencies only when needed
+COPY package.json yarn.lock ./
+RUN yarn install
 
-COPY package.json pnpm-lock.yaml ./
-
-RUN pnpm install --frozen-lockfile
-
-FROM base AS build
-
+# Copy all files
 COPY . .
 
-RUN pnpm run build
+# Build the Next.js application
+RUN yarn build
 
-FROM base AS deps
-
-RUN pnpm install --frozen-lockfile --prod
-
-FROM node:23-bookworm-slim AS production
-
-WORKDIR /app
-
-RUN corepack enable && corepack prepare pnpm --activate
-
-ENV time_zone=Asia/Seoul
-ENV NODE_ENV=production
-
-COPY --from=build /app/.next .next
-COPY --from=build /app/public public
-COPY --from=build /app/package.json .
-COPY --from=deps /app/node_modules node_modules
-
-RUN mkdir -p /app/.next/cache/images && chown -R node:node /app/.next
-
-USER node
-
+# Expose the port the app runs on
 EXPOSE 3000
 
-CMD ["pnpm", "run", "start"]
+# Start the application
+CMD ["yarn", "start"]
