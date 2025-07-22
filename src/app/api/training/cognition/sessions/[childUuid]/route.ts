@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   request: NextRequest,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { params }: { params: Promise<{ childUuid: string }> }
 ) {
   try {
@@ -12,17 +13,19 @@ export async function POST(
 
     let userId = null;
     if (cookieHeader) {
-      const cookies = cookieHeader.split(";").reduce((acc: any, cookie) => {
-        const [key, value] = cookie.trim().split("=");
-        acc[key] = value;
-        return acc;
-      }, {});
+      const cookies = cookieHeader
+        .split(";")
+        .reduce((acc: Record<string, string>, cookie) => {
+          const [key, value] = cookie.trim().split("=");
+          acc[key] = value;
+          return acc;
+        }, {});
 
       if (cookies.userInfo) {
         try {
           const userInfo = JSON.parse(decodeURIComponent(cookies.userInfo));
           userId = userInfo.id;
-        } catch (e) {
+        } catch {
           console.log("쿠키에서 userInfo 파싱 실패");
         }
       }

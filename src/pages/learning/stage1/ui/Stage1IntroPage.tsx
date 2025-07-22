@@ -24,19 +24,19 @@ export const Stage1IntroPage = () => {
   }, []);
 
   useEffect(() => {
+    const getUserName = () => {
+      if (!userInfo?.name) return "마음아";
+      const name = userInfo.name;
+      if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+        return `${name.substring(1)}아`;
+      }
+      return `${name.split(" ")[0]}아`;
+    };
+
     const userName = getUserName();
     const text = `안녕 ${userName}!\n 1단계에서는 사람들의 다양한 표정을 보고 어떤 감정인지 맞춰보는 퀴즈를 할거야. 여러 감정들이 얼굴에 어떻게 나타나는지 함께 배워보자! 표정을 통해서 다른 사람의 마음을 이해하는 능력을 기를 수 있을거야. 준비됐니?`;
     setFullText(text);
   }, [userInfo]);
-
-  const getUserName = () => {
-    if (!userInfo?.name) return "마음아";
-    const name = userInfo.name;
-    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
-      return `${name.substring(1)}아`;
-    }
-    return `${name.split(" ")[0]}아`;
-  };
 
   const highlightWords = [
     "표정",

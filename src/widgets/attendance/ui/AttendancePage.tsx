@@ -14,6 +14,16 @@ interface UserInfo {
   role: string;
 }
 
+interface AttendanceRecord {
+  date: string;
+  isPresent: boolean;
+}
+
+interface MonthlyAttendanceData {
+  presentDates?: string[];
+  attendanceRecords?: AttendanceRecord[];
+}
+
 export const AttendancePage = () => {
   const router = useRouter();
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
@@ -21,7 +31,10 @@ export const AttendancePage = () => {
   const [showNotesAnimation] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [monthlyAttendance, setMonthlyAttendance] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [monthlyAttendance, setMonthlyAttendance] =
+    useState<MonthlyAttendanceData | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoadingAttendance, setIsLoadingAttendance] = useState(true);
 
   const [showStampAnimation, setShowStampAnimation] = useState(false);
@@ -37,8 +50,11 @@ export const AttendancePage = () => {
     completedCount,
     totalCount,
     todayStampId,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     completeStamp,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     canCompleteStamp,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     activateNextStamp,
     initializeStampsFromAttendanceData,
   } = useStampData();
@@ -107,7 +123,9 @@ export const AttendancePage = () => {
     }
   }, [userInfo]);
 
-  const updateStampsFromAttendanceData = (attendanceData: any) => {
+  const updateStampsFromAttendanceData = (
+    attendanceData: MonthlyAttendanceData
+  ) => {
     console.log("🎯 실제 출석 데이터로 스탬프 및 거북이 위치 업데이트");
     console.log("전체 출석 데이터:", attendanceData);
 
@@ -116,8 +134,8 @@ export const AttendancePage = () => {
     if (presentDates.length === 0 && attendanceData.attendanceRecords) {
       console.log("🔍 presentDates가 비어있음, attendanceRecords에서 추출");
       presentDates = attendanceData.attendanceRecords
-        .filter((record: any) => record.isPresent === true)
-        .map((record: any) => record.date);
+        .filter((record: AttendanceRecord) => record.isPresent === true)
+        .map((record: AttendanceRecord) => record.date);
 
       console.log("📅 attendanceRecords에서 추출한 출석 날짜들:", presentDates);
     } else {

@@ -12,6 +12,16 @@ interface UserInfo {
   role: string;
 }
 
+interface QuizItem {
+  quizId: string;
+  isCorrect: boolean;
+  selectedOption: string;
+  correctOption: string;
+  timeTakenSeconds: number;
+  answeredAt: string;
+  imageUrl: string;
+}
+
 interface QuizResultData {
   sessionId: string;
   totalQuestions: number;
@@ -21,7 +31,7 @@ interface QuizResultData {
   startTime: string;
   endTime: string;
   duration: number;
-  quizzes: any[];
+  quizzes: QuizItem[];
 }
 
 export const Stage1ResultPage = () => {
@@ -80,16 +90,16 @@ export const Stage1ResultPage = () => {
     loadQuizResult();
   }, [searchParams]);
 
-  const getUserName = () => {
-    if (!userInfo?.name) return "마음아";
-    const name = userInfo.name;
-    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
-      return `${name.substring(1)}아`;
-    }
-    return `${name.split(" ")[0]}아`;
-  };
-
   useEffect(() => {
+    const getUserName = () => {
+      if (!userInfo?.name) return "마음아";
+      const name = userInfo.name;
+      if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+        return `${name.substring(1)}아`;
+      }
+      return `${name.split(" ")[0]}아`;
+    };
+
     const userName = getUserName();
     const text = isPassed
       ? `와! 정말 잘했어 ${userName}!\n1단계 감정 인식 퀴즈를 모두 완료했구나. 표정을 보고 감정을 알아차리는 능력이 많이 늘었을 거야. 이제 감정을 더 잘 이해할 수 있게 되었어!`
