@@ -22,6 +22,7 @@ interface QuizQuestion {
   imageUrl: string;
   title: string;
   options: string[];
+  correctIndex?: number;
   correctAnswer?: number;
   explanation?: string;
 }
@@ -113,21 +114,17 @@ export const getQuizByAttemptId = async (
 };
 
 export const submitQuizResult = async (
-  attemptUuid: string,
   quizData: QuizSubmissionData
 ): Promise<SubmitQuizResponse> => {
-  console.log("📝 퀴즈 결과 제출:", { attemptUuid, quizData });
+  console.log("📝 퀴즈 결과 제출:", { quizData });
 
-  const response = await fetch(
-    `/api/training/cognition/attempts/quizzes/${attemptUuid}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(quizData),
-    }
-  );
+  const response = await fetch(`/api/training/cognition/quizzes/answers`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(quizData),
+  });
 
   console.log("📡 결과 제출 응답 상태:", response.status);
 

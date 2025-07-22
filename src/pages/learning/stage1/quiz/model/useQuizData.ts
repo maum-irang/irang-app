@@ -42,6 +42,18 @@ export const useQuizData = () => {
 
       const quizData = await getQuizByAttemptId(sessionData.attemptId);
       console.log("✅ 퀴즈 가져오기 성공:", quizData);
+      console.log(
+        "🎯 correctIndex:",
+        quizData.correctIndex,
+        "타입:",
+        typeof quizData.correctIndex
+      );
+      console.log(
+        "🎯 correctAnswer:",
+        quizData.correctAnswer,
+        "타입:",
+        typeof quizData.correctAnswer
+      );
 
       const questions: Question[] = [
         {
@@ -49,7 +61,7 @@ export const useQuizData = () => {
           imageUrl: quizData.imageUrl,
           title: quizData.title,
           options: quizData.options,
-          correctAnswer: quizData.correctAnswer,
+          correctAnswer: quizData.correctIndex ?? quizData.correctAnswer,
           explanation: quizData.explanation,
         },
       ];
@@ -84,6 +96,11 @@ export const useQuizData = () => {
       (endTime.getTime() - questionStartTime.getTime()) / 1000
     );
 
+    const isCorrectFrontend = answerIndex === currentQuestion.correctAnswer;
+    console.log("🎯 선택한 답안:", answerIndex);
+    console.log("🎯 정답 인덱스:", currentQuestion.correctAnswer);
+    console.log("🎯 프론트엔드 정답 여부:", isCorrectFrontend);
+
     setSelectedAnswer(answerIndex);
     setShowResult(true);
 
@@ -95,16 +112,19 @@ export const useQuizData = () => {
 
       console.log("📝 답안 제출:", submissionData);
 
-      const result = await submitQuizResult(
-        quizState.attemptId,
-        submissionData
-      );
+      const result = await submitQuizResult(submissionData);
       console.log("✅ 제출 성공:", result);
+      console.log("🔍 백엔드 isCorrect:", result.isCorrect);
+      console.log("🔍 프론트엔드 isCorrect:", isCorrectFrontend);
+      console.log(
+        "🔍 둘이 일치하는가?",
+        result.isCorrect === isCorrectFrontend
+      );
 
       const quizResult: QuizResult = {
         quizId: currentQuestion.quizId,
         selectedIndex: answerIndex,
-        isCorrect: result.isCorrect,
+        isCorrect: result.isCorrect ?? isCorrectFrontend,
         timeSpent,
       };
 
@@ -149,13 +169,25 @@ export const useQuizData = () => {
 
       const nextQuizData = await getQuizByAttemptId(quizState.attemptId);
       console.log("✅ 다음 문제 로드 성공:", nextQuizData);
+      console.log(
+        "🎯 다음 문제 correctIndex:",
+        nextQuizData.correctIndex,
+        "타입:",
+        typeof nextQuizData.correctIndex
+      );
+      console.log(
+        "🎯 다음 문제 correctAnswer:",
+        nextQuizData.correctAnswer,
+        "타입:",
+        typeof nextQuizData.correctAnswer
+      );
 
       const nextQuestion: Question = {
         quizId: nextQuizData.quizId,
         imageUrl: nextQuizData.imageUrl,
         title: nextQuizData.title,
         options: nextQuizData.options,
-        correctAnswer: nextQuizData.correctAnswer,
+        correctAnswer: nextQuizData.correctIndex ?? nextQuizData.correctAnswer,
         explanation: nextQuizData.explanation,
       };
 

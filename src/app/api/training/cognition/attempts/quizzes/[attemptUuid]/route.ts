@@ -138,6 +138,7 @@ export async function POST(
       }
     } else {
       console.log("===== 퀴즈 결과 제출 처리 =====");
+      console.log("제출할 답안 데이터:", JSON.stringify(body, null, 2));
 
       const cookieHeader = request.headers.get("cookie");
       console.log("전달할 쿠키:", cookieHeader);
@@ -150,6 +151,12 @@ export async function POST(
         headers["Cookie"] = cookieHeader;
       }
 
+      console.log("백엔드로 전송할 최종 데이터:", {
+        url: `https://api2.irang.us/training/cognition/attempts/quizzes/${attemptUuid}`,
+        headers,
+        body: JSON.stringify(body),
+      });
+
       const response = await fetch(
         `https://api2.irang.us/training/cognition/attempts/quizzes/${attemptUuid}`,
         {
@@ -161,14 +168,33 @@ export async function POST(
       );
 
       console.log("백엔드 결과 제출 응답 상태:", response.status);
+      console.log(
+        "백엔드 응답 헤더:",
+        Object.fromEntries(response.headers.entries())
+      );
 
       if (response.ok) {
         const responseText = await response.text();
-        console.log("백엔드 결과 제출 응답:", responseText);
+        console.log("백엔드 결과 제출 원본 응답:", responseText);
 
         try {
           const resultData = JSON.parse(responseText);
-          console.log("파싱된 결과 데이터:", resultData);
+          console.log(
+            "파싱된 결과 데이터:",
+            JSON.stringify(resultData, null, 2)
+          );
+          console.log(
+            "isCorrect 값:",
+            resultData.isCorrect,
+            "타입:",
+            typeof resultData.isCorrect
+          );
+          console.log(
+            "ended 값:",
+            resultData.ended,
+            "타입:",
+            typeof resultData.ended
+          );
 
           return NextResponse.json(resultData, {
             status: 200,

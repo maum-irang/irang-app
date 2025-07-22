@@ -165,7 +165,7 @@ export const Stage1IntroPage = () => {
                     <p className="font-bold text-gray-800 text-sm font-normal">
                       예상 시간
                     </p>
-                    <p className="text-gray-600 text-sm">7-12분</p>
+                    <p className="text-gray-600 text-sm">5-8분</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -176,7 +176,7 @@ export const Stage1IntroPage = () => {
                     <p className="font-bold text-gray-800 text-sm font-normal">
                       문제 수
                     </p>
-                    <p className="text-gray-600 text-sm">8개</p>
+                    <p className="text-gray-600 text-sm">10개 맞출때까지</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -187,7 +187,7 @@ export const Stage1IntroPage = () => {
                     <p className="font-bold text-gray-800 text-sm font-normal">
                       난이도
                     </p>
-                    <p className="text-gray-600 text-sm">쉬움</p>
+                    <p className="text-gray-600 text-sm">보통</p>
                   </div>
                 </div>
               </div>
