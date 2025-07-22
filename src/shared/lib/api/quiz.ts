@@ -17,6 +17,26 @@ interface SubmitQuizResponse {
   ended: boolean;
 }
 
+interface QuizResultSummary {
+  sessionId: string;
+  totalQuestions: number;
+  correctAnswers: number;
+  accuracy: number;
+  averageTimeSeconds: number;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  quizzes: {
+    quizId: string;
+    isCorrect: boolean;
+    selectedOption: string;
+    correctOption: string;
+    timeTakenSeconds: number;
+    answeredAt: string;
+    imageUrl: string;
+  }[];
+}
+
 interface QuizQuestion {
   quizId: string;
   imageUrl: string;
@@ -189,6 +209,46 @@ export const getUserUuid = (): string | null => {
     console.error("❌ 사용자 정보 파싱 오류:", error);
     return null;
   }
+};
+
+// 퀴즈 결과 조회
+export const getQuizResult = async (
+  attemptId: string
+): Promise<QuizResultSummary> => {
+  console.log("📊 퀴즈 결과 조회:", { attemptId });
+
+  const response = await fetch(
+    `/api/training/cognition/attempts/result/${attemptId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  console.log("📡 결과 조회 응답 상태:", response.status);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("❌ 결과 조회 에러:", errorText);
+
+    let errorData;
+    try {
+      errorData = JSON.parse(errorText);
+    } catch {
+      errorData = { error: errorText };
+    }
+
+    throw new Error(
+      errorData.error ||
+        `퀴즈 결과 조회에 실패했습니다. (상태: ${response.status})`
+    );
+  }
+
+  const data = await response.json();
+  console.log("✅ 결과 조회 성공:", data);
+  return data;
 };
 
 export const createQuizQuestion = getQuizByAttemptId;

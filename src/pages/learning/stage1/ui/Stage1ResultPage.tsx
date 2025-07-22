@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Home, RotateCcw } from "lucide-react";
 import Lottie from "lottie-react";
 import celebrationAnimation from "../../../../../public/animations/celebration.json";
+import { getQuizResult } from "@/shared/lib/api/quiz";
 
 interface UserInfo {
   id: string;
@@ -11,15 +12,31 @@ interface UserInfo {
   role: string;
 }
 
+interface QuizResultData {
+  sessionId: string;
+  totalQuestions: number;
+  correctAnswers: number;
+  accuracy: number;
+  averageTimeSeconds: number;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  quizzes: any[];
+}
+
 export const Stage1ResultPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [displayText, setDisplayText] = useState("");
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [fullText, setFullText] = useState("");
+  const [quizResult, setQuizResult] = useState<QuizResultData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const score = 4;
-  const total = 5;
-  const percentage = Math.round((score / total) * 100);
+  const score = quizResult?.correctAnswers || 0;
+  const total = quizResult?.totalQuestions || 0;
+  const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
   const passThreshold = 80;
   const isPassed = percentage >= passThreshold;
 
@@ -29,6 +46,39 @@ export const Stage1ResultPage = () => {
       setUserInfo(JSON.parse(storedUserInfo));
     }
   }, []);
+
+  useEffect(() => {
+    const loadQuizResult = async () => {
+      if (!searchParams) {
+        setError("URL 파라미터를 읽을 수 없습니다.");
+        setIsLoading(false);
+        return;
+      }
+
+      const attemptId = searchParams.get("attemptId");
+      if (!attemptId) {
+        setError("attemptId가 없습니다.");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        console.log("📊 결과 페이지에서 데이터 로드 시작:", attemptId);
+        const result = await getQuizResult(attemptId);
+        console.log("✅ 결과 데이터 로드 성공:", result);
+        setQuizResult(result);
+      } catch (error) {
+        console.error("❌ 결과 데이터 로드 실패:", error);
+        setError(
+          error instanceof Error ? error.message : "결과 조회에 실패했습니다."
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadQuizResult();
+  }, [searchParams]);
 
   const getUserName = () => {
     if (!userInfo?.name) return "마음아";
@@ -90,6 +140,37 @@ export const Stage1ResultPage = () => {
       router.push("/home?showCompleteAnimation=true");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-green-100 p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
+          <p className="text-xl font-bold">결과를 불러오고 있어요...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-green-100 p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">😅</div>
+          <p className="text-xl font-bold mb-4 text-red-600">
+            결과를 불러올 수 없어요
+          </p>
+          <p className="text-lg mb-6 text-gray-700">{error}</p>
+          <button
+            onClick={() => router.push("/learning/stage1/quiz")}
+            className="bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full transition-colors"
+          >
+            다시 시도하기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

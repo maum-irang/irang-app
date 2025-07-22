@@ -16,10 +16,10 @@ export const QuizPage = () => {
   } = useQuizData();
 
   useEffect(() => {
-    if (quizState.isCompleted) {
-      router.push("/learning/stage1/result");
+    if (quizState.isCompleted && quizState.attemptId) {
+      router.push(`/learning/stage1/result?attemptId=${quizState.attemptId}`);
     }
-  }, [quizState.isCompleted, router]);
+  }, [quizState.isCompleted, quizState.attemptId, router]);
 
   const handleAnswerSelect = (answerIndex: number) => {
     selectAnswer(answerIndex);
