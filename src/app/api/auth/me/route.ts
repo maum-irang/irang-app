@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const authHeader = request.headers.get("Authorization");
     console.log("받은 Authorization 헤더:", authHeader);
 
-    const response = await fetch("https://api.irang.us/auth/me", {
+    const response = await fetch("https://api2.irang.us/auth/me", {
       method: "GET",
       headers: {
         Accept: "*/*",

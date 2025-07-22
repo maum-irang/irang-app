@@ -14,13 +14,13 @@ export async function POST(request: Request) {
     };
 
     console.log("📤 백엔드로 보낼 헤더:", headers);
-    console.log("🌐 요청 URL:", "https://api.irang.us/attendance/check");
+    console.log("🌐 요청 URL:", "https://api2.irang.us/attendance/check");
 
     let response;
 
     try {
       console.log("🔄 방법 1: 빈 객체로 시도");
-      response = await fetch("https://api.irang.us/attendance/check", {
+      response = await fetch("https://api2.irang.us/attendance/check", {
         method: "POST",
         headers,
         body: JSON.stringify({}),
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       if (!response.ok) {
         console.log("❌ 방법 2 실패, 방법 3 시도");
 
-        response = await fetch("https://api.irang.us/attendance/check", {
+        response = await fetch("https://api2.irang.us/attendance/check", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

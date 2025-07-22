@@ -1,17 +1,36 @@
 export interface Question {
-  id: number;
+  quizId: string;
   imageUrl: string;
-  emotion: string;
+  title: string;
   options: string[];
-  correctAnswer: number;
+  correctAnswer?: number;
   explanation?: string;
 }
 
 export interface QuizResult {
-  questionId: number;
-  selectedAnswer: number;
-  isCorrect: boolean;
-  timeSpent: number;
+  quizId: string;
+  selectedIndex: number;
+  isCorrect?: boolean;
+  timeSpent?: number;
+}
+
+export interface FinalQuizResult {
+  sessionId: string;
+  totalQuestions: number;
+  correctAnswers: number;
+  accuracy: number;
+  averageTimeSeconds: number;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  quizzes: {
+    quizId: string;
+    isCorrect: boolean;
+    selectedOption: string;
+    correctOption: string;
+    timeTakenSeconds: number;
+    answeredAt: string;
+  }[];
 }
 
 export interface QuizState {
@@ -22,4 +41,8 @@ export interface QuizState {
   score: number;
   startTime: Date;
   endTime?: Date;
+  isLoading: boolean;
+  error?: string;
+  attemptId?: string;
+  finalResult?: FinalQuizResult;
 }

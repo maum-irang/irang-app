@@ -26,11 +26,11 @@ export async function GET(request: NextRequest) {
 
     console.log(
       "📤 백엔드 요청 URL:",
-      `https://api.irang.us/attendance/monthly?childId=${childId}&year=${year}&month=${month}`
+      `https://api2.irang.us/attendance/monthly?childId=${childId}&year=${year}&month=${month}`
     );
 
     const response = await fetch(
-      `https://api.irang.us/attendance/monthly?childId=${childId}&year=${year}&month=${month}`,
+      `https://api2.irang.us/attendance/monthly?childId=${childId}&year=${year}&month=${month}`,
       {
         method: "GET",
         headers,
