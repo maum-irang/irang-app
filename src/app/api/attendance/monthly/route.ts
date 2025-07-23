@@ -4,10 +4,12 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const childId = url.searchParams.get("childId");
-    
+
     const currentDate = new Date();
-    const year = url.searchParams.get("year") || currentDate.getFullYear().toString();
-    const month = url.searchParams.get("month") || (currentDate.getMonth() + 1).toString();
+    const year =
+      url.searchParams.get("year") || currentDate.getFullYear().toString();
+    const month =
+      url.searchParams.get("month") || (currentDate.getMonth() + 1).toString();
 
     if (!childId) {
       return NextResponse.json(

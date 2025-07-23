@@ -63,7 +63,6 @@ export const AttendancePage = () => {
   useEffect(() => {
     const loadUserInfo = () => {
       try {
-
         const storedUserInfo = localStorage.getItem("userInfo");
         if (storedUserInfo) {
           const userData = JSON.parse(storedUserInfo);
@@ -82,11 +81,10 @@ export const AttendancePage = () => {
     if (!userInfo?.id) return;
 
     try {
-
       const now = new Date();
-      const koreaTime = new Date(now.getTime() + (9 * 60 * 60 * 1000))
+      const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
       const year = koreaTime.getFullYear().toString();
-      const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
+      const month = (koreaTime.getMonth() + 1).toString().padStart(2, "0");
 
       const response = await fetch(
         `/api/attendance/monthly?childId=${userInfo.id}&year=${year}&month=${month}`
@@ -235,8 +233,6 @@ export const AttendancePage = () => {
     setShowStampAnimation(true);
 
     try {
-
-
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
@@ -246,29 +242,26 @@ export const AttendancePage = () => {
         headers,
       });
 
-              if (response.ok) {
-          await response.json();
+      if (response.ok) {
+        await response.json();
 
-
-        
         moveToNextStamp();
 
         setTimeout(async () => {
-
           try {
             await fetchMonthlyAttendance();
           } catch {
             // Silent error handling
           }
         }, 5000);
-              } else {
-          try {
-            await response.json();
-          } catch {
-            // Silent error handling
-          }
-          alert("출석체크에 실패했습니다. 다시 시도해주세요.");
+      } else {
+        try {
+          await response.json();
+        } catch {
+          // Silent error handling
         }
+        alert("출석체크에 실패했습니다. 다시 시도해주세요.");
+      }
     } catch {
       alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     }

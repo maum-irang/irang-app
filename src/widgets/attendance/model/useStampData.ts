@@ -112,12 +112,10 @@ export const useStampData = () => {
         completedCount: finalStamps.filter(s => s.completed).length,
         todayStampId: nextStamp?.id || null,
       }));
-
     }
   };
 
   const initializeStampsFromAttendanceData = (presentDates: string[]) => {
-
     const stampPositions = [
       { top: "15%", left: "20%" },
       { top: "15%", left: "50%" },
@@ -168,7 +166,6 @@ export const useStampData = () => {
       totalCount: stampsWithTurtle.length,
       todayStampId: turtlePosition,
     });
-
   };
 
   useEffect(() => {
