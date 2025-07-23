@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Stage2ResultPage } from "@/components/learning/stage2/ui/Stage2ResultPage";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (

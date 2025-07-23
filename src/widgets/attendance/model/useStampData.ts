@@ -116,7 +116,9 @@ export const useStampData = () => {
         todayStampId: nextStamp?.id || null,
       }));
 
-      console.log(`🐢 거북이 이동: ${currentTurtleStamp.id}일차 → ${nextStamp?.id || '완료'}일차`);
+      console.log(
+        `🐢 거북이 이동: ${currentTurtleStamp.id}일차 → ${nextStamp?.id || "완료"}일차`
+      );
     }
   };
 
