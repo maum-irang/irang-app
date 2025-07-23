@@ -603,7 +603,7 @@ export const AttendancePage = () => {
                     오답노트
                   </p>
                 </button>
-                <button className="bg-accent-transparent rounded-3xl p-6 px-10 text-center min-h-[140px] flex flex-col justify-center w-full">
+                <button className="bg-accent-transparent rounded-3xl p-6 px-11 text-center min-h-[140px] flex flex-col justify-center w-full">
                   <div className="mb-3 text-accent-primary">
                     <BookOpen size={40} className="mx-auto" strokeWidth={3} />
                   </div>
