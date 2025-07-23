@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Layers, Stamp, Notebook, Mic, Camera } from "lucide-react";
+import { Layers, Stamp, Notebook, Mic, Camera, BookOpen } from "lucide-react";
 import Lottie from "lottie-react";
 import checkAnimation from "../../../../public/animations/check.json";
 import stampAnimation from "../../../../public/animations/stamp.json";
@@ -565,7 +565,7 @@ export const AttendancePage = () => {
               <h2 className="text-2xl font-black text-gray-800 mb-6 relative z-10 font-normal">
                 한 단계 <span className="text-blue-400">UP!</span>
               </h2>
-              <div className="grid grid-cols-3 gap-6 relative z-10">
+              <div className="grid grid-cols-3 gap-3 relative z-10">
                 <div className="relative">
                   <button
                     onClick={handleAttendanceClick}
@@ -595,21 +595,24 @@ export const AttendancePage = () => {
                     </div>
                   )}
                 </div>
-                <div className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full">
+                <button className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full">
                   <div className="mb-3 text-accent-primary">
                     <Notebook size={40} className="mx-auto" strokeWidth={3} />
                   </div>
                   <p className="text-lg font-black text-gray-800 font-normal">
                     오답노트
                   </p>
-                </div>
-                <div className="bg-accent-transparent rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center w-full">
-                  <p className="text-xl font-black text-accent-primary font-normal">
-                    COMING
+                </button>
+                <button className="bg-accent-transparent rounded-3xl p-6 px-10 text-center min-h-[140px] flex flex-col justify-center w-full">
+                  <div className="mb-3 text-accent-primary">
+                    <BookOpen size={40} className="mx-auto" strokeWidth={3} />
+                  </div>
+                  <p className="text-lg font-black text-gray-800 font-normal">
+                    데일리
                     <br />
-                    SOON
+                    학습하기
                   </p>
-                </div>
+                </button>
               </div>
             </div>
           </div>
