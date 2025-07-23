@@ -35,7 +35,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = "small",
   leftIcon = <ExpandIcon />,
   rightIcon = <ExpandIcon />,
-  onClick = () => console.log("Button clicked!"),
+  onClick = () => {},
   disabled = false,
   className = "",
 }) => {

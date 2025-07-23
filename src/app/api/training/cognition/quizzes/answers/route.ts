@@ -36,8 +36,7 @@ export async function POST(request: NextRequest) {
             "Content-Type": "application/json",
           },
         });
-      } catch (parseError) {
-        console.error("JSON 파싱 오류:", parseError);
+      } catch {
         return NextResponse.json(
           { error: "응답 파싱 오류", originalResponse: responseText },
           { status: 500 }
@@ -52,7 +51,6 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error) {
-    console.error("답안 제출 API 프록시 오류:", error);
     return NextResponse.json(
       { error: "서버 오류가 발생했습니다.", details: String(error) },
       { status: 500 }

@@ -50,8 +50,6 @@ interface QuizQuestion {
 export const startCognitionSession = async (
   childUuid: string
 ): Promise<StartSessionResponse> => {
-  console.log("🚀 세션 시작 요청:", { childUuid });
-
   const response = await fetch(
     `/api/training/cognition/sessions/${childUuid}`,
     {
@@ -62,11 +60,8 @@ export const startCognitionSession = async (
     }
   );
 
-  console.log("📡 세션 시작 응답 상태:", response.status);
-
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("❌ 세션 시작 API 에러 응답:", errorText);
 
     let errorData;
     try {
@@ -81,15 +76,12 @@ export const startCognitionSession = async (
   }
 
   const data = await response.json();
-  console.log("✅ 세션 시작 성공:", data);
   return data;
 };
 
 export const getQuizByAttemptId = async (
   attemptUuid: string
 ): Promise<QuizQuestion> => {
-  console.log("🎯 퀴즈 가져오기 요청:", { attemptUuid });
-
   try {
     const response = await fetch(
       `/api/training/cognition/attempts/quizzes/${attemptUuid}`,
@@ -102,11 +94,8 @@ export const getQuizByAttemptId = async (
       }
     );
 
-    console.log("📡 퀴즈 가져오기 응답 상태:", response.status);
-
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("❌ 퀴즈 가져오기 에러 응답:", errorText);
 
       let errorData;
       try {
@@ -122,10 +111,8 @@ export const getQuizByAttemptId = async (
     }
 
     const data = await response.json();
-    console.log("✅ 퀴즈 가져오기 성공:", data);
     return data;
   } catch (error) {
-    console.error("❌ 퀴즈 가져오기 전체 에러:", error);
     if (error instanceof Error) {
       throw error;
     }
@@ -136,8 +123,6 @@ export const getQuizByAttemptId = async (
 export const submitQuizResult = async (
   quizData: QuizSubmissionData
 ): Promise<SubmitQuizResponse> => {
-  console.log("📝 퀴즈 결과 제출:", { quizData });
-
   const response = await fetch(`/api/training/cognition/quizzes/answers`, {
     method: "POST",
     headers: {
@@ -146,11 +131,8 @@ export const submitQuizResult = async (
     body: JSON.stringify(quizData),
   });
 
-  console.log("📡 결과 제출 응답 상태:", response.status);
-
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("❌ 결과 제출 에러:", errorText);
 
     let errorData;
     try {
@@ -166,47 +148,36 @@ export const submitQuizResult = async (
   }
 
   const data = await response.json();
-  console.log("✅ 결과 제출 성공:", data);
   return data;
 };
 
 export const getUserUuid = (): string | null => {
   if (typeof window === "undefined") {
-    console.log("⚠️ 서버 사이드에서 호출됨");
     return null;
   }
 
-  console.log("👤 localStorage에서 사용자 정보 조회 시작");
-
   const userInfo = localStorage.getItem("userInfo");
-  console.log("👤 localStorage 원본 데이터:", userInfo);
 
   if (!userInfo) {
-    console.log("❌ localStorage에 userInfo가 없습니다");
     return null;
   }
 
   try {
     const userData = JSON.parse(userInfo);
-    console.log("👤 파싱된 사용자 데이터:", JSON.stringify(userData, null, 2));
 
     // id 필드 우선 확인
     if (userData.id) {
-      console.log("✅ userData.id 찾음:", userData.id);
       return userData.id;
     }
 
     // 다른 필드들도 확인
     const uuid = userData.uuid || userData.childId || userData.userId;
     if (uuid) {
-      console.log("✅ 대체 UUID 필드 찾음:", uuid);
       return uuid;
     }
 
-    console.log("❌ 어떤 UUID 필드도 찾을 수 없음");
     return null;
-  } catch (error) {
-    console.error("❌ 사용자 정보 파싱 오류:", error);
+  } catch {
     return null;
   }
 };
@@ -215,8 +186,6 @@ export const getUserUuid = (): string | null => {
 export const getQuizResult = async (
   attemptId: string
 ): Promise<QuizResultSummary> => {
-  console.log("📊 퀴즈 결과 조회:", { attemptId });
-
   const response = await fetch(
     `/api/training/cognition/attempts/result/${attemptId}`,
     {
@@ -227,11 +196,8 @@ export const getQuizResult = async (
     }
   );
 
-  console.log("📡 결과 조회 응답 상태:", response.status);
-
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("❌ 결과 조회 에러:", errorText);
 
     let errorData;
     try {
@@ -247,7 +213,6 @@ export const getQuizResult = async (
   }
 
   const data = await response.json();
-  console.log("✅ 결과 조회 성공:", data);
   return data;
 };
 

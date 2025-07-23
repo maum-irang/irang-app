@@ -63,8 +63,7 @@ const StampRoadmap: React.FC<StampRoadmapProps> = ({
           "../../../../../public/animations/turtle.json"
         );
         setTurtleAnimation(animationData.default);
-      } catch (error) {
-        console.warn("거북이 애니메이션 로드 실패:", error);
+      } catch {
         setTurtleAnimation("css-fallback");
       }
     };

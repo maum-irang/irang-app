@@ -69,8 +69,8 @@ export const AttendancePage = () => {
           const userData = JSON.parse(storedUserInfo);
           setUserInfo(userData);
         }
-      } catch (error) {
-        console.error("사용자 정보 로드 중 오류:", error);
+      } catch {
+        // Silent error handling
       } finally {
         setIsLoadingUser(false);
       }
@@ -97,11 +97,9 @@ export const AttendancePage = () => {
         setMonthlyAttendance(data);
 
         updateStampsFromAttendanceData(data);
-      } else {
-        console.error("❌ 월별 출석 데이터 실패:", response.status);
       }
-    } catch (error) {
-      console.error("월별 출석 데이터 조회 오류:", error);
+    } catch {
+      // Silent error handling
     } finally {
       setIsLoadingAttendance(false);
     }
@@ -145,8 +143,7 @@ export const AttendancePage = () => {
           "../../../../public/animations/click.json"
         );
         setClickAnimation(animationData.default);
-      } catch (error) {
-        console.warn("클릭 애니메이션 로드 실패, CSS 애니메이션 사용:", error);
+      } catch {
         setClickAnimation("css-fallback");
       }
     };
@@ -181,8 +178,7 @@ export const AttendancePage = () => {
         "../../../../public/animations/click.json"
       );
       setClickAnimation(animationData.default);
-    } catch (error) {
-      console.warn("클릭 애니메이션 로드 실패, CSS 애니메이션 사용:", error);
+    } catch {
       setClickAnimation("css-fallback");
     }
   };
@@ -261,22 +257,19 @@ export const AttendancePage = () => {
 
           try {
             await fetchMonthlyAttendance();
-          } catch (error) {
-            console.error("❌ 백엔드 동기화 오류:", error);
+          } catch {
+            // Silent error handling
           }
         }, 5000);
-      } else {
-        console.error("출석체크 실패:", response.status);
-        try {
-          const errorData = await response.json();
-          console.error("에러 내용:", errorData);
-        } catch {
-          console.error("에러 응답 파싱 실패");
+              } else {
+          try {
+            await response.json();
+          } catch {
+            // Silent error handling
+          }
+          alert("출석체크에 실패했습니다. 다시 시도해주세요.");
         }
-        alert("출석체크에 실패했습니다. 다시 시도해주세요.");
-      }
-    } catch (error) {
-      console.error("출석체크 요청 중 오류:", error);
+    } catch {
       alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };

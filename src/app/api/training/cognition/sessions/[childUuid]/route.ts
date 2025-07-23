@@ -8,7 +8,6 @@ export async function POST(
   try {
     const cookieHeader = request.headers.get("cookie");
 
-    let userId = null;
     if (cookieHeader) {
       const cookies = cookieHeader
         .split(";")
@@ -20,15 +19,12 @@ export async function POST(
 
       if (cookies.userInfo) {
         try {
-          const userInfo = JSON.parse(decodeURIComponent(cookies.userInfo));
-          userId = userInfo.id;
+          JSON.parse(decodeURIComponent(cookies.userInfo));
         } catch {
-          console.log("쿠키에서 userInfo 파싱 실패");
+          // Silent error handling
         }
       }
     }
-
-    console.log("쿠키에서 추출한 userId:", userId);
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -60,8 +56,7 @@ export async function POST(
             "Content-Type": "application/json",
           },
         });
-      } catch (parseError) {
-        console.error("JSON 파싱 오류:", parseError);
+      } catch {
         return NextResponse.json(
           { error: "응답 파싱 오류", originalResponse: responseText },
           { status: 500 }
@@ -76,7 +71,6 @@ export async function POST(
       );
     }
   } catch (error) {
-    console.error("인지 훈련 세션 시작 API 프록시 오류:", error);
     return NextResponse.json(
       { error: "서버 오류가 발생했습니다.", details: String(error) },
       { status: 500 }

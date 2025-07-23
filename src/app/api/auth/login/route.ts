@@ -37,14 +37,12 @@ export async function POST(request: NextRequest) {
 
       return nextResponse;
     } else {
-      console.error("❌ 백엔드 로그인 실패:", responseText);
       return NextResponse.json(
         { error: "로그인에 실패했습니다.", details: responseText },
         { status: response.status }
       );
     }
-  } catch (error) {
-    console.error("로그인 API 프록시 오류:", error);
+  } catch {
     return NextResponse.json(
       { error: "서버 오류가 발생했습니다." },
       { status: 500 }

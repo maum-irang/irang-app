@@ -76,7 +76,6 @@ export const Stage1ResultPage = () => {
         const result = await getQuizResult(attemptId);
         setQuizResult(result);
       } catch (error) {
-        console.error("❌ 결과 데이터 로드 실패:", error);
         setError(
           error instanceof Error ? error.message : "결과 조회에 실패했습니다."
         );
