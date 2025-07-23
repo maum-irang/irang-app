@@ -20,15 +20,11 @@ export async function GET(
       }
     );
 
-    console.log("백엔드 응답 상태:", response.status);
-
     if (response.ok) {
       const responseText = await response.text();
-      console.log("백엔드 응답:", responseText);
 
       try {
         const quizData = JSON.parse(responseText);
-        console.log("파싱된 퀴즈 데이터:", quizData);
 
         return NextResponse.json(quizData, {
           status: 200,
@@ -45,7 +41,6 @@ export async function GET(
       }
     } else {
       const errorText = await response.text();
-      console.log("API 오류 응답:", errorText);
 
       return NextResponse.json(
         { error: "퀴즈 문제 가져오기에 실패했습니다.", details: errorText },
@@ -66,8 +61,6 @@ export async function POST(
   { params }: { params: Promise<{ attemptUuid: string }> }
 ) {
   try {
-    console.log("===== POST 요청 수신 =====");
-
     const { attemptUuid } = await params;
     console.log("attemptUuid:", attemptUuid);
 

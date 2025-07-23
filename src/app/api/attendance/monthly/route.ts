@@ -6,14 +6,21 @@ export async function GET(request: NextRequest) {
 
     const url = new URL(request.url);
     const childId = url.searchParams.get("childId");
-    const year = url.searchParams.get("year");
-    const month = url.searchParams.get("month");
+    
+
+    const currentDate = new Date();
+    const year = url.searchParams.get("year") || currentDate.getFullYear().toString();
+    const month = url.searchParams.get("month") || (currentDate.getMonth() + 1).toString();
 
     console.log("요청 파라미터:", { childId, year, month });
+    console.log("현재 날짜 기본값 적용:", { 
+      현재년도: currentDate.getFullYear(), 
+      현재월: currentDate.getMonth() + 1 
+    });
 
-    if (!childId || !year || !month) {
+    if (!childId) {
       return NextResponse.json(
-        { error: "childId, year, month 파라미터가 필요합니다." },
+        { error: "childId 파라미터가 필요합니다." },
         { status: 400 }
       );
     }

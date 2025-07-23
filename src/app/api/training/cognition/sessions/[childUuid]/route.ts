@@ -6,10 +6,7 @@ export async function POST(
   { params }: { params: Promise<{ childUuid: string }> }
 ) {
   try {
-    console.log("===== 인지 훈련 세션 시작 API 호출 =====");
-
     const cookieHeader = request.headers.get("cookie");
-    console.log("전달할 쿠키:", cookieHeader);
 
     let userId = null;
     if (cookieHeader) {
@@ -51,19 +48,11 @@ export async function POST(
       }
     );
 
-    console.log("백엔드 응답 상태:", response.status);
-    console.log(
-      "백엔드 응답 헤더:",
-      Object.fromEntries(response.headers.entries())
-    );
-
     if (response.ok) {
       const responseText = await response.text();
-      console.log("백엔드 응답:", responseText);
 
       try {
         const sessionData = JSON.parse(responseText);
-        console.log("파싱된 세션 데이터:", sessionData);
 
         return NextResponse.json(sessionData, {
           status: 200,
@@ -80,7 +69,6 @@ export async function POST(
       }
     } else {
       const errorText = await response.text();
-      console.log("API 오류 응답:", errorText);
 
       return NextResponse.json(
         { error: "세션 시작에 실패했습니다.", details: errorText },

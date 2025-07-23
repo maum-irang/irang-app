@@ -63,15 +63,11 @@ export const AttendancePage = () => {
   useEffect(() => {
     const loadUserInfo = () => {
       try {
-        console.log("=== 사용자 정보 로드 시작 ===");
 
         const storedUserInfo = localStorage.getItem("userInfo");
         if (storedUserInfo) {
           const userData = JSON.parse(storedUserInfo);
-          console.log("저장된 사용자 정보:", userData);
           setUserInfo(userData);
-        } else {
-          console.log("저장된 사용자 정보가 없습니다");
         }
       } catch (error) {
         console.error("사용자 정보 로드 중 오류:", error);
@@ -86,17 +82,11 @@ export const AttendancePage = () => {
     if (!userInfo?.id) return;
 
     try {
-      console.log("===== 월별 출석 데이터 조회 시작 =====");
 
-      const currentDate = new Date();
-      const year = currentDate.getFullYear().toString();
-      const month = (currentDate.getMonth() + 1).toString();
-
-      console.log("🔍 요청 파라미터:", {
-        childId: userInfo.id,
-        year,
-        month,
-      });
+      const now = new Date();
+      const koreaTime = new Date(now.getTime() + (9 * 60 * 60 * 1000))
+      const year = koreaTime.getFullYear().toString();
+      const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
 
       const response = await fetch(
         `/api/attendance/monthly?childId=${userInfo.id}&year=${year}&month=${month}`
@@ -104,7 +94,6 @@ export const AttendancePage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("✅ 월별 출석 데이터:", data);
         setMonthlyAttendance(data);
 
         updateStampsFromAttendanceData(data);
@@ -127,20 +116,12 @@ export const AttendancePage = () => {
   const updateStampsFromAttendanceData = (
     attendanceData: MonthlyAttendanceData
   ) => {
-    console.log("🎯 실제 출석 데이터로 스탬프 및 거북이 위치 업데이트");
-    console.log("전체 출석 데이터:", attendanceData);
-
     let presentDates = attendanceData.presentDates || [];
 
     if (presentDates.length === 0 && attendanceData.attendanceRecords) {
-      console.log("🔍 presentDates가 비어있음, attendanceRecords에서 추출");
       presentDates = attendanceData.attendanceRecords
         .filter((record: AttendanceRecord) => record.isPresent === true)
         .map((record: AttendanceRecord) => record.date);
-
-      console.log("📅 attendanceRecords에서 추출한 출석 날짜들:", presentDates);
-    } else {
-      console.log("📅 presentDates에서 가져온 출석 날짜들:", presentDates);
     }
 
     initializeStampsFromAttendanceData(presentDates);
@@ -258,30 +239,32 @@ export const AttendancePage = () => {
     setShowStampAnimation(true);
 
     try {
-      console.log("===== 출석체크 시작 =====");
-      console.log("🎯 단순 도장 찍기 - 백엔드에서 자동 데이터 생성");
+
 
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-
-      console.log("📤 요청 헤더:", headers);
 
       const response = await fetch("/api/attendance/check", {
         method: "POST",
         headers,
       });
 
-      if (response.ok) {
-        const attendanceData = await response.json();
-        console.log("출석체크 성공:", attendanceData);
-        console.log("출석 ID:", attendanceData.attendanceId);
-        console.log("출석 날짜:", attendanceData.date);
-        console.log("출석 상태:", attendanceData.isPresent);
+              if (response.ok) {
+          await response.json();
 
-        setTimeout(() => {
-          moveToNextStamp();
-        }, 2000);
+
+        
+        moveToNextStamp();
+
+        setTimeout(async () => {
+
+          try {
+            await fetchMonthlyAttendance();
+          } catch (error) {
+            console.error("❌ 백엔드 동기화 오류:", error);
+          }
+        }, 5000);
       } else {
         console.error("출석체크 실패:", response.status);
         try {
@@ -316,32 +299,21 @@ export const AttendancePage = () => {
   };
 
   const getUserDisplayName = () => {
-    console.log("getUserDisplayName 호출:");
-    console.log("- isLoadingUser:", isLoadingUser);
-    console.log("- userInfo:", userInfo);
-    console.log("- userInfo?.name:", userInfo?.name);
-
     if (isLoadingUser) {
-      console.log("-> 로딩 중 반환");
       return "로딩중...";
     }
     if (!userInfo || !userInfo.name) {
-      console.log("-> userInfo 없음, 기본값 반환");
       return "마음아";
     }
     const name = userInfo.name;
     if (name.length > 1 && /^[가-힣]+$/.test(name)) {
       const firstName = name.substring(1);
-      console.log("- 한국어 이름 처리:", name, "->", firstName);
       const result = `${firstName}아`;
-      console.log("-> 최종 결과:", result);
       return result;
     }
 
     const firstName = name.split(" ")[0];
-    console.log("- 영어 이름 처리:", firstName);
     const result = `${firstName}아`;
-    console.log("-> 최종 결과:", result);
     return result;
   };
 

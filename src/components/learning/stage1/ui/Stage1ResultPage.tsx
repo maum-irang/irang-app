@@ -73,9 +73,7 @@ export const Stage1ResultPage = () => {
       }
 
       try {
-        console.log("📊 결과 페이지에서 데이터 로드 시작:", attemptId);
         const result = await getQuizResult(attemptId);
-        console.log("✅ 결과 데이터 로드 성공:", result);
         setQuizResult(result);
       } catch (error) {
         console.error("❌ 결과 데이터 로드 실패:", error);

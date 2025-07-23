@@ -55,7 +55,7 @@ export const Stage2QuizPage = () => {
   };
 
   const playTTS = () => {
-    console.log("TTS 재생:", displayText);
+              // TTS 재생
   };
 
   useEffect(() => {
