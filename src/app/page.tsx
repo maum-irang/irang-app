@@ -37,26 +37,11 @@ export default function LoginPage() {
         });
 
         if (response.status === 201) {
-          console.log("✅ 로그인 성공!");
-
           const loginData = await response.json();
-          console.log("📥 로그인 응답 전체:", loginData);
-          console.log("📄 응답의 모든 키:", Object.keys(loginData));
 
           if (loginData.id && loginData.name) {
             localStorage.setItem("userInfo", JSON.stringify(loginData));
-            console.log("✅ 사용자 정보 저장 완료:", loginData);
-          } else {
-            console.log("❌ 사용자 정보 불완전:", {
-              id: loginData.id,
-              name: loginData.name,
-            });
           }
-
-          console.log("🔍 토큰 찾는 중...");
-          console.log("- loginData.token:", loginData.token);
-          console.log("- loginData.accessToken:", loginData.accessToken);
-          console.log("- loginData.access_token:", loginData.access_token);
 
           if (
             loginData.token ||
@@ -68,24 +53,16 @@ export default function LoginPage() {
               loginData.accessToken ||
               loginData.access_token;
             localStorage.setItem("authToken", token);
-            console.log("✅ 토큰 저장 완료:", token);
-
-            const savedToken = localStorage.getItem("authToken");
-            console.log("💾 저장된 토큰 확인:", savedToken);
-          } else {
-            console.log("❌ 로그인 응답에 토큰이 없습니다!");
           }
 
           setTimeout(() => {
             router.push("/home");
           }, 2000);
         } else {
-          console.error("로그인 실패:", response.status);
           setShowCelebration(false);
           alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
         }
-      } catch (error) {
-        console.error("로그인 요청 중 오류:", error);
+      } catch {
         setShowCelebration(false);
         alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
