@@ -34,7 +34,7 @@ export const Stage3QuizPage = () => {
 
   useEffect(() => {
     setIsNextEnabled(false);
-    
+
     const timer = setTimeout(() => {
       setIsNextEnabled(true);
     }, 4000);
@@ -141,8 +141,8 @@ export const Stage3QuizPage = () => {
               onClick={handleNext}
               disabled={!isNextEnabled}
               className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 font-normal ${
-                isNextEnabled 
-                  ? "bg-blue-500 text-white active:scale-95 hover:bg-blue-600 cursor-pointer" 
+                isNextEnabled
+                  ? "bg-blue-500 text-white active:scale-95 hover:bg-blue-600 cursor-pointer"
                   : "bg-gray-400 text-gray-600 cursor-not-allowed"
               }`}
               style={{
@@ -159,12 +159,7 @@ export const Stage3QuizPage = () => {
                     )
                   ) : null}
                 </div>
-                <span>
-                  {!isNextEnabled 
-                      ? "다음" 
-                      : "완료"
-                  }
-                </span>
+                <span>{!isNextEnabled ? "다음" : "완료"}</span>
               </div>
             </button>
           </div>
