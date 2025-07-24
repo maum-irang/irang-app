@@ -8,19 +8,57 @@ import stampAnimation from "../../../../public/animations/stamp.json";
 import StampRoadmap from "./components/StampRoadmap";
 import { useStampData } from "../model/useStampData";
 
+const getInitialAnimationState = () => {
+  if (typeof window === 'undefined') return { study: false, attendance: false, stamp: false, stampCompleted: false };
+  
+  try {
+    const saved = localStorage.getItem('learningAnimationState');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return {
+        study: parsed.showStudyAnimation || false,
+        attendance: parsed.showAttendanceAnimation || false,
+        stamp: parsed.showStampAnimation || false,
+        stampCompleted: parsed.stampAnimationCompleted || false,
+      };
+    }
+  } catch (error) {
+    console.error('Failed to load initial animation state:', error);
+  }
+  return { study: false, attendance: false, stamp: false, stampCompleted: false };
+};
+
 export const AttendancePage = () => {
   const router = useRouter();
-  const [showStudyAnimation, setShowStudyAnimation] = useState(false);
-  const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
+  const initialState = getInitialAnimationState();
+  
+  const [showStudyAnimation, setShowStudyAnimation] = useState(initialState.study);
+  const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(initialState.attendance);
   const [showNotesAnimation] = useState(false);
 
-  const [showStampAnimation, setShowStampAnimation] = useState(false);
+  const [showStampAnimation, setShowStampAnimation] = useState(initialState.stamp);
   const [showClickAnimation, setShowClickAnimation] = useState(false);
   const [clickAnimation, setClickAnimation] = useState<object | string | null>(
     null
   );
   const [, setLastClickTime] = useState(Date.now());
   const [clickTimeout, setClickTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  const saveAnimationState = (studyAnim: boolean, attendanceAnim: boolean, stampAnim: boolean) => {
+    try {
+      const stateToSave = {
+        showStudyAnimation: studyAnim,
+        showAttendanceAnimation: attendanceAnim,
+        showStampAnimation: stampAnim,
+      };
+      console.log('Saving animation state to localStorage:', stateToSave);
+      localStorage.setItem('learningAnimationState', JSON.stringify(stateToSave));
+    } catch (error) {
+      console.error('Failed to save animation state:', error);
+    }
+  };
+
+
 
   const {
     stamps,
@@ -32,14 +70,23 @@ export const AttendancePage = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("showCompleteAnimation") === "true") {
+    const hasStage1Complete = urlParams.get("showCompleteAnimation") === "true";
+    const hasStage2Complete = urlParams.get("showStage2CompleteAnimation") === "true";
+    
+    if (hasStage1Complete) {
       setShowAttendanceAnimation(true);
       window.history.replaceState({}, "", window.location.pathname);
     }
 
-    if (urlParams.get("showStage2CompleteAnimation") === "true") {
+    if (hasStage2Complete) {
       setShowStudyAnimation(true);
       window.history.replaceState({}, "", window.location.pathname);
+    }
+
+    if (hasStage1Complete || hasStage2Complete) {
+      setTimeout(() => {
+        saveAnimationState(hasStage2Complete, hasStage1Complete, false);
+      }, 100);
     }
 
     const loadClickAnimation = async () => {
@@ -76,6 +123,11 @@ export const AttendancePage = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    console.log('Animation state changed:', { showStudyAnimation, showAttendanceAnimation, showStampAnimation });
+    saveAnimationState(showStudyAnimation, showAttendanceAnimation, showStampAnimation);
+  }, [showStudyAnimation, showAttendanceAnimation, showStampAnimation]);
 
   const loadClickAnimation = async () => {
     try {
