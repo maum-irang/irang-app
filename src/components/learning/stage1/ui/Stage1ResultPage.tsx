@@ -47,7 +47,7 @@ export const Stage1ResultPage = () => {
   const score = quizResult?.correctAnswers || 0;
   const total = quizResult?.totalQuestions || 0;
   const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
-  const passThreshold = 80;
+  const passThreshold = 60;
   const isPassed = percentage >= passThreshold;
 
   useEffect(() => {
