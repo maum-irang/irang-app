@@ -10,6 +10,7 @@ export const Stage3QuizPage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
+  const [isNextEnabled, setIsNextEnabled] = useState(false);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -30,6 +31,16 @@ export const Stage3QuizPage = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    setIsNextEnabled(false);
+    
+    const timer = setTimeout(() => {
+      setIsNextEnabled(true);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [step]);
 
   const handleBack = () => {
     router.push("/learning/stage3/cam-test");
@@ -128,20 +139,32 @@ export const Stage3QuizPage = () => {
             </button>
             <button
               onClick={handleNext}
-              className="p-8 bg-blue-500 text-white rounded-3xl font-black text-lg transition-all duration-300 active:scale-95 hover:bg-blue-600 font-normal"
+              disabled={!isNextEnabled}
+              className={`p-8 rounded-3xl font-black text-lg transition-all duration-300 font-normal ${
+                isNextEnabled 
+                  ? "bg-blue-500 text-white active:scale-95 hover:bg-blue-600 cursor-pointer" 
+                  : "bg-gray-400 text-gray-600 cursor-not-allowed"
+              }`}
               style={{
                 borderRadius: "30px 40px 35px 25px",
               }}
             >
               <div className="flex flex-col font-normal items-center space-y-3">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                  {step < expressions.length - 1 ? (
-                    <ChevronRight size={32} />
-                  ) : (
-                    <Check size={32} />
-                  )}
+                  {isNextEnabled ? (
+                    step < expressions.length - 1 ? (
+                      <ChevronRight size={32} />
+                    ) : (
+                      <Check size={32} />
+                    )
+                  ) : null}
                 </div>
-                <span>{step < expressions.length - 1 ? "다음" : "완료"}</span>
+                <span>
+                  {!isNextEnabled 
+                      ? "다음" 
+                      : "완료"
+                  }
+                </span>
               </div>
             </button>
           </div>
