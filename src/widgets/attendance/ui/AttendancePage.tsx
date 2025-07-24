@@ -8,6 +8,12 @@ import stampAnimation from "../../../../public/animations/stamp.json";
 import StampRoadmap from "./components/StampRoadmap";
 import { useStampData } from "../model/useStampData";
 
+interface UserInfo {
+  id: string;
+  name: string;
+  role: string;
+}
+
 const getInitialAnimationState = () => {
   if (typeof window === 'undefined') return { study: false, attendance: false, stamp: false, stampCompleted: false };
   
@@ -44,6 +50,9 @@ export const AttendancePage = () => {
   const [, setLastClickTime] = useState(Date.now());
   const [clickTimeout, setClickTimeout] = useState<NodeJS.Timeout | null>(null);
 
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
+
   const saveAnimationState = (studyAnim: boolean, attendanceAnim: boolean, stampAnim: boolean) => {
     try {
       const stateToSave = {
@@ -72,6 +81,42 @@ export const AttendancePage = () => {
     if (!showAttendanceAnimation) return 1; 
     if (!showStudyAnimation) return 2; 
     return 3; 
+  };
+
+  useEffect(() => {
+    const loadUserInfo = () => {
+      try {
+        const storedUserInfo = localStorage.getItem("userInfo");
+        if (storedUserInfo) {
+          const userData = JSON.parse(storedUserInfo);
+          setUserInfo(userData);
+        }
+      } catch {
+      } finally {
+        setIsLoadingUser(false);
+      }
+    };
+
+    loadUserInfo();
+  }, []);
+
+  const getUserDisplayName = () => {
+    if (isLoadingUser) {
+      return "로딩중...";
+    }
+    if (!userInfo || !userInfo.name) {
+      return "마음아";
+    }
+    const name = userInfo.name;
+    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
+      const firstName = name.substring(1);
+      const result = `${firstName}아`;
+      return result;
+    }
+
+    const firstName = name.split(" ")[0];
+    const result = `${firstName}아`;
+    return result;
   };
 
   useEffect(() => {
@@ -233,14 +278,14 @@ export const AttendancePage = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-black font-normal">
             안녕{" "}
-            <span className="text-accent-primary">마음아</span>?
+            <span className="text-accent-primary">{getUserDisplayName()}</span>?
             <br />
             오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
             <div className="bg-white/80 rounded-2xl px-8 py-4 border-2 border-gray-200 relative shadow-lg">
               <h2 className="text-2xl font-black text-accent-primary text-center font-normal">
-                마음이
+                {userInfo && userInfo.name ? userInfo.name : "마음이"}
               </h2>
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-400 shadow-inner"></div>
