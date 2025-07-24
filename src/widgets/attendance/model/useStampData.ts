@@ -17,6 +17,8 @@ interface StampState {
   todayStampId: number | null;
 }
 
+const STAMP_STORAGE_KEY = "turtle_stamp_data";
+
 export const useStampData = () => {
   const [stampState, setStampState] = useState<StampState>({
     stamps: [],
@@ -24,6 +26,28 @@ export const useStampData = () => {
     totalCount: 0,
     todayStampId: null,
   });
+
+  // 로컬스토리지에 상태 저장
+  const saveToLocalStorage = (state: StampState) => {
+    try {
+      localStorage.setItem(STAMP_STORAGE_KEY, JSON.stringify(state));
+    } catch (error) {
+      console.error("Failed to save stamp data to localStorage:", error);
+    }
+  };
+
+  // 로컬스토리지에서 상태 불러오기
+  const loadFromLocalStorage = (): StampState | null => {
+    try {
+      const saved = localStorage.getItem(STAMP_STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (error) {
+      console.error("Failed to load stamp data from localStorage:", error);
+    }
+    return null;
+  };
 
   const initializeStamps = (): StampData[] => {
     const stampPositions = [
@@ -47,36 +71,42 @@ export const useStampData = () => {
   };
 
   const completeStamp = (stampId: number) => {
-    setStampState(prev => ({
-      ...prev,
-      stamps: prev.stamps.map(stamp =>
+    const newState = {
+      ...stampState,
+      stamps: stampState.stamps.map(stamp =>
         stamp.id === stampId
           ? { ...stamp, completed: true, isToday: false }
           : stamp
       ),
-      completedCount: prev.completedCount + 1,
-    }));
+      completedCount: stampState.completedCount + 1,
+    };
+    setStampState(newState);
+    saveToLocalStorage(newState);
   };
 
   const updateTodayStamp = (stampId: number) => {
-    setStampState(prev => ({
-      ...prev,
-      stamps: prev.stamps.map(stamp => ({
+    const newState = {
+      ...stampState,
+      stamps: stampState.stamps.map(stamp => ({
         ...stamp,
         isToday: stamp.id === stampId,
       })),
       todayStampId: stampId,
-    }));
+    };
+    setStampState(newState);
+    saveToLocalStorage(newState);
   };
 
   const resetStamps = () => {
     const newStamps = initializeStamps();
-    setStampState({
+    const newState = {
       stamps: newStamps,
       completedCount: newStamps.filter(s => s.completed).length,
       totalCount: newStamps.length,
       todayStampId: newStamps.find(s => s.isToday)?.id || null,
-    });
+    };
+    setStampState(newState);
+    saveToLocalStorage(newState);
   };
 
   const canCompleteStamp = (stampId: number): boolean => {
@@ -106,12 +136,15 @@ export const useStampData = () => {
         isToday: nextStamp ? stamp.id === nextStamp.id : false,
       }));
 
-      setStampState(prev => ({
-        ...prev,
+      const newState = {
+        ...stampState,
         stamps: finalStamps,
         completedCount: finalStamps.filter(s => s.completed).length,
         todayStampId: nextStamp?.id || null,
-      }));
+      };
+
+      setStampState(newState);
+      saveToLocalStorage(newState);
     }
   };
 
@@ -160,25 +193,40 @@ export const useStampData = () => {
 
     const completedCount = stampsWithTurtle.filter(s => s.completed).length;
 
-    setStampState({
+    const newState = {
       stamps: stampsWithTurtle,
       completedCount,
       totalCount: stampsWithTurtle.length,
       todayStampId: turtlePosition,
-    });
+    };
+
+    setStampState(newState);
+    saveToLocalStorage(newState);
   };
 
   useEffect(() => {
-    const stamps = initializeStamps();
-    const completedCount = stamps.filter(s => s.completed).length;
-    const todayStamp = stamps.find(s => s.isToday);
+    // 로컬스토리지에서 저장된 데이터 먼저 확인
+    const savedState = loadFromLocalStorage();
+    
+    if (savedState) {
+      // 저장된 데이터가 있으면 그것을 사용
+      setStampState(savedState);
+    } else {
+      // 저장된 데이터가 없으면 초기 데이터로 설정
+      const stamps = initializeStamps();
+      const completedCount = stamps.filter(s => s.completed).length;
+      const todayStamp = stamps.find(s => s.isToday);
 
-    setStampState({
-      stamps,
-      completedCount,
-      totalCount: stamps.length,
-      todayStampId: todayStamp?.id || null,
-    });
+      const initialState = {
+        stamps,
+        completedCount,
+        totalCount: stamps.length,
+        todayStampId: todayStamp?.id || null,
+      };
+
+      setStampState(initialState);
+      saveToLocalStorage(initialState);
+    }
   }, []);
 
   return {
