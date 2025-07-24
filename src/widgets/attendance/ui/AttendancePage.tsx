@@ -68,6 +68,12 @@ export const AttendancePage = () => {
     moveToNextStamp,
   } = useStampData();
 
+  const getClickAnimationStage = () => {
+    if (!showAttendanceAnimation) return 1; 
+    if (!showStudyAnimation) return 2; 
+    return 3; 
+  };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const hasStage1Complete = urlParams.get("showCompleteAnimation") === "true";
@@ -298,7 +304,7 @@ export const AttendancePage = () => {
                       학습하기
                     </p>
                   </button>
-                  {showClickAnimation && (
+                  {showClickAnimation && getClickAnimationStage() === 1 && (
                     <div className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none">
                       {clickAnimation && clickAnimation !== "css-fallback" ? (
                         <Lottie
@@ -351,6 +357,26 @@ export const AttendancePage = () => {
                       학습하기
                     </p>
                   </button>
+                  {showClickAnimation && getClickAnimationStage() === 2 && (
+                    <div className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none">
+                      {clickAnimation && clickAnimation !== "css-fallback" ? (
+                        <Lottie
+                          animationData={clickAnimation}
+                          loop={true}
+                          autoPlay
+                          style={{ width: 100, height: 100 }}
+                        />
+                      ) : (
+                        <div className="click-animation">
+                          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {showStudyAnimation && (
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
@@ -381,6 +407,26 @@ export const AttendancePage = () => {
                       학습하기
                     </p>
                   </button>
+                  {showClickAnimation && getClickAnimationStage() === 3 && (
+                    <div className="absolute inset-0 rounded-3xl flex items-center justify-end pt-10 z-10 pointer-events-none">
+                      {clickAnimation && clickAnimation !== "css-fallback" ? (
+                        <Lottie
+                          animationData={clickAnimation}
+                          loop={true}
+                          autoPlay
+                          style={{ width: 100, height: 100 }}
+                        />
+                      ) : (
+                        <div className="click-animation">
+                          <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                              <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {showNotesAnimation && (
                     <div
                       className="absolute inset-0 rounded-3xl flex items-center justify-center z-10 pointer-events-none"
