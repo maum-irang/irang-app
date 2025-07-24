@@ -8,34 +8,11 @@ import stampAnimation from "../../../../public/animations/stamp.json";
 import StampRoadmap from "./components/StampRoadmap";
 import { useStampData } from "../model/useStampData";
 
-interface UserInfo {
-  id: string;
-  name: string;
-  role: string;
-}
-
-interface AttendanceRecord {
-  date: string;
-  isPresent: boolean;
-}
-
-interface MonthlyAttendanceData {
-  presentDates?: string[];
-  attendanceRecords?: AttendanceRecord[];
-}
-
 export const AttendancePage = () => {
   const router = useRouter();
   const [showStudyAnimation, setShowStudyAnimation] = useState(false);
   const [showAttendanceAnimation, setShowAttendanceAnimation] = useState(false);
   const [showNotesAnimation] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [monthlyAttendance, setMonthlyAttendance] =
-    useState<MonthlyAttendanceData | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoadingAttendance, setIsLoadingAttendance] = useState(true);
 
   const [showStampAnimation, setShowStampAnimation] = useState(false);
   const [showClickAnimation, setShowClickAnimation] = useState(false);
@@ -50,78 +27,8 @@ export const AttendancePage = () => {
     completedCount,
     totalCount,
     todayStampId,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    completeStamp,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    canCompleteStamp,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    activateNextStamp,
-    initializeStampsFromAttendanceData,
     moveToNextStamp,
   } = useStampData();
-
-  useEffect(() => {
-    const loadUserInfo = () => {
-      try {
-        const storedUserInfo = localStorage.getItem("userInfo");
-        if (storedUserInfo) {
-          const userData = JSON.parse(storedUserInfo);
-          setUserInfo(userData);
-        }
-      } catch {
-        // Silent error handling
-      } finally {
-        setIsLoadingUser(false);
-      }
-    };
-
-    loadUserInfo();
-  }, []);
-  const fetchMonthlyAttendance = async () => {
-    if (!userInfo?.id) return;
-
-    try {
-      const now = new Date();
-      const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-      const year = koreaTime.getFullYear().toString();
-      const month = (koreaTime.getMonth() + 1).toString().padStart(2, "0");
-
-      const response = await fetch(
-        `/api/attendance/monthly?childId=${userInfo.id}&year=${year}&month=${month}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setMonthlyAttendance(data);
-
-        updateStampsFromAttendanceData(data);
-      }
-    } catch {
-      // Silent error handling
-    } finally {
-      setIsLoadingAttendance(false);
-    }
-  };
-
-  useEffect(() => {
-    if (userInfo?.id) {
-      fetchMonthlyAttendance();
-    }
-  }, [userInfo]);
-
-  const updateStampsFromAttendanceData = (
-    attendanceData: MonthlyAttendanceData
-  ) => {
-    let presentDates = attendanceData.presentDates || [];
-
-    if (presentDates.length === 0 && attendanceData.attendanceRecords) {
-      presentDates = attendanceData.attendanceRecords
-        .filter((record: AttendanceRecord) => record.isPresent === true)
-        .map((record: AttendanceRecord) => record.date);
-    }
-
-    initializeStampsFromAttendanceData(presentDates);
-  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -215,7 +122,7 @@ export const AttendancePage = () => {
     router.push("/learning/stage2");
   };
 
-  const handleAttendanceClick = async () => {
+  const handleAttendanceClick = () => {
     setShowClickAnimation(false);
     setLastClickTime(Date.now());
 
@@ -230,41 +137,16 @@ export const AttendancePage = () => {
 
     setClickTimeout(timeout);
 
+    // 스탬프 애니메이션 보여주기
     setShowStampAnimation(true);
 
-    try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
+    // 거북이 바로 이동시키기 (API 호출 없이)
+    moveToNextStamp();
 
-      const response = await fetch("/api/attendance/check", {
-        method: "POST",
-        headers,
-      });
-
-      if (response.ok) {
-        await response.json();
-
-        moveToNextStamp();
-
-        setTimeout(async () => {
-          try {
-            await fetchMonthlyAttendance();
-          } catch {
-            // Silent error handling
-          }
-        }, 5000);
-      } else {
-        try {
-          await response.json();
-        } catch {
-          // Silent error handling
-        }
-        alert("출석체크에 실패했습니다. 다시 시도해주세요.");
-      }
-    } catch {
-      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-    }
+    // 애니메이션 종료 후 스탬프 애니메이션 숨기기
+    setTimeout(() => {
+      setShowStampAnimation(false);
+    }, 2000);
   };
 
   const handleStage3Click = () => {
@@ -284,25 +166,6 @@ export const AttendancePage = () => {
     router.push("/learning/stage3");
   };
 
-  const getUserDisplayName = () => {
-    if (isLoadingUser) {
-      return "로딩중...";
-    }
-    if (!userInfo || !userInfo.name) {
-      return "마음아";
-    }
-    const name = userInfo.name;
-    if (name.length > 1 && /^[가-힣]+$/.test(name)) {
-      const firstName = name.substring(1);
-      const result = `${firstName}아`;
-      return result;
-    }
-
-    const firstName = name.split(" ")[0];
-    const result = `${firstName}아`;
-    return result;
-  };
-
   return (
     <div
       className="min-h-screen p-6 flex items-center relative overflow-hidden"
@@ -317,14 +180,14 @@ export const AttendancePage = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-black text-black font-normal">
             안녕{" "}
-            <span className="text-accent-primary">{getUserDisplayName()}</span>?
+            <span className="text-accent-primary">마음아</span>?
             <br />
             오늘도 재미있게 학습해보자
           </h1>
           <div className="relative">
             <div className="bg-white/80 rounded-2xl px-8 py-4 border-2 border-gray-200 relative shadow-lg">
               <h2 className="text-2xl font-black text-accent-primary text-center font-normal">
-                {userInfo && userInfo.name ? userInfo.name : "마음이"}
+                마음이
               </h2>
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <div className="w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-400 shadow-inner"></div>
@@ -533,7 +396,7 @@ export const AttendancePage = () => {
                       <Stamp size={40} className="mx-auto" strokeWidth={3} />
                     </div>
                     <p className="text-lg font-black text-gray-800 font-normal">
-                      오늘의 <br />
+                      거북이 <br />
                       출석하기
                     </p>
                   </button>
