@@ -17,8 +17,8 @@ export const Stage2ResultPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [fullText, setFullText] = useState("");
 
-  const score = 4;
-  const total = 5;
+  const score = 2;
+  const total = 2;
   const percentage = Math.round((score / total) * 100);
   const passThreshold = 80;
   const isPassed = percentage >= passThreshold;

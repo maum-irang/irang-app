@@ -207,7 +207,7 @@ export const useStampData = () => {
   useEffect(() => {
     // 로컬스토리지에서 저장된 데이터 먼저 확인
     const savedState = loadFromLocalStorage();
-    
+
     if (savedState) {
       // 저장된 데이터가 있으면 그것을 사용
       setStampState(savedState);
