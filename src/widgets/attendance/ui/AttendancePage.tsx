@@ -137,16 +137,11 @@ export const AttendancePage = () => {
 
     setClickTimeout(timeout);
 
-    // 스탬프 애니메이션 보여주기
     setShowStampAnimation(true);
 
-    // 거북이 바로 이동시키기 (API 호출 없이)
-    moveToNextStamp();
-
-    // 애니메이션 종료 후 스탬프 애니메이션 숨기기
     setTimeout(() => {
-      setShowStampAnimation(false);
-    }, 2000);
+      moveToNextStamp();
+    }, 4000);
   };
 
   const handleStage3Click = () => {
